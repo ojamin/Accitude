@@ -1,0 +1,14 @@
+%h2 Editing profile for #{user.username}
+[
+= link_to_remote(:Back, :url => {:action => :profile, :controller => :users})
+]
+%br
+%br
+- form_remote_for user, :url => {:action => :edit_profile, :controller => :users} do |f|
+  = gen_list [ |
+    ['Edit', f.text_field(:email)], |
+    ['Password', password_field_tag(:password)], |
+    ['Pass again', password_field_tag(:passagain)], |
+    [submit_tag(:Update), ''] |
+  ] |
+

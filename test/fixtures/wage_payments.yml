@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  wage_id: 
+  for_employee: 1.5
+  for_income_tax: 1.5
+  for_ni: 1.5
+  for_other: 1.5
+  for_other_desc: MyString
+  total: 1.5
+  hours: 1.5
+  period_start: 2009-12-11
+  period_end: 2009-12-11
+  paid_on: 2009-12-11
+  payment_method: MyString
+
+two:
+  wage_id: 
+  for_employee: 1.5
+  for_income_tax: 1.5
+  for_ni: 1.5
+  for_other: 1.5
+  for_other_desc: MyString
+  total: 1.5
+  hours: 1.5
+  period_start: 2009-12-11
+  period_end: 2009-12-11
+  paid_on: 2009-12-11
+  payment_method: MyString

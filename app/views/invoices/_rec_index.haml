@@ -1,0 +1,16 @@
+%h2 Listing your current payment plans
+%br
+- outp = []
+- plans.each do |p|
+  - outp << [ |
+    link_to_remote(p.contact.name_long, :url => {:action => :rec_view, :id => p.id}), |
+    "£#{p.get_total.to_s}", (p.is_active? ? "Yes" : "No"), p.frequency |
+  ] |
+- outp += do_pag(plans)
+= gen_list(outp, :head => ['Customer', 'Value', 'Active', 'Frequency'], :num => 4, |
+  2 => {:style => "width: 70px;text-align: right;"}, |
+  3 => {:style => "width: 70px;text-align: right;"}, |
+  4 => {:style => "width: 90px;text-align: right;"}) |
+
+- if plans.size == 0
+  Sorry, no results.

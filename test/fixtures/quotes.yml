@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  contact_id: 1
+  organisation_id: 1
+  produced_on: 2009-12-11
+  valid_till: 2009-12-11
+
+two:
+  contact_id: 1
+  organisation_id: 1
+  produced_on: 2009-12-11
+  valid_till: 2009-12-11

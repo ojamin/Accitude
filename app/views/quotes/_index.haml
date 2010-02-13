@@ -1,0 +1,12 @@
+%h2 Your Previous Quotes:
+%br
+- outp = []
+- quotes.each do |q|
+  - outp << [ |
+    link_to_remote(q.contact.name_long, :url => {:action => :view, :id => q.id, :controller => :quotes}), |
+    q.produced_on.inspect |
+  ] |
+- outp += do_pag(quotes)
+= gen_list outp, :head => ['Client', 'Produced On']
+- if quotes.size == 0
+  Sorry, no results.

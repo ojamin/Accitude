@@ -1,0 +1,15 @@
+%h2 #{account.id ? "Edit Bank Account..." : "New Bank Account..."}
+[
+= link_to_remote(:Back, :url => {:action => (account.id ? :view : :index), :controller => :banks, :id => account.id})
+]
+- form_remote_for account, :url => {:action => (account.id ? :edit : :new), :controller => :banks} do |f|
+  = gen_list [ |
+    ['Bank Name', f.text_field(:name)], |
+    ['Account Number', f.text_field(:account)], |
+    ['Sort Code', f.text_field(:sortcode)], |
+    ['Publish details to invoices?', check_box(account, :publish)], |
+    [submit_tag(account.id ? "Update" : "Add"), ''] |
+  ] |
+
+
+

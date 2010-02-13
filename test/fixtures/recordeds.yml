@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  done_on: 2009-12-11
+  type: MyString
+  invoice_id: 1
+
+two:
+  done_on: 2009-12-11
+  type: MyString
+  invoice_id: 1

@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  payment_plan_id: 1
+  quote_id: 1
+  invoice_id: 1
+  expense_id: 1
+  desc: MyText
+  value: 1.5
+  quantity: 1.5
+
+two:
+  payment_plan_id: 1
+  quote_id: 1
+  invoice_id: 1
+  expense_id: 1
+  desc: MyText
+  value: 1.5
+  quantity: 1.5

@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  contact_id: 1
+  organisation_id: 1
+  start: 2009-12-11
+  times: 1
+  last_run_on: 2009-12-11
+  frequency: 1
+
+two:
+  contact_id: 1
+  organisation_id: 1
+  start: 2009-12-11
+  times: 1
+  last_run_on: 2009-12-11
+  frequency: 1

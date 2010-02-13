@@ -1,0 +1,19 @@
+%h2 #{invoice.id ? "Editing invoice for #{invoice.contact.name_long}" : "New Invoice..."}
+[
+= link_to_remote :Back, :url => {:action => (invoice.id ? :view : :index), :controller => :invoices, :id => invoice.id}
+]
+%br
+- form_remote_for invoice, :url => {:action => (invoice.id ? :edit : :new), :controller => :invoices} do |f|
+  = hidden_field_tag :item_ids, JSON.generate([])
+  - if invoice.id
+    = hidden_field_tag :id, invoice.id
+  - outp = []
+  - outp << ['Produced on', f.calendar_date_select(:produced_on, :popup => :force, :onChange => "$('invoice_due_on').value = this.value")]
+  - outp << ['Due on', f.calendar_date_select(:due_on, :popup => :force, :valid_date_check => "date > new Date($F('invoice_produced_on')).stripTime()")]
+  - unless invoice.id
+    - outp << ['Contact for', select_tag(:contact_id, options_from_collection_for_select(contacts, 'id', 'name_long'))]
+  - outp << [submit_tag('Finish invoice'), '']
+  = gen_list outp
+
+= gen_items :title => "Enter the items to go on the invoice below:", :items => invoice.items, :allow_new => true
+

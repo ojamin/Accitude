@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  employee_id: 1
+  organisation_id: 1
+  hourly_rate: 1.5
+  weekly_hours: 1.5
+  state: MyString
+  start: 2009-12-11
+  end: 2009-12-11
+  tax_code: MyString
+  other_deduction: 1.5
+  other_deduction_desc: MyString
+
+two:
+  employee_id: 1
+  organisation_id: 1
+  hourly_rate: 1.5
+  weekly_hours: 1.5
+  state: MyString
+  start: 2009-12-11
+  end: 2009-12-11
+  tax_code: MyString
+  other_deduction: 1.5
+  other_deduction_desc: MyString

@@ -1,0 +1,18 @@
+%h2 Viewing a quote for #{quote.contact.name_long}
+[
+= link_to 'Get PDF', :controller => :quotes, :action => :view, :id => quote.id, :format => :pdf
+\-
+Send as email
+\-
+= link_to_remote 'Convert to invoice', :url => {:controller => :quotes, :action => :convert_to_invoice, :id => quote.id}
+\-
+= link_to_remote 'Edit', :url => {:action => :edit, :id => quote.id, :controller => :quotes}
+]
+%br
+%br 
+= gen_list [ |
+  ["Produced on", quote.produced_on.inspect], |
+  ["Valid until", quote.valid_till.inspect] |
+] |
+
+= gen_items :items => quote.items, :title => "Items attached to the quote:"

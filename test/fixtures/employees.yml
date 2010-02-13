@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  organisation_id: 1
+  name: MyString
+  street: MyString
+  address: MyText
+  postcode: MyString
+  phone: MyString
+  email: MyString
+  started: 2009-12-11
+  left: 2009-12-11
+  ni_number: MyString
+
+two:
+  organisation_id: 1
+  name: MyString
+  street: MyString
+  address: MyText
+  postcode: MyString
+  phone: MyString
+  email: MyString
+  started: 2009-12-11
+  left: 2009-12-11
+  ni_number: MyString

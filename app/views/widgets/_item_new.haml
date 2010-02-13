@@ -1,0 +1,12 @@
+- colour = (['2','3'] - [colour_id])[0]
+#item_new{:class => "item_wrap list_colour#{colour}"}
+  - i = Item.new
+  - form_remote_for i, :url => {:controller => :widgets, :action => :item_new_process} do |f|
+    = hidden_field_tag :item_ids2, item_ids
+    = hidden_field_tag :colour_id, colour
+    .item_wrap1= f.text_field :desc, :size => '50'
+    .item_wrap2= f.text_field :quantity, :size => '4'
+    .item_wrap3= f.text_field :value, :size => 4
+    .item_wrap1= f.submit :Add
+
+

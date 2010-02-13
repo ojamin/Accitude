@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  expense_id: 1
+  wage_payment_id: 1
+  liability_id: 1
+  contact_id: 1
+  bank_account_id: 1
+  invoice_id: 1
+  posted_on: 2009-12-11
+  type: MyString
+  desc: MyString
+  amount: 1.5
+  kind: MyString
+
+two:
+  expense_id: 1
+  wage_payment_id: 1
+  liability_id: 1
+  contact_id: 1
+  bank_account_id: 1
+  invoice_id: 1
+  posted_on: 2009-12-11
+  type: MyString
+  desc: MyString
+  amount: 1.5
+  kind: MyString

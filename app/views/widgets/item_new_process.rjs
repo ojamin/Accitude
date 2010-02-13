@@ -1,0 +1,4 @@
+page[:item_new].remove
+page.insert_html :bottom, :items_main, render(:partial => 'widgets/item_existing', :locals => {:item => @item, :colour_id => @colour_id})
+page.insert_html :bottom, :items_main, render(:partial => 'widgets/item_new', :locals => {:item_ids => @item_ids, :colour_id => @colour_id})
+page[:item_ids][:value] = @item_ids 

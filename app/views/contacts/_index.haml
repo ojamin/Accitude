@@ -1,0 +1,10 @@
+%h2 Contacts List
+
+- outp = []
+- contact_list.each do |c|
+  - outp << [link_to_remote(c.name, :url => {:action => :view, :id => c.id, :controller => :contacts}), |
+    (c.company ? c.company : ""), (c.phone ? c.phone : "")] |
+- outp += do_pag(contact_list)
+= gen_list outp
+- if contact_list.size == 0
+  Sorry, no results.

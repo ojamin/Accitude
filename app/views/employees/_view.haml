@@ -1,0 +1,25 @@
+%h2 Showing details for #{employee.name}
+[
+= link_to_remote(:Back, :url => {:action => :index, :controller => :employees})
+\-
+= link_to_remote(:Edit, :url => {:action => :edit, :id => employee.id, :controller => :employees})
+\-
+Expenses:
+= link_to_remote('List', :url => {:action => :ex_index, :id => employee.id, :controller => :employees})
+= link_to_remote('Add', :url => {:action => :ex_new, :id => employee.id, :controller => :employees})
+]
+%br 
+- outp = [ |
+['Name', employee.name.to_s], |
+  ['Address', ''], |
+  ['', employee.street], |
+  ['', employee.address], |
+  ['', employee.postcode], |
+  ['Phone', employee.phone], |
+  ['Email', employee.email], |
+  ['Date started', employee.started.inspect], |
+  ['Date left', employee.left.inspect], |
+  ['NI Number', employee.ni_number] |
+] |
+.clear &nbsp;
+= gen_list outp

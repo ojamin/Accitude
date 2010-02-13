@@ -1,0 +1,20 @@
+%h2 Viewing an invoice for #{invoice.contact.name_long}
+[
+= link_to 'Get PDF', :controller => :invoices, :action => :view, :id => invoice.id, :format => :pdf
+\-
+Send as email
+\-
+= link_to_remote :Edit, :url => {:action => :edit, :id => invoice.id, :controller => :invoices}
+- if invoice.payment_plan
+  \-
+  = link_to_remote "Payment Plan", :url => {:action => :rec_view, :controller => :invoices, :id => invoice.payment_plan_id}
+\-
+= link_to_remote :Back, :url => {:action => :index, :controller => :invoices}
+]
+%br
+= gen_list [ |
+  ["Produced on", invoice.produced_on.inspect], |
+  ["Due on", invoice.due_on.inspect] |
+] |
+
+= gen_items :title => "Items attached to the invoice:", :items => invoice.items

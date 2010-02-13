@@ -1,0 +1,19 @@
+%h2 #{quote.id ? "Editing Quote for: #{quote.contact.name_long}" : "New Quote..."}
+[
+= link_to_remote(:Back, :url => {:action => (quote.id ? :view : :index), :id => quote.id, :controller => :quotes})
+]
+
+- form_remote_for quote, :url => {:action => (quote.id ? :edit : :new), :controller => :quotes} do |f|
+  - if quote.id
+    = hidden_field_tag :id, quote.id
+  = hidden_field_tag :item_ids, JSON.generate([])
+  - outp = []
+  - outp << ["Produced on", f.calendar_date_select(:produced_on, :popup => :force, :onChange => "$('quote_valid_till').value = this.value")]
+  - outp << ["Valid until", f.calendar_date_select(:valid_till, :popup => :force, :valid_date_check => "date > new Date($F('quote_produced_on')).stripTime()")]
+  - unless quote.contact
+    - outp << ["Contact for", select_tag(:contact_id, options_from_collection_for_select(contacts, 'id', 'name_long'))]
+  - outp << [submit_tag(quote.id ? 'Update' : 'Finish quote'), ""]
+  = gen_list outp
+
+= gen_items :title => "Enter the items to go on the quotation below:", :items => quote.items, :allow_new => true
+

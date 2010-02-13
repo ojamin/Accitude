@@ -1,0 +1,20 @@
+%h2 Editing Organisation: #{org.name}
+[
+= link_to_remote(:Back, :url => {:action => :index, :controller => :organisations})
+]
+- form_for org, :url => {:action => :edit, :controller => :organisations}, :html => {:target => :frame, :multipart => true} do |f|
+  - outp = [ |
+    ["Name", f.text_field(:name)], |
+    ["Start of accounting period", f.calendar_date_select(:period, :popup => :force)], |
+    ["Address", f.text_area(:address, :size => '25x7')], |
+    ["Email", f.text_field(:email)], |
+    ["Phone Number", f.text_field(:phone)], |
+    ["Website", f.text_field(:website)], |
+    ["Footer", f.text_area(:footer, :size => '25x7')], |
+    ["Logo", file_field(:image, :uploaded_data)], |
+    [submit_tag(:Update), ""] |
+  ] |
+  = gen_list outp
+
+%iframe#frame{:style => 'display:none;', :name => :frame}
+

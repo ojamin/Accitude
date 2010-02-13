@@ -1,0 +1,19 @@
+%h2 New Payment Plan
+[
+= link_to_remote :Back, :url => {:action => :rec_index, :controller => :invoices}
+]
+%br
+- form_remote_for plan, :url => {:action => :rec_new, :controller => :invoices} do |f|
+  = hidden_field_tag :item_ids, JSON.generate([])
+  - outp = [ |
+    ['Start date', f.calendar_date_select(:start, :popup => :force)], |
+    ['Customer', select_tag(:contact_id, options_from_collection_for_select(contacts, 'id', 'name_long'))], |
+    ["Times to run (-1 = unending)", f.text_field(:times)], |
+    ["Frequency", f.select(:frequency, PaymentPlan.freqs)], |
+    [submit_tag("Add Plan"), ""] |
+  ] |
+  = gen_list outp
+
+= gen_items :title => "Enter the items to go on the invoice below:", :items => plan.items, :allow_new => true
+
+

@@ -1,0 +1,19 @@
+%h2 #{employee.id ? "Editing #{employee.name}..." : "Creating a new employee..."}
+[
+= link_to_remote(:Back, :url => {:action => (employee.id ? :view : :index), :controller => :employees, :id => employee.id})
+]
+- form_remote_for employee, :url => {:action => (employee.id ? :edit : :new), :controller => :employees} do |f|
+  = gen_list [ |
+    ['Name', f.text_field(:name)], |
+    ['Street', f.text_field(:street)], |
+    ['Address', f.text_area(:address, :size => '25x6')], |
+    ['Postcode', f.text_field(:postcode)], |
+    ['Phone', f.text_field(:phone)], |
+    ['Email', f.text_field(:email)], |
+    ['Date Started', f.calendar_date_select(:started, :popup => :force)], |
+    ['Date Finished', f.calendar_date_select(:left, :popup => :force, :valid_date_check => "date > new Date($F('employee_started')).stripTime()")], |
+    ['NI Number', f.text_field(:ni_number)], |
+    [submit_tag(employee.id ? :Update : :Add), ''] |
+  ] |
+
+

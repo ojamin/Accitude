@@ -1,0 +1,17 @@
+.list_main
+  - if head && head.class == Array && head.size == num
+    .list_wrap.list_colour1
+      - num.times do |n|
+        - if n == 0
+          .list_left{opts[n]}= head[n]
+        - else
+          .list_right{opts[n]}= head[n]
+  - colours = [2,3]
+  - items.each do |i|
+    %div{:class => "list_wrap list_colour#{colours[0]}"}
+      - num.times do |n|
+        - if n == 0
+          .list_left{opts[n]}= i[n]
+        - else
+          .list_right{opts[n]}= i[n]
+    - colours = colours.reverse

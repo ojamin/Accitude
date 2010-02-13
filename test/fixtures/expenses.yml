@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  employee_id: 1
+  claimed_on: 2009-12-11
+  paid_on: 2009-12-11
+
+two:
+  employee_id: 1
+  claimed_on: 2009-12-11
+  paid_on: 2009-12-11

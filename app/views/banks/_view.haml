@@ -1,0 +1,10 @@
+%h2 Viewing a bank account
+[
+= link_to_remote(:Back, :url => {:action => :index, :controller => :banks})
+]
+= gen_list [ |
+  ['Name', account.name], |
+  ['Account number', account.account], |
+  ['Sort code', account.sortcode], |
+  ['Publish details to invoices?', (account.publish ? 'Yes' : 'No')] |
+] |

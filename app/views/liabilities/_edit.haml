@@ -1,0 +1,21 @@
+%h2 #{liability.id ? "Editing Liability - Supplier: #{liability.contact.name_long}" : "New Liability..."}
+[
+= link_to_remote :Back, :url => {:action => (liability.id ? :view : :index), :controller => :liabilities, :id => liability.id}
+]
+%br
+- form_remote_for liability, :url => {:action => (liability.id ? :edit : :new), :controller => :liabilities} do |f|
+  - if liability.id
+    = hidden_field_tag :id, liability.id
+  - outp = []
+  - outp << ['Incurred on', f.calendar_date_select(:incurred_on, :popup => :force)]
+  - outp << ['Paid on', f.calendar_date_select(:paid_on, :popup => :force, :valid_date_check => "date > new Date($F('liability_incurred_on')).stripTime()")]
+  - unless liability.id
+    - outp << ['Supplier', select_tag(:contact_id, options_from_collection_for_select(contacts, 'id', 'name_long'))]
+  - outp << ['Description', f.text_area(:description, :size => '27x7')]
+  - outp << ['Receipt ID', f.text_field(:receipt_id)]
+  - outp << ['Value', f.text_field(:value)]
+  - outp << [submit_tag('Finish liability'), '']
+  = gen_list outp
+
+
+

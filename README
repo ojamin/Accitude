@@ -1,0 +1,35 @@
+Welcome to Accitude - the accounts software with attitude for small business.
+
+Features:
+  - Quote creation
+  - Invoice creation
+  - Recurring Invoices
+  - Multi company
+  - Multi user
+  - Employee aware
+  - Wage processing
+  - Bank reconsiliation
+  - Liability processing
+  - Recurring Liabilities
+  - Contact list
+
+Clone us at git://github.com/ebotech/Accitude.git or http://github.com/ebotech/Accitude.git
+Visit our github page at http://github.com/ebotech/Accitude
+
+REQUIREMENTS:
+  - Ruby on Rails 2.3.5
+  - Ruby Gems
+  - Your prefered database
+
+TO INSTALL:
+  1. Clone our repository with `git clone http://github.com/ebotech/Accitude.git`
+  2. `cp config/database.yml.template config/database.yml`
+  3. Edit config/database.yml to another database if needed
+  4. Run `rake gems:install`
+  5. Run `script/console`
+  6. Run `Organisation.new(:name => "An Organisation").save`
+  7. Run `((a = User.new(:password => "test")).username = "admin") && a.save`
+  8. Run `script/server`
+  9. Browse to localhost:3000 and start using the program - the default username/password is admin/test
+
+Sponsored by Ebotech Consulting Ltd. - www.ebotech.com

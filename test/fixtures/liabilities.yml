@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  contact_id: 1
+  organisation_id: 1
+  incurred_on: 2009-12-11
+  paid_on: 2009-12-11
+  information: MyText
+  receipt_id: MyString
+  processed: false
+
+two:
+  contact_id: 1
+  organisation_id: 1
+  incurred_on: 2009-12-11
+  paid_on: 2009-12-11
+  information: MyText
+  receipt_id: MyString
+  processed: false

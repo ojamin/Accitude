@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  organisation_id: 1
+  name: MyString
+  account: MyString
+  sortcode: MyString
+  publish: false
+
+two:
+  organisation_id: 1
+  name: MyString
+  account: MyString
+  sortcode: MyString
+  publish: false

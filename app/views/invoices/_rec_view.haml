@@ -1,0 +1,32 @@
+%h2 Viewing a payment plan
+[
+= link_to_remote :Back, :url => {:action => :rec_index, :controller => :invoices}
+- unless plan.times == 0
+  \-
+  = link_to_remote 'End plan', :url => {:controller => :invoices, :action => :rec_end, :id => plan.id}, :confirm => 'Really end plan?'
+]
+%br
+= gen_list [ |
+  ["Customer", plan.contact.name_long], |
+  ["Start date", plan.start.inspect], |
+  ["Times left to run (-1 = unending)", (plan.times == 0 ? 'Ended' : plan.times)], |
+  ["Last run on", plan.last_run_on.inspect], |
+  ["How often", plan.frequency] |
+] |
+
+= gen_items :title => "Items attached to the invoice:", :items => plan.items
+%br
+%h3 Invoices generated (by date)
+- outp = []
+- plan.invoices.each do |i|
+  - outp << [link_to_remote(i.produced_on.inspect, :url => {:action => :view, :id => i.id}), |
+    link_to('Get PDF', :action => :view, :id => i.id, :format => :pdf), (i.been_paid? ? 'Yes' : 'No')] |
+
+= gen_list outp, :head => ['Date Produced', 'Paid?'], :size => 2
+
+
+
+
+
+
+

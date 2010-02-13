@@ -1,0 +1,18 @@
+%h2 #{expense.id ? "Editing expense for: #{employee.name}" : "Adding a new expense for #{employee.name}"}
+[
+= link_to_remote('Back', :url => {:action => :ex_index, :id => employee.id, :controller => :employees})
+]
+%br
+- form_remote_for expense, :url => {:controller => :employees, :action => (expense.id ? :ex_edit : :ex_new)} do |f|
+  = hidden_field_tag :item_ids, JSON.generate([])
+  - if expense.id
+    = hidden_field_tag :id, employee.id
+    = hidden_field_tag :eid, expense.id
+  = gen_list [ |
+    ['Claimed on date', f.calendar_date_select(:claimed_on, :popup => :force)], |
+    ['Paid on date', f.calendar_date_select(:paid_on, :popup => :force, :valid_date_check => "date > new Date($F('expense_claimed_on')).stripTime()")], |
+    [submit_tag(expense.id ? 'Update' : 'Add'), ''] |
+  ] |
+
+= gen_items :items => expense.items, :allow_new => true, :title => "Enter the items to go on the expense form below:"
+

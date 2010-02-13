@@ -1,0 +1,7 @@
+%h2 Profile for #{user.username}
+[
+= link_to_remote('Edit profile', :url => {:action => :edit_profile, :controller => :users})
+]
+%br  
+%br
+= 'Email: ' + user.email.to_s

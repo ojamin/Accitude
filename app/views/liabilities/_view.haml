@@ -1,0 +1,15 @@
+%h2 Viewing a liability 
+[
+= link_to_remote :Edit, :url => {:action => :edit, :controller => :liabilities, :id => liability.id}
+\-
+= link_to_remote :Back, :url => {:action => :index, :controller => :liabilities}
+]
+%br
+= gen_list [ |
+  ['Supplier', liability.contact.name_long], |
+  ['Incurred on', liability.incurred_on.inspect], |
+  ['Paid on', (liability.paid_on ? liability.paid_on.inspect : 'Not Paid')], |
+  ['Description', liability.description], |
+  ['Receipt ID', liability.receipt_id], |
+  ['Value', format_as_currency(liability.value)] |
+] |

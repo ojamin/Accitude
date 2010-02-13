@@ -1,0 +1,27 @@
+%h2 Showing details for #{contact.name}
+[
+= link_to_remote(:Back, :url => {:action => :index, :controller => :contacts})
+\-
+= link_to_remote(:Edit, :url => {:action => :edit, :id => contact.id, :controller => :contacts})
+]
+%br 
+- outp = [ |
+  ['Name', contact.name], |
+  ['Company', contact.company], |
+  ['Address', ''], |
+  ['', contact.street], |
+  ['', contact.address], |
+  ['', contact.postcode], |
+  ['Phone', contact.phone], |
+  ['Phone 2', contact.phone2], |
+  ['Fax', contact.fax], |
+  ['Email', contact.email], |
+  ['Website', contact.website], |
+  ['Is a customer', contact.customer], |
+  ['Is a supplier', contact.supplier] |
+] |
+
+= gen_list outp
+
+
+
