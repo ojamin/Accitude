@@ -8,8 +8,9 @@ body {
 p { margin:0px 0.5em; margin-bottom: 1em; }
 
 
-form label { float:left; width: 90px; text-align:right; margin-bottom:7px;}
+form label { float:left; text-align:left; margin-bottom:7px;}
 form input, form select { float:left; margin-left: 10px; }
+form label input {float: right;}
 form br { clear: left; }
 
 #ly_w {
@@ -97,14 +98,33 @@ form br { clear: left; }
 	background: #EBF5FA;
 	padding: 5px;
 }
-
-
+#notice_div_id {
+  border: 1px solid #5CCF60;
+  margin: 15px;
+  padding: 10px;
+  background: #C5EDC6;
+  font-weight: bold;
+}
+#error_div_id {
+  border: 1px solid #CB5858;
+  margin: 15px;
+  padding: 10px;
+  background: #EDC5C5;
+  font-weight: bold;
+}
 .odd { background: #FDFAE8; }
-
 .list_main {
   overflow: hidden;
   position: relative;
   width: 500px;
+  margin-top: 20px;
+}
+.list_main select {
+  width: 180px;
+}
+.list_main_sublist {
+  margin-top: 0px;
+  position: inline;
 }
 .list_left {
   position: relative;
@@ -119,9 +139,6 @@ form br { clear: left; }
   position: relative;
   float: left;
   clear: both;
-}
-.list_main {
-  margin-top: 20px;
 }
 .list_wrap {
   position: relative;

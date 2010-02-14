@@ -22,6 +22,7 @@ module ApplicationHelper
   def gen_list(items=[], opts={})
     head = (opts[:head] || nil)
     num = (opts[:size] || 3)
+    sublist = opts[:sublist] ? true : false
     opts = (opts[:params] || [])
     (num - opts.size).times {|i| opts << '' } unless opts.size >= num
     items.count.times {|c|
@@ -32,7 +33,7 @@ module ApplicationHelper
         end
       }
     }
-    return render(:partial => 'widgets/gen_list', :locals => {:items => items, :head => head, :num => num, :opts => opts})
+    return render(:partial => 'widgets/gen_list', :locals => {:sublist => sublist, :items => items, :head => head, :num => num, :opts => opts})
   end
 
   def gen_items(opts={})
@@ -50,9 +51,16 @@ module ApplicationHelper
 
   def gen_main(html="")
     page["maintext"].replace_html html
-    page << "Flash.transferFromCookies();"
-    page << "Flash.writeDataTo('error', $('error_div_id'));"
-    page << "Flash.writeDataTo('notice', $('notice_div_id'));"
+    gen_flash
+  end
+  
+  def gen_flash(p = nil)
+    (p ? p : page) << "$('notice_div_id').hide(); $('error_div_id').hide();"
+    (p ? p : page) << "Flash.transferFromCookies();"
+    (p ? p : page) << "Flash.writeDataTo('notice', $('notice_div_id'));"
+    (p ? p : page) << "Flash.writeDataTo('error', $('error_div_id'));"
+    (p ? p : page) << "if ($('notice_div_id').innerHTML != '') { $('notice_div_id').show() }"
+    (p ? p : page) << "if ($('error_div_id').innerHTML != '') { $('error_div_id').show() }"
   end
 
   def format_as_currency(value)

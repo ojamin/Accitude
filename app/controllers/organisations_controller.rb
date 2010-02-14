@@ -1,11 +1,10 @@
 class OrganisationsController < ApplicationController
 
   skip_before_filter :enforce_org
+  
   private
   def menu_items
-    menuitems = [['List Organisations', {:url => {:action => :index}}]]
-    menuitems.push ['Add Organisations', {:url => {:action => :add}}] if @logged_in.is_admin
-    return menuitems
+    return [['List Organisations', {:url => {:action => :index}}]]
   end
   
   public

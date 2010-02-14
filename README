@@ -27,7 +27,6 @@ TO INSTALL:
   3. Edit config/database.yml to another database if needed
   4. Run `rake gems:install`
   5. Run `script/console`
-  6. Run `Organisation.new(:name => "An Organisation").save`
   7. Run `((a = User.new(:password => "test")).username = "admin") && a.save`
   8. Run `script/server`
   9. Browse to localhost:3000 and start using the program - the default username/password is admin/test

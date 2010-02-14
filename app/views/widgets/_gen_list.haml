@@ -1,4 +1,5 @@
-.list_main
+- list_main = sublist ? {:class => "list_main_sublist list_main",} : {:class => :list_main}
+%div{list_main}
   - if head && head.class == Array && head.size == num
     .list_wrap.list_colour1
       - num.times do |n|
@@ -8,7 +9,8 @@
           .list_right{opts[n]}= head[n]
   - colours = [2,3]
   - items.each do |i|
-    %div{:class => "list_wrap list_colour#{colours[0]}"}
+    - dopts = {:class => "list_wrap list_colour#{colours[0]}"}.merge(i[num] ? i[num] : {}) {|k,o,n| "#{o} #{n}" }
+    %div{dopts}
       - num.times do |n|
         - if n == 0
           .list_left{opts[n]}= i[n]

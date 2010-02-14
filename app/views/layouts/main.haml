@@ -18,6 +18,9 @@
               = link_to(:Logout, :controller => :main, :action => :logout)
               \|
               = link_to_remote(:Profile, :url => {:controller => :users, :action => :profile})
+              - if @logged_in.is_admin
+                \-
+                = link_to_remote(:Admin, :url => {:controller => :admin, :action => :index})
               )
             - else
               = link_to(:Login, :controller => :main, :action => :login)
@@ -42,8 +45,8 @@
             %li= link_to_remote('Choose Organisation', :url => {:controller => :organisations})
 
         #cont
-          #error_div_id
-          #notice_div_id
+          #error_div_id{:style => "display: none;"}
+          #notice_div_id{:style => "display: none;"}
           %br
           #maintext= yield
 

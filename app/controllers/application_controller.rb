@@ -8,12 +8,12 @@ class ApplicationController < ActionController::Base
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
-  protect_from_forgery # :secret => '1f29646080aa4f2962b29498878249a3'
+  # protect_from_forgery :secret => '1f29646080aa4f2962b29498878249a3'
   
   # See ActionController::Base for details 
   # Uncomment this to filter the contents of submitted sensitive data parameters
   # from your application log (in this case, all fields with names like "password"). 
-  filter_parameter_logging :password, :passagain
+  filter_parameter_logging :password, :passagain, :oldpass, :pass
 
   before_filter :check_login, :enforce_login, :setup_org, :enforce_org
 
@@ -79,6 +79,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_error_msgs(obj)
-    return obj.errors.full_messages.join(' | ')
+    return obj.errors.full_messages.join(' and ') if obj.errors.size > 0
+    return "Error in input"
   end
 end
