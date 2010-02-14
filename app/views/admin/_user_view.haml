@@ -1,0 +1,9 @@
+%h2 Viewing #{user.username}
+\[
+= link_to_remote(:Edit, :url => {:action => :user_edit, :controller => :admin, :id => user.id})
+\]
+%br
+= gen_list [ |
+  ["Username", user.username], |
+  ["Email", user.email] |
+  ], :size => 2 |

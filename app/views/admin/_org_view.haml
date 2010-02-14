@@ -1,0 +1,11 @@
+%h2 Viewing #{org.name}
+%br
+Users with access to this org:
+- form_remote_tag :url => {:action => :org_mod_user, :controller => :admin, :id => org.id, :access => 1} do
+  #org_mod_user
+    - outp = []
+    - org.users.each do |u|
+      - outp << [u.username, link_to_remote('Remove access', :url => {:action => :org_mod_user, :controller => :admin, :id => org.id, :uid => u.id, :access => 0}), {:id => "org_mod_user_#{u.id}"}]
+    - sel_opts = options_from_collection_for_select((User.find(:all) - org.users), 'id', 'username')
+    - outp << [select_tag(:uid, sel_opts, :width => 15), submit_tag('Add access'), {:id => "org_mod_user_new"}]
+    = gen_list outp, :size => 2

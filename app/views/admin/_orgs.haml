@@ -1,0 +1,11 @@
+%h2 Listing Organisations
+%br
+- form_remote_tag :url => {:action => :org_new, :controller => :admin} do
+  %label
+    Name:
+    = text_field_tag :name
+  = submit_tag "Add Organisation"
+%br
+%ul#orgs_list
+  - orgs.each do |o|
+    %li= link_to_remote(o.name, :url => {:action => :org_view, :controller => :admin, :id => o.id})

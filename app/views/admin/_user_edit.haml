@@ -1,0 +1,15 @@
+%h2= (user.id ? "Editing #{user.username}" : "New User")
+\[
+= link_to_remote(:Back, :url => {:action => (user.id ? :user_view : :users), :controller => :admin, :id => user.id})
+\]
+%br 
+- form_remote_for user, :url => {:action => (user.id ? :user_edit : :user_new), :controller => :admin, :id => user.id} do |f|
+  = gen_list [ |
+    ["Username", f.text_field(:username)], |
+    ["Password", password_field_tag(:password)], |
+    ["Pass Again", password_field_tag(:passagain)], |
+    ["Email", f.text_field(:email)], |
+    [submit_tag(user.id ? "Update" : "Create"), ""] |
+  ], :size => 2 |
+
+

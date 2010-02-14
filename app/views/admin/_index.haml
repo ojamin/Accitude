@@ -1,0 +1,6 @@
+%h2 Admin Page
+%br
+%ul
+  %li= link_to_remote("List Users", :url => {:action => :users, :controller => :admin})
+  %li= link_to_remote("List Organisations", :url => {:action => :orgs, :controller => :admin})
+

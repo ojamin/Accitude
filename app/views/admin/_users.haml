@@ -1,0 +1,5 @@
+%h2 Listing Users:
+%br
+%ul
+  - users.each do |u|
+    %li= link_to_remote(u.username, :url => {:action => :user_view, :controller => :admin, :id => u.id})
