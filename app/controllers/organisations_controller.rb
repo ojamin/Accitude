@@ -15,7 +15,7 @@ class OrganisationsController < ApplicationController
     else
       @orgs = @logged_in.organisations.paginate :page => (params[:page] || '1')
     end
-    ren_cont 'index', {:orgs => @orgs}
+    ren_cont 'index', {:orgs => @orgs} and return
   end
 
   def set_org
@@ -35,7 +35,8 @@ class OrganisationsController < ApplicationController
           @org.image = @img
           @img.save
         end
-        ren_cont 'edit_fin'
+        flash[:notice] = "Organisation saved"
+        index
       end and return
     end
     ren_cont 'edit', {:org => @org} and return
