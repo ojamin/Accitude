@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
   @logged_in = false
   @current_org = false
 
+  private
   def menu_items
     return []
   end
@@ -53,15 +54,15 @@ class ApplicationController < ActionController::Base
   end
 
   def check_login
-    return @logged_in if @logged_in
     return false unless session[:uid]
+    return @logged_in if @logged_in
     @logged_in = User.find_by_username(session[:uid])
     session.reset unless @logged_in
     return @logged_in
   end
 
   def enforce_login
-    enforce_this unless @logged_in
+    enforce_this @logged_in
   end
 
   def enforce_admin

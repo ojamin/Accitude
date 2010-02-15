@@ -55,12 +55,8 @@ module ApplicationHelper
   end
   
   def gen_flash(p = nil)
-    (p ? p : page) << "$('notice_div_id').hide(); $('error_div_id').hide();"
-    (p ? p : page) << "Flash.transferFromCookies();"
-    (p ? p : page) << "Flash.writeDataTo('notice', $('notice_div_id'));"
-    (p ? p : page) << "Flash.writeDataTo('error', $('error_div_id'));"
-    (p ? p : page) << "if ($('notice_div_id').innerHTML != '') { $('notice_div_id').show() }"
-    (p ? p : page) << "if ($('error_div_id').innerHTML != '') { $('error_div_id').show() }"
+    # actual JS is in the layout template
+    (p ? p : page) << "do_flash_message_showing();"
   end
 
   def format_as_currency(value)

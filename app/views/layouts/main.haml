@@ -45,8 +45,19 @@
             %li= link_to_remote('Choose Organisation', :url => {:controller => :organisations})
 
         #cont
-          #error_div_id{:style => "display: none;"}
-          #notice_div_id{:style => "display: none;"}
+          #error_div_id{:style => "display: none"}
+          #notice_div_id{:style => "display: none"}
+          :javascript
+            function do_flash_message_showing()
+            {
+              $('notice_div_id').hide(); $('error_div_id').hide();
+              Flash.transferFromCookies();
+              Flash.writeDataTo('notice', $('notice_div_id'));
+              Flash.writeDataTo('error', $('error_div_id'));
+              if ($('notice_div_id').innerHTML != '') { $('notice_div_id').show() };
+              if ($('error_div_id').innerHTML != '') { $('error_div_id').show() };
+            }
+            do_flash_message_showing();
           %br
           #maintext= yield
 
