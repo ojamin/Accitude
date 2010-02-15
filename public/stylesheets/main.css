@@ -104,6 +104,8 @@ form br { clear: left; }
   padding: 10px;
   background: #C5EDC6;
   font-weight: bold;
+  margin-left: 0px;
+  width: 620px;
 }
 #error_div_id {
   border: 1px solid #CB5858;
@@ -111,6 +113,8 @@ form br { clear: left; }
   padding: 10px;
   background: #EDC5C5;
   font-weight: bold;
+  margin-left: 0px;
+  width: 620px;
 }
 .odd { background: #FDFAE8; }
 .list_main {
