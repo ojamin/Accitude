@@ -62,7 +62,7 @@ class AdminController < ApplicationController
   def org_new
     enforce_this params[:commit] && params[:name]
     @org = Organisation.new(:name => params[:name])
-    if false && @org.save
+    if @org.save
       flash[:notice] = "Organisationi created!"
       flash[:error] = "foo"
       render :update do |page|

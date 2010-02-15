@@ -11,21 +11,18 @@
       #ly_h
         %h1#logo= link_to('Accitude', :controller => :main)
         %a{:style => "display:none;", :href => "#content"} Skip to content
-        %ul#ly_userbox
-          %li
-            - if @logged_in
-              Welcome, #{@logged_in.username} (
-              = link_to(:Logout, :controller => :main, :action => :logout)
-              \|
-              = link_to_remote(:Profile, :url => {:controller => :users, :action => :profile})
-              - if @logged_in.is_admin
-                \-
-                = link_to_remote(:Admin, :url => {:controller => :admin, :action => :index})
-              )
-            - else
-              = link_to(:Login, :controller => :main, :action => :login)
-          %br
-          %br
+        #ly_userbox
+          - if @logged_in
+            Welcome, #{@logged_in.username} (
+            = link_to(:Logout, :controller => :main, :action => :logout)
+            \|
+            = link_to_remote(:Profile, :url => {:controller => :users, :action => :profile})
+            - if @logged_in.is_admin
+              \-
+              = link_to_remote(:Admin, :url => {:controller => :admin, :action => :index})
+            )
+          - else
+            = link_to(:Login, :controller => :main, :action => :login)
         #dymenu
       #ly_b
         %ul#mnu_nav
