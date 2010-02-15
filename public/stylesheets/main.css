@@ -159,7 +159,7 @@ form br { clear: left; }
   background-color: #f6f6f6;
 }
 #dymenu {
-  background-color: #2E4A5A;
+  background-color: #749Ab7;
   margin-left: 235px;
   clear: both;
   height: 30px;
@@ -169,7 +169,7 @@ form br { clear: left; }
   overflow: hidden;
 }
 #dymenu a {
-  color: #F6F6F6;
+  color: #000000;
 }
 .dymenuitem {
   float: left;
