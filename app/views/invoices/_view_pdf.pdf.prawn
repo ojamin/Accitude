@@ -1,5 +1,6 @@
-img = "#{RAILS_ROOT}/public#{invoice.organisation.image.public_filename}"
-pdf.image img, :at => [-30,750]
+if invoice.organisation.image
+  img = "#{RAILS_ROOT}/public#{invoice.organisation.image.public_filename}"
+  pdf.image img, :at => [-30,750]
 
 pdf.text "Invoice", :align => :right, :size => 50
 pdf.text invoice.organisation.name, :align => :right, :size => 16
