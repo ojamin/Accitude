@@ -1,6 +1,7 @@
 if quote.organisation.image
   img = "#{RAILS_ROOT}/public#{quote.organisation.image.public_filename}"
   pdf.image img, :at => [-30,750]
+end
 
 pdf.text "Quotation", :align => :right, :size => 50
 pdf.text quote.organisation.name, :align => :right, :size => 16
