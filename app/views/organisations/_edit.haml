@@ -11,13 +11,14 @@
     ["Phone Number", f.text_field(:phone)], |
     ["Website", f.text_field(:website)], |
     ["Footer", f.text_area(:footer, :size => '25x7')], |
-    ["New Logo", file_field(:image, :uploaded_data)], |
+    ["New Logo (pref 600x400)", file_field(:image, :uploaded_data)], |
     [submit_tag(:Update), ""] |
   ] |
   = gen_list outp
 %br
-Current logo:
-%br
-= image_tag org.image.public_filename[8..-1]
+- if org.image
+  Current logo:
+  %br
+  = image_tag org.image.public_filename[8..-1]
 %iframe#frame{:style => 'display:none;', :name => :frame}
 

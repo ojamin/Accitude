@@ -14,7 +14,7 @@
     ['Fax', f.text_field(:fax)], |
     ['Email', f.text_field(:email)], |
     ['Website', f.text_field(:website)], |
-    [submit_tag(contact.name ? 'Add' : 'Update'), ''] |
+    [submit_tag(contact.id ? 'Update' : 'Add'), ''] |
   ] |
 
 
