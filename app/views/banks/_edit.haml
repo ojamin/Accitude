@@ -7,7 +7,7 @@
     ['Bank Name', f.text_field(:name)], |
     ['Account Number', f.text_field(:account)], |
     ['Sort Code', f.text_field(:sortcode)], |
-    ['Publish details to invoices?', check_box(account, :publish)], |
+    ['Publish details to invoices?', f.check_box(:publish)], |
     [submit_tag(account.id ? "Update" : "Add"), ''] |
   ] |
 

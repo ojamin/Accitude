@@ -14,6 +14,8 @@
     ['Fax', f.text_field(:fax)], |
     ['Email', f.text_field(:email)], |
     ['Website', f.text_field(:website)], |
+    ['Customer', f.check_box(:customer)], |
+    ['Supplier', f.check_box(:supplier)], |
     [submit_tag(contact.id ? 'Update' : 'Add'), ''] |
   ] |
 

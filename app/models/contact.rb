@@ -1,7 +1,7 @@
 class Contact < ActiveRecord::Base
 
   attr_accessible :company, :name, :street, :address,
-                  :postcode, :phone, :fax, :email
+                  :postcode, :phone, :phone2, :fax, :email, :website, :customer, :supplier
 
   belongs_to :quote
   belongs_to :integer
@@ -13,6 +13,8 @@ class Contact < ActiveRecord::Base
   has_many :recurring_liabilities
   has_many :payment_plans
 
+  validates_presence_of  :name, :company, :street
+
   def name_long
     outp = []
     outp << self.name if self.name
@@ -20,6 +22,6 @@ class Contact < ActiveRecord::Base
     return (outp.join ', ' || 'No contact name')
   end
 
-  validates_presence_of  :name, :company, :street
-  
+
+ 
 end
