@@ -36,7 +36,7 @@ class InvoicesController < ApplicationController
         flash[:error] = get_error_msgs @invoice
       end
     end
-    @contacts = @current_org.contacts
+    @contacts = @current_org.customers
     ren_cont 'edit', {:invoice => @invoice, :contacts => @contacts} and return
   end
 
@@ -77,7 +77,7 @@ class InvoicesController < ApplicationController
         flash[:error] = get_error_msgs @plan
       end
     end
-    ren_cont 'rec_new', {:plan => @plan, :contacts => @current_org.contacts} and return
+    ren_cont 'rec_new', {:plan => @plan, :contacts => @current_org.customers} and return
   end
 
   def rec_process
