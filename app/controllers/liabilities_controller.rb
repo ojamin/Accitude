@@ -32,7 +32,7 @@ class LiabilitiesController < ApplicationController
         flash[:error] = get_error_msgs @liability
       end
     end
-    @contacts = @current_org.contacts
+    @contacts = @current_org.suppliers
     ren_cont 'edit', {:liability => @liability, :contacts => @contacts} and return
   end
 
