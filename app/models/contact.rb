@@ -21,7 +21,5 @@ class Contact < ActiveRecord::Base
     outp << self.company if self.company
     return (outp.join ', ' || 'No contact name')
   end
-
-
- 
+  
 end

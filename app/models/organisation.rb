@@ -19,4 +19,11 @@ class Organisation < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
 
+  def customers
+    return self.contacts.find_all_by_customer(true)
+  end
+
+  def suppliers
+    return self.contacts.find_all_by_supplier(true)
+  end
 end

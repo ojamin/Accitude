@@ -11,11 +11,10 @@ class Invoice < ActiveRecord::Base
   has_many :recordeds
   has_many :transactions
 
+  validates_presence_of :produced_on
+
   def been_paid?
     return true if paid_on
     return false
   end
-
-  validates_presence_of :produced_on
-
 end
