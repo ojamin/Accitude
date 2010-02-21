@@ -7,7 +7,7 @@
     "£#{p.get_total.to_s}", (p.is_active? ? "Yes" : "No"), p.frequency |
   ] |
 - outp += do_pag(plans)
-= gen_list(outp, :head => ['Customer', 'Value', 'Active', 'Frequency'], :num => 4, |
+= gen_list(outp, :head => ['Customer', 'Value', 'Active', 'Frequency'], :size => 4, |
   2 => {:style => "width: 70px;text-align: right;"}, |
   3 => {:style => "width: 70px;text-align: right;"}, |
   4 => {:style => "width: 90px;text-align: right;"}) |
