@@ -16,7 +16,7 @@
     ['Website', f.text_field(:website)], |
     ['Customer', f.check_box(:customer)], |
     ['Supplier', f.check_box(:supplier)], |
-    [submit_tag(contact.name ? 'Add' : 'Update'), ''] |
+    [submit_tag(contact.id ? 'Update' : 'Add'), ''] |
   ] |
 
 

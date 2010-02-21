@@ -64,7 +64,6 @@ class AdminController < ApplicationController
     @org = Organisation.new(:name => params[:name])
     if @org.save
       flash[:notice] = "Organisationi created!"
-      flash[:error] = "foo"
       render :update do |page|
         gen_flash page
         page.insert_html :bottom, :orgs_list, link_to_remote(@org.name, :url => {:action => :org_view, :controller => :admin, :id => @org.id})

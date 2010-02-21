@@ -1,23 +1,27 @@
 if quote.organisation.image
   img = "#{RAILS_ROOT}/public#{quote.organisation.image.public_filename}"
-  pdf.image img, :at => [-30,750]
+  pdf.image img, :at => [-30,750], :fit => [300,200]
 end
 
 pdf.text "Quotation", :align => :right, :size => 50
 pdf.text quote.organisation.name, :align => :right, :size => 16
 pdf.text quote.organisation.address, :align => :right, :size => 16
-pdf.text <<eof
-
-
+pdf.text " ", :align => :right, :size => 80
+left = <<eof
+#{quote.contact.name_long}
+#{quote.contact.street}
+#{quote.contact.address}
+#{quote.contact.postcode}
 eof
-pdf.text quote.contact.name_long, :size => 14
-pdf.text quote.contact.street, :size => 14
-pdf.text quote.contact.address, :size => 14
-pdf.text quote.contact.postcode, :size => 14
-pdf.text "", :size => 14
-pdf.text "Quotation date: #{quote.produced_on.inspect}", :size => 14
-pdf.text "Valid until: #{quote.produced_on.inspect}", :size => 14
-pdf.text "Our ref: #{quote.id}", :size => 14
+right = <<eof
+Quotation date: #{quote.produced_on.inspect}
+Valid until: #{quote.produced_on.inspect}
+Our ref: #{quote.id}
+eof
+pdf.table [[{:text => left, :align => :left, :size => 14}, {:text => right, :align => :right, :size => 14}]],
+  :width => 550,
+  :border_width => 0
+
 pdf.text <<eof
 
 

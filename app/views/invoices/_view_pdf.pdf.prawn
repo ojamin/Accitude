@@ -1,15 +1,12 @@
 if invoice.organisation.image
   img = "#{RAILS_ROOT}/public#{invoice.organisation.image.public_filename}"
-  pdf.image img, :at => [-30,750]
+  pdf.image img, :at => [-30,750], :fit => [300,200]
 end
 
 pdf.text "Invoice", :align => :right, :size => 50
 pdf.text invoice.organisation.name, :align => :right, :size => 16
 pdf.text invoice.organisation.address, :align => :right, :size => 16
-pdf.text <<eof
-
-
-eof
+pdf.text " ", :align => :right, :size => 80
 left = <<eof
 #{invoice.contact.name_long}
 #{invoice.contact.street}
