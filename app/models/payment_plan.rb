@@ -8,7 +8,15 @@ class PaymentPlan < ActiveRecord::Base
   has_many :items
   
   validates_presence_of :start
-  validates_numericality_of :times, :greater_than_or_equal_to => -1
+  validates_numericality_of :times, :greater_than_or_equal_to => -1, :only_integer => true
+  
+  #protected
+  #  def validate
+  #   if errors.invalid?(:times) == false
+  #      errors.add(:times, "cannot be zero" ) if times == 0
+  #    end
+  #  end
+
 
   FREQS = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly']
 

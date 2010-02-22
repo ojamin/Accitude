@@ -22,7 +22,7 @@
   - outp << [link_to_remote(i.produced_on.inspect, :url => {:action => :view, :id => i.id}), |
     link_to('Get PDF', :action => :view, :id => i.id, :format => :pdf), (i.been_paid? ? 'Yes' : 'No')] |
 
-= gen_list outp, :head => ['Date Produced', 'Paid?'], :size => 2
+= gen_list outp, :head => ['Date Produced', 'PDF','Paid?'], :size => 3
 
 
 
