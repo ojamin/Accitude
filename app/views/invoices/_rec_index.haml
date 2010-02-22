@@ -4,7 +4,7 @@
 - plans.each do |p|
   - outp << [ |
     link_to_remote(p.contact.name_long, :url => {:action => :rec_view, :id => p.id}), |
-    "£#{p.get_total.to_s}", (p.is_active? ? "Yes" : "No"), p.frequency |
+    format_as_currency(p.get_total), (p.is_active? ? "Yes" : "No"), p.frequency |
   ] |
 - outp += do_pag(plans)
 = gen_list(outp, :head => ['Customer', 'Value', 'Active', 'Frequency'], :size => 4, |
