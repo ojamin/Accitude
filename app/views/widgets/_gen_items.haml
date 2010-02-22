@@ -32,7 +32,7 @@
 - outp = []
 - items.each do |i|
   - ids.push i.id
-  - outp << [i.desc, i.value, i.quantity]
+  - outp << [i.desc, format_as_currency(i.value), i.quantity]
 %br
 %br
 - if local_assigns[:title]

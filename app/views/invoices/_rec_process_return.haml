@@ -3,7 +3,7 @@
 - plans.each do |p|
   - outp = []
   - p.process_plan.each do |i|
-    - outp << ["Date: #{i.produced_on.inspect}", "[ #{link_to('Get PDF', :action => :view, :id => i.id, :format => :pdf)} ]"]
-  = gen_list outp, :head => ["For #{p.contact.name_long}", "Total: £#{p.get_total}"]
+    - outp << ["Date: #{i.produced_on.inspect}", link_to('Get PDF', :action => :view, :id => i.id, :format => :pdf) ]
+  = gen_list outp, :head => ["For #{p.contact.name_long}", "Total: #{format_as_currency(p.get_total)}"]
   .clear &nbsp;
 
