@@ -63,7 +63,7 @@ class AdminController < ApplicationController
     enforce_this params[:commit] && params[:name]
     @org = Organisation.new(:name => params[:name])
     if @org.save
-      flash[:notice] = "Organisationi created!"
+      flash[:notice] = "Organisation created!"
       render :update do |page|
         gen_flash page
         page.insert_html :bottom, :orgs_list, link_to_remote(@org.name, :url => {:action => :org_view, :controller => :admin, :id => @org.id})

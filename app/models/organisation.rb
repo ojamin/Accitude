@@ -18,6 +18,8 @@ class Organisation < ActiveRecord::Base
 
   validates_presence_of :name
   validates_uniqueness_of :name
+  #validates_format_of :image_url, :with    => %r{\.(gif|jpg|png)$}i, :message => "must be a URL for a GIF, JPG, or PNG image"
+
 
   def customers
     return self.contacts.find_all_by_customer(true)
