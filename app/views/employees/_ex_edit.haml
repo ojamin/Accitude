@@ -11,6 +11,7 @@
   = gen_list [ |
     ['Claimed on date', f.calendar_date_select(:claimed_on, :popup => :force)], |
     ['Paid on date', f.calendar_date_select(:paid_on, :popup => :force, :valid_date_check => "date > new Date($F('expense_claimed_on')).stripTime()")], |
+    ['Notes', f.text_area(:notes, :size => '31x6')], |
     [submit_tag(expense.id ? 'Update' : 'Add'), ''] |
   ] |
 

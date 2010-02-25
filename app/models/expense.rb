@@ -1,6 +1,6 @@
 class Expense < ActiveRecord::Base
 
-  attr_accessible :claimed_on, :paid_on
+  attr_accessible :claimed_on, :paid_on, :notes
 
   belongs_to :employee
   has_many :transactions
