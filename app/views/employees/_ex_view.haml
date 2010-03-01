@@ -7,7 +7,8 @@
 %br
 = gen_list [ |
   ['Claimed on date', expense.claimed_on.inspect], |
-  ['Paid on date', (expense.paid_on.inspect || 'Not yet paid')] |
+  ['Paid on date', (expense.paid_on.inspect || 'Not yet paid')], |
+  ['Notes', expense.notes] |
 ] |
 
 = gen_items :items => expense.items, :title => 'Items on the expense claim:'
