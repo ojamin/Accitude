@@ -1,12 +1,3 @@
-%style{:type => 'text/css'}
-  :plain
-    .item_main {
-      overflow: hidden;
-    }
-    #item_new {
-      vertical-align: top;
-    }
-
 - ids = []
 - outp = []
 - items.each do |i|
@@ -19,13 +10,12 @@
 - if local_assigns[:allow_new]
   - i = Item.new
   - form_remote_for i, :url => {:controller => :widgets, :action => :item_new_process} do |f|
-    <table id="items_main">
+    <table class="items_main" id="items_main">
     = gen_list outp, :head => (local_assigns[:head] ? head : ['Description', 'Value', 'Quantity']), :sublist => true
     = render :partial => 'widgets/item_new', :locals => {:item_ids => JSON.generate(ids), :colour_id => 1, :first => true}
     </table>
 - else
-  #items_main
-    = gen_list outp, :head => (local_assigns[:head] ? head : ['Description', 'Value', 'Quantity'])
+  = gen_list outp, :head => (local_assigns[:head] ? head : ['Description', 'Value', 'Quantity'])
 
 
 
