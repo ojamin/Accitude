@@ -1,4 +1,4 @@
-%div{:class => "item_wrap list_colour#{colour_id}"}[item]
-  .item_wrap1= item.desc
-  .item_wrap2= item.quantity
-  .item_wrap3= item.value
+%tr{:class => "list_colour#{colour_id}"}[item]
+  %td= item.desc
+  %td= item.quantity
+  %td= item.value

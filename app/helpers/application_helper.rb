@@ -18,22 +18,26 @@ module ApplicationHelper
           "<input type='hidden' name='commit' value='commit' />").html_safe!
   end
 
+  def make_html_safe(inp)
+    if inp.class == String && inp.html_safe? != true
+      inp = h inp
+    elsif inp.class == Array
+      inp.size.times {|i| inp[i] = make_html_safe inp[i]}
+    elsif inp.class == Hash
+      inp.keys.each {|k| inp[k] = make_html_safe inp[k]}
+    end
+    return inp
+  end
+
   # takes [[1,2], [1,2],...]
   def gen_list(items=[], opts={})
-    head = (opts[:head] || nil)
-    num = (opts[:size] || 3)
-    sublist = opts[:sublist] ? true : false
-    opts = (opts[:params] || [])
-    (num - opts.size).times {|i| opts << '' } unless opts.size >= num
-    items.count.times {|c|
-      num.times {|i|
-        if items[c][i] && items[c][i].class == String && items[c][i].scan("\n").length > 0
-          items[c][i] = h(items[c][i]) unless items[c][i].html_safe?
-          items[c][i] = items[c][i].split("\n").join("<br />").html_safe!
-        end
-      }
-    }
-    return render(:partial => 'widgets/gen_list', :locals => {:sublist => sublist, :items => items, :head => head, :num => num, :opts => opts})
+    opts[:size] = (opts[:size] && opts[:size].to_i > 0) ? opts[:size].to_i : 3
+    opts[:size].times {|i| opts[i] = (opts[i] || "") }
+    opts[:head] = opts[:head].class == Array ? opts[:head] : []
+    opts[:sublist] = opts[:sublist] ? (opts[:sublist].class == String ? opts[:sublist] : "list_main_sublist") : false
+    opts = make_html_safe opts
+    items = make_html_safe items
+    return render(:partial => 'widgets/gen_list', :locals => {:sublist => opts[:sublist], :items => items, :head => opts[:head], :num => opts[:size], :opts => opts})
   end
 
   def gen_items(opts={})

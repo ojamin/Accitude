@@ -1,19 +1,21 @@
-- list_main = sublist ? {:class => "list_main_sublist list_main",} : {:class => :list_main}
-%div{list_main}
-  - if head && head.class == Array && head.size == num
-    .list_wrap.list_colour1
-      - num.times do |n|
-        - if n == 0
-          .list_left{opts[n]}= head[n]
-        - else
-          .list_right{opts[n]}= head[n]
-  - colours = [2,3]
-  - items.each do |i|
-    - dopts = {:class => "list_wrap list_colour#{colours[0]}"}.merge(i[num] ? i[num] : {}) {|k,o,n| "#{o} #{n}" }
-    %div{dopts}
-      - num.times do |n|
-        - if n == 0
-          .list_left{opts[n]}= i[n]
-        - else
-          .list_right{opts[n]}= i[n]
-    - colours = colours.reverse
+- list_main = opts[:sublist] ? {:class => "list_main_sublist list_main",} : {:class => :list_main}
+- tbl = render :inline => "%table{list_main}", :type => :haml, :locals => {:list_main => list_main}
+= opts[:sublist] ? "" : "#{tbl.split('>')[0]}>".html_safe!
+- if opts[:head] && opts[:head].class == Array && opts[:head].size == opts[:size]
+  %tr.list_colour1
+    - opts[:size].times do |n|
+      - if n == 0
+        %td{opts[n]}= head[n]
+      - else
+        %td{opts[n]}= head[n]
+- colours = [2,3]
+- items.each do |i|
+  - dopts = {:class => "list_colour#{colours[0]}"}.merge(i[opts[:size]] ? i[opts[:size]] : {}) {|k,o,n| "#{o} #{n}" }
+  %tr{dopts}
+    - opts[:size].times do |n|
+      - if n == 0
+        %td{opts[n]}= i[n]
+      - else
+        %td{opts[n]}= i[n]
+  - colours = colours.reverse
+= opts[:sublist] ? "" : "</table>".html_safe!

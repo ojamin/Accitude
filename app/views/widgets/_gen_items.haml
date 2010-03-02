@@ -3,29 +3,8 @@
     .item_main {
       overflow: hidden;
     }
-    .item_wrap {
-      position: relative;
-      float: left;
-      clear: both;
-      width: 550px;
-    }
-    .item_wrap1 {
-      position: relative;
-      float: left;
-      width: 390px;
-      text-align: left;
-    }
-    .item_wrap2 {
-      position: relative;
-      float: left;
-      width: 75px;
-      text-align: right;
-    }
-    .item_wrap3 {
-      position: relative;
-      float: left;
-      width: 80px;
-      text-align: right;
+    #item_new {
+      vertical-align: top;
     }
 
 - ids = []
@@ -37,7 +16,16 @@
 %br
 - if local_assigns[:title]
   %h4= title
-#items_main
-  = gen_list outp, :head => (local_assigns[:head] ? head : ['Description', 'Value', 'Quantity'])
-  - if local_assigns[:allow_new]
-    = render :partial => 'widgets/item_new', :locals => {:item_ids => JSON.generate(ids), :colour_id => 1}
+- if local_assigns[:allow_new]
+  - i = Item.new
+  - form_remote_for i, :url => {:controller => :widgets, :action => :item_new_process} do |f|
+    <table id="items_main">
+    = gen_list outp, :head => (local_assigns[:head] ? head : ['Description', 'Value', 'Quantity']), :sublist => true
+    = render :partial => 'widgets/item_new', :locals => {:item_ids => JSON.generate(ids), :colour_id => 1, :first => true}
+    </table>
+- else
+  #items_main
+    = gen_list outp, :head => (local_assigns[:head] ? head : ['Description', 'Value', 'Quantity'])
+
+
+
