@@ -1,0 +1,4 @@
+- type = obj.class.to_s.downcase + "s"
+- form_remote_for obj, :url => {:action => :view, :id => obj.id, :controller => type} do |f|
+  = calendar_date_select_tag(:paid_on, nil, :popup => :force, :valid_date_check => "date > new Date('#{obj.produced_on}').stripTime()")
+  = f.submit "Pay"
