@@ -6,6 +6,7 @@
   - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), |
     i.produced_on.inspect] |
 - outp += do_pag(invoices)
-= gen_list outp, :head => ['Client', 'Produced On']
 - if invoices.size == 0
   Sorry, no results.
+- else
+  = gen_list outp, :head => ['Client', 'Produced On']
