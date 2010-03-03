@@ -1,8 +1,8 @@
 class AddTypeToInvoice < ActiveRecord::Migration
   def self.up
     add_column :invoices, :type, :string
-    inv = Invoices.find :all
-    inv.each {|i|
+    Invoice.reset_column_information
+    Invoice.find(:all).each {|i|
       i[:type] = "Invoice"
       i.save
     }
