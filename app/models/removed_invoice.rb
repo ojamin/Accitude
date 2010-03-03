@@ -1,0 +1,2 @@
+class RemovedInvoice < AllInvoice
+end
