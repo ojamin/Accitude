@@ -4,7 +4,7 @@ class Organisation < ActiveRecord::Base
                   :phone, :footer, :website
 
   has_and_belongs_to_many :users
-  has_many :invoices, :class_name => "AllInvoice"
+  has_many :invoices
   has_many :quotes
   has_many :costs
   has_many :wages

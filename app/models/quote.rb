@@ -5,7 +5,7 @@ class Quote < ActiveRecord::Base
   belongs_to :contact
   belongs_to :organisation
   has_many :items
-  has_many :invoices, :class_name => "AllInvoice"
+  has_many :invoices
 
   validates_presence_of :produced_on
 

@@ -6,7 +6,7 @@ class Contact < ActiveRecord::Base
   belongs_to :organisation
   has_many :costs
   has_many :quotes
-  has_many :invoices, :class_name => "AllInvoice"
+  has_many :invoices
   has_many :transactions
   has_many :recurring_liabilities
   has_many :payment_plans

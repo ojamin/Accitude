@@ -4,7 +4,7 @@ class PaymentPlan < ActiveRecord::Base
 
   belongs_to :contact
   belongs_to :organisation
-  has_many :invoices, :class_name => "AllInvoice"
+  has_many :invoices
   has_many :items
   
   validates_presence_of :start
