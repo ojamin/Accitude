@@ -1,11 +1,12 @@
 %h2 Your Previous Invoices
 %br
 - outp = []
-
-- invoices.each do |i|
-  - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), |
+- form_remote_tag :url => {:action => :index, :controller => :invoices} do
+  - outp << [select_tag(:filter, options_for_select([["All", "All"], ["Processed", "Processed"], ["Unprocessed", "Unprocessed"]])), submit_tag('Filter')]
+  - invoices.each do |i|
+    - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), |
     i.produced_on.inspect] |
-- outp += do_pag(invoices)
-= gen_list outp, :head => ['Client', 'Produced On']
-- if invoices.size == 0
-  Sorry, no results.
+  - outp += do_pag(invoices)
+  = gen_list outp, :head => ['Client', 'Produced On']
+  - if invoices.size == 0
+    Sorry, no results.

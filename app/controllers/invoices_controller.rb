@@ -13,7 +13,13 @@ class InvoicesController < ApplicationController
 
   public
   def index
-    @invoices = @current_org.invoices.paginate :page => (params[:page] || '1')
+    if params[:filter] == 'Processed'
+      @invoices = @current_org.invoices.find_all_by_processed(true).paginate :page => (params[:page] || '1')
+    elsif params[:filter] == 'Unprocessed'
+      @invoices = @current_org.invoices.find_all_by_processed(false).paginate :page => (params[:page] || '1')
+    else
+      @invoices = @current_org.invoices.paginate :page => (params[:page] || '1')
+    end
     ren_cont 'index', {:invoices => @invoices} and return
   end
 
