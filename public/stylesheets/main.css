@@ -120,7 +120,7 @@ form br { clear: left; }
 .list_main {
   overflow: hidden;
   position: relative;
-  width: 500px;
+  width: 650px;
   margin-top: 20px;
 }
 .list_main select {
@@ -130,24 +130,16 @@ form br { clear: left; }
   margin-top: 0px;
   position: inline;
 }
-.list_left {
-  position: relative;
-  float: left;
+.items_main {
+  width: 650px;
 }
-.list_right {
-  position: relative;
-  float: right;
-  margin-left: 10px;
+#item_new {
+  vertical-align: top;
 }
 .clear {
   position: relative;
   float: left;
   clear: both;
-}
-.list_wrap {
-  position: relative;
-  float: left;
-  width: 100%;
 }
 .list_colour1 {
   background-color: #e7e7e7;

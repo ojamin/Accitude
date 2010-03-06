@@ -1,5 +1,5 @@
 %h2 Your Previous Quotes:
-%br
+%br/
 - outp = []
 - quotes.each do |q|
   - outp << [ |
@@ -7,6 +7,7 @@
     q.produced_on.inspect |
   ] |
 - outp += do_pag(quotes)
-= gen_list outp, :head => ['Client', 'Produced On']
 - if quotes.size == 0
   Sorry, no results.
+- else
+  = gen_list outp, :head => ['Client', 'Produced On']

@@ -4,6 +4,7 @@
 - accounts.each do |a|
   - outp << [(link_to_remote(a.name, :url => {:action => :view, :id => a.id})).html_safe!, "#{a.account} - #{a.sortcode}"]
 - outp += do_pag(accounts)
-= gen_list outp, {:head => ['Bank', 'Account # - Sortcode']}
 - if accounts.size == 0
   Sorry, no results.
+- else
+  = gen_list outp, {:head => ['Bank', 'Account # - Sortcode']}

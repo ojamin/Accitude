@@ -3,6 +3,7 @@
 - employees.each do |e|
   - outp << [link_to_remote(e.name, :url => {:action => :view, :id => e.id, :controller => :employees})]
 - outp += do_pag(employees)
-= gen_list outp, :size => 1
 - if employees.size == 0
   Sorry, no results.
+- else
+  = gen_list outp, :size => 1

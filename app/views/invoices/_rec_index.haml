@@ -7,10 +7,11 @@
     format_as_currency(p.get_total), (p.is_active? ? "Yes" : "No"), p.frequency |
   ] |
 - outp += do_pag(plans)
-= gen_list(outp, :head => ['Customer', 'Value', 'Active', 'Frequency'], :size => 4, |
-  2 => {:style => "width: 70px;text-align: right;"}, |
-  3 => {:style => "width: 70px;text-align: right;"}, |
-  4 => {:style => "width: 90px;text-align: right;"}) |
-
 - if plans.size == 0
   Sorry, no results.
+- else
+  = gen_list(outp, :head => ['Customer', 'Value', 'Active', 'Frequency'], :size => 4, |
+    2 => {:style => "width: 70px;text-align: right;"}, |
+    3 => {:style => "width: 70px;text-align: right;"}, |
+    4 => {:style => "width: 90px;text-align: right;"}) |
+

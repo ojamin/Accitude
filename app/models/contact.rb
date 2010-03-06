@@ -3,8 +3,6 @@ class Contact < ActiveRecord::Base
   attr_accessible :company, :name, :street, :address,
                   :postcode, :phone, :phone2, :fax, :email, :website, :customer, :supplier
 
-  belongs_to :quote
-  belongs_to :integer
   belongs_to :organisation
   has_many :costs
   has_many :quotes

@@ -4,18 +4,18 @@ if quote.organisation.image
 end
 
 pdf.text "Quotation", :align => :right, :size => 50
-pdf.text quote.organisation.name, :align => :right, :size => 16
-pdf.text quote.organisation.address, :align => :right, :size => 16
+pdf.text quote.organisation.name.to_s, :align => :right, :size => 16
+pdf.text quote.organisation.address.to_s, :align => :right, :size => 16
 pdf.text " ", :align => :right, :size => 80
 left = <<eof
-#{quote.contact.name_long}
-#{quote.contact.street}
-#{quote.contact.address}
-#{quote.contact.postcode}
+#{quote.contact.name_long.to_s}
+#{quote.contact.street.to_s}
+#{quote.contact.address.to_s}
+#{quote.contact.postcodev}
 eof
 right = <<eof
-Quotation date: #{quote.produced_on.inspect}
-Valid until: #{quote.produced_on.inspect}
+Quotation date: #{quote.produced_on.to_s}
+Valid until: #{quote.produced_on.to_s}
 Our ref: #{quote.id}
 eof
 pdf.table [[{:text => left, :align => :left, :size => 14}, {:text => right, :align => :right, :size => 14}]],
@@ -48,9 +48,9 @@ pdf.text <<eof
 
 eof
 pdf.text "If you would like to go ahead with this quote, please contact us:", :size => 14
-pdf.text "  Email: #{quote.organisation.email}" if quote.organisation.email
-pdf.text "  Phone: #{quote.organisation.phone}" if quote.organisation.phone
-pdf.text "  Website: #{quote.organisation.website}" if quote.organisation.website
+pdf.text "  Email: #{quote.organisation.email.to_s}" if quote.organisation.email
+pdf.text "  Phone: #{quote.organisation.phone.to_s}" if quote.organisation.phone
+pdf.text "  Website: #{quote.organisation.website.to_s}" if quote.organisation.website
 pdf.text <<eof
 
 

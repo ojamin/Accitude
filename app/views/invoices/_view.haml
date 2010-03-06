@@ -3,8 +3,11 @@
 = link_to 'Get PDF', :controller => :invoices, :action => :view, :id => invoice.id, :format => :pdf
 \-
 Send as email
-\-
-= link_to_remote :Edit, :url => {:action => :edit, :id => invoice.id, :controller => :invoices}
+- unless invoice.paid_on
+  \-
+  = link_to_remote :Edit, :url => {:action => :edit, :id => invoice.id, :controller => :invoices}
+  \-
+  = link_to_remote :Remove, :url => {:action => :remove, :id => invoice.id, :controller => :invoices}
 - if invoice.payment_plan
   \-
   = link_to_remote "Payment Plan", :url => {:action => :rec_view, :controller => :invoices, :id => invoice.payment_plan_id}
@@ -14,7 +17,8 @@ Send as email
 %br
 = gen_list [ |
   ["Produced on", invoice.produced_on.inspect], |
-  ["Due on", invoice.due_on.inspect] |
+  ["Due on", invoice.due_on.inspect], |
+  [(invoice.paid_on ? "Paid on" : "Set paid on date"), (invoice.paid_on ? invoice.paid_on.inspect : render(:partial => "widgets/paid_on_select", :locals => {:obj => invoice}))] |
 ] |
 
 = gen_items :title => "Items attached to the invoice:", :items => invoice.items

@@ -4,18 +4,18 @@ if invoice.organisation.image
 end
 
 pdf.text "Invoice", :align => :right, :size => 50
-pdf.text invoice.organisation.name, :align => :right, :size => 16
-pdf.text invoice.organisation.address, :align => :right, :size => 16
+pdf.text invoice.organisation.name.to_s, :align => :right, :size => 16
+pdf.text invoice.organisation.address.to_s, :align => :right, :size => 16
 pdf.text " ", :align => :right, :size => 80
 left = <<eof
-#{invoice.contact.name_long}
-#{invoice.contact.street}
-#{invoice.contact.address}
-#{invoice.contact.postcode}
+#{invoice.contact.name_long.to_s}
+#{invoice.contact.street.to_s}
+#{invoice.contact.address.to_s}
+#{invoice.contact.postcode.to_s}
 eof
 right = <<eof
-Invoice date: #{invoice.produced_on.inspect}
-Payment due by: #{invoice.due_on.inspect}
+Invoice date: #{invoice.produced_on.to_s}
+Payment due by: #{invoice.due_on.to_s}
 Our ref: #{invoice.id}
 eof
 pdf.table [[{:text => left, :align => :left, :size => 14}, {:text => right, :align => :right, :size => 14}]],
@@ -48,9 +48,9 @@ pdf.text <<eof
 
 eof
 pdf.text "If you have any queries re this invoice, please contact us:", :size => 14
-pdf.text "  Email: #{invoice.organisation.email}" if invoice.organisation.email
-pdf.text "  Phone: #{invoice.organisation.phone}" if invoice.organisation.phone
-pdf.text "  Website: #{invoice.organisation.website}" if invoice.organisation.website
+pdf.text "  Email: #{invoice.organisation.email.to_s}" if invoice.organisation.email
+pdf.text "  Phone: #{invoice.organisation.phone.to_s}" if invoice.organisation.phone
+pdf.text "  Website: #{invoice.organisation.website.to_s}" if invoice.organisation.website
 pdf.text <<eof
 
 
@@ -61,5 +61,5 @@ All invoices are bound by our standard terms and conditions which are available 
 
 eof
 pdf.text tmp, :size => 10, :align => :center
-pdf.text invoice.organisation.footer, :size => 10, :align => :center
+pdf.text invoice.organisation.footer.to_s, :size => 10, :align => :center
 

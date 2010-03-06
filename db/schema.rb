@@ -9,7 +9,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100225073822) do
+ActiveRecord::Schema.define(:version => 20100304150914) do
+
+  create_table "all_invoices", :force => true do |t|
+    t.date     "produced_on"
+    t.date     "due_on"
+    t.date     "paid_on"
+    t.string   "paid_method"
+    t.integer  "quote_id"
+    t.integer  "payment_plan_id"
+    t.integer  "contact_id"
+    t.integer  "organisation_id"
+    t.boolean  "processed",       :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
+  end
 
   create_table "bank_accounts", :force => true do |t|
     t.integer  "organisation_id"
@@ -62,7 +77,7 @@ ActiveRecord::Schema.define(:version => 20100225073822) do
     t.date     "paid_on"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "notes"
+    t.text     "notes"
   end
 
   create_table "images", :force => true do |t|
@@ -74,20 +89,6 @@ ActiveRecord::Schema.define(:version => 20100225073822) do
     t.integer  "parent_id"
     t.string   "thumbnail"
     t.integer  "organisation_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "invoices", :force => true do |t|
-    t.date     "produced_on"
-    t.date     "due_on"
-    t.date     "paid_on"
-    t.string   "paid_method"
-    t.integer  "quote_id"
-    t.integer  "payment_plan_id"
-    t.integer  "contact_id"
-    t.integer  "organisation_id"
-    t.boolean  "processed"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
