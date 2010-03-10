@@ -13,18 +13,40 @@ class InvoicesController < ApplicationController
 
   public
   def index
-    if params[:filter] == 'Processed'
-      @invoices = @current_org.invoices.find_all_by_processed(true).paginate :page => (params[:page] || '1')
-    elsif params[:filter] == 'Unprocessed'
-      @invoices = @current_org.invoices.find_all_by_processed(false).paginate :page => (params[:page] || '1')
-    elsif params[:filter] == 'Before'
-      @invoices = @current_org.invoices.find(:all, :conditions => ["produced_on < ?", Time.parse(params[:date])]).paginate :page => (params[:page] || '1')
-    elsif params[:filter] == 'After'
-      @invoices = @current_org.invoices.find(:all, :conditions => ["produced_on > ?", Time.parse(params[:date])]).paginate :page => (params[:page] || '1')
+    conditions = []
+    conditionvalues = []
+    if params[:before]
+      conditions << "produced_on < ?"
+      conditionvalues << Time.parse(params[:before])
+      @before = params[:before]
+    else
+      @before = Time.now
+    end
+    if params[:after]
+      conditions << "produced_on > ?"
+      conditionvalues << Time.parse(params[:after])
+      @after = params[:after]
+    else
+      @after = 1.year.ago
+    end
+    if params[:procstate] == "Processed"
+      conditions << "processed = ?"
+      conditionvalues << TRUE
+      @procstate = "Processed"
+    elsif params[:procstate] == "Unprocessed"
+      conditions << "processed = ?"
+      conditionvalues << FALSE
+      @procstate = "Unprocessed"
+    else
+      @procstate = "All"
+    end
+    if conditions.length != 0
+      @invoices = @current_org.invoices.find(:all, :conditions => [conditions.join(' and '), *conditionvalues]).paginate :page => (params[:page] || '1')
     else
       @invoices = @current_org.invoices.paginate :page => (params[:page] || '1')
     end
-    ren_cont 'index', {:invoices => @invoices} and return
+    @contacts = @current_org.customers
+    ren_cont 'index', {:invoices => @invoices, :contacts => @contacts, :before => @before, :after => @after, :procstate => @procstate} and return
   end
 
   def new

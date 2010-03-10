@@ -3,8 +3,12 @@
 - outp = []
 
 =form_remote_tag :url => {:action => :index, :controller => :invoices} do
-  = select_tag(:filter, options_for_select([["All"], ["Processed"], ["Unprocessed"], ["Before"], ["After"]]))
-  = calendar_date_select_tag(:date)
+  = select_tag(:contact, options_from_collection_for_select(contacts, 'id', 'name_long'))
+  After:
+  = calendar_date_select_tag(:after, after)
+  Until:
+  = calendar_date_select_tag(:before, before)
+  = select_tag(:procstate, options_for_select([["All"], ["Processed"], ["Unprocessed"]], procstate))
   = submit_tag('Filter')
 - invoices.each do |i|
   - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), |
