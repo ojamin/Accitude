@@ -15,38 +15,55 @@ class InvoicesController < ApplicationController
   def index
     conditions = []
     conditionvalues = []
+
+    #get values if present in the params, or set defaults
+    if params[:contact] != -1 && @current_org.contacts.find_by_id(params[:contact].to_s)
+      @contact = params[:contact].to_s
+    else
+      @contact = -1
+    end
     if params[:before]
-      conditions << "produced_on < ?"
-      conditionvalues << Time.parse(params[:before])
-      @before = params[:before]
+      @before = Time.parse(params[:before])
     else
       @before = Time.now
     end
     if params[:after]
-      conditions << "produced_on > ?"
-      conditionvalues << Time.parse(params[:after])
-      @after = params[:after]
+      @after = Time.parse(params[:after])
     else
       @after = 1.year.ago
     end
     if params[:procstate] == "Processed"
-      conditions << "processed = ?"
-      conditionvalues << TRUE
       @procstate = "Processed"
     elsif params[:procstate] == "Unprocessed"
-      conditions << "processed = ?"
-      conditionvalues << FALSE
       @procstate = "Unprocessed"
     else
       @procstate = "All"
     end
+
+    #setup the conditions
+    if @contact != -1
+      conditions << "contact_id = ?"
+      conditionvalues << @contact
+    end
+    conditions << "produced_on < ?"
+    conditionvalues << @before
+    conditions << "produced_on > ?"
+    conditionvalues << @after
+    if @procstate == "Processed"
+      conditions << "processed = ?"
+      conditionvalues << TRUE
+    elsif @procstate == "Unprocessed"
+      conditions << "processed = ?"
+      conditionvalues << FALSE
+    end
+
     if conditions.length != 0
       @invoices = @current_org.invoices.find(:all, :conditions => [conditions.join(' and '), *conditionvalues]).paginate :page => (params[:page] || '1')
     else
       @invoices = @current_org.invoices.paginate :page => (params[:page] || '1')
     end
     @contacts = @current_org.customers
-    ren_cont 'index', {:invoices => @invoices, :contacts => @contacts, :before => @before, :after => @after, :procstate => @procstate} and return
+    ren_cont 'index', {:invoices => @invoices, :contacts => @contacts, :contact => @contact, :before => @before, :after => @after, :procstate => @procstate} and return
   end
 
   def new

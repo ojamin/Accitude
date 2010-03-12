@@ -1,15 +1,17 @@
 %h2 Your Previous Invoices
 %br
-- outp = []
 
-=form_remote_tag :url => {:action => :index, :controller => :invoices} do
-  = select_tag(:contact, options_from_collection_for_select(contacts, 'id', 'name_long'))
-  After:
-  = calendar_date_select_tag(:after, after)
-  Until:
-  = calendar_date_select_tag(:before, before)
-  = select_tag(:procstate, options_for_select([["All"], ["Processed"], ["Unprocessed"]], procstate))
-  = submit_tag('Filter')
+
+= form_remote_tag :url => {:action => :index, :controller => :invoices} do
+  - outp = []
+  - outp << [select_tag(:contact, "<option value=-1>All</option>" + options_from_collection_for_select(contacts, 'id', 'name_long', contact.to_i)), |
+    calendar_date_select_tag(:after, after, :popup => :force, :valid_date_check => "date < new Date($F('before')).stripTime()"), |
+    calendar_date_select_tag(:before, before, :popup => :force, :valid_date_check => "date > new Date($F('after')).stripTime()"), |
+    select_tag(:procstate, options_for_select([["All"], ["Processed"], ["Unprocessed"]], procstate)), |
+    submit_tag('Filter')] |
+  = gen_list outp, :head => ['Customer', 'Produced After', 'Produced Before', 'Type', ''], :size => 5
+
+- outp = []
 - invoices.each do |i|
   - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), |
   i.produced_on.inspect] |
