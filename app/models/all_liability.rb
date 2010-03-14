@@ -1,4 +1,4 @@
-class Liability < AllLiability 
+class AllLiability < ActiveRecord::Base
 
   attr_accessible :incurred_on, :paid_on, :description,
                   :receipt_id, :processed, :value

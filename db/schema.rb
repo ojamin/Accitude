@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100304150914) do
+ActiveRecord::Schema.define(:version => 20100314224355) do
 
   create_table "all_invoices", :force => true do |t|
     t.date     "produced_on"
@@ -23,6 +23,20 @@ ActiveRecord::Schema.define(:version => 20100304150914) do
     t.boolean  "processed",       :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
+  end
+
+  create_table "all_liabilities", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "organisation_id"
+    t.date     "incurred_on"
+    t.date     "paid_on"
+    t.text     "description"
+    t.string   "receipt_id"
+    t.boolean  "processed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "value",           :precision => 10, :scale => 2
     t.string   "type"
   end
 
@@ -103,19 +117,6 @@ ActiveRecord::Schema.define(:version => 20100304150914) do
     t.float    "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "liabilities", :force => true do |t|
-    t.integer  "contact_id"
-    t.integer  "organisation_id"
-    t.date     "incurred_on"
-    t.date     "paid_on"
-    t.text     "description"
-    t.string   "receipt_id"
-    t.boolean  "processed"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.decimal  "value",           :precision => 10, :scale => 2
   end
 
   create_table "organisations", :force => true do |t|
