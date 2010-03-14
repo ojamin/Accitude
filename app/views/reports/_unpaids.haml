@@ -1,0 +1,40 @@
+%h2 Items currently unpaid
+%br
+
+
+- form_remote_tag :url => {:action => :index, :controller => :invoices} do
+  - outp = []
+  - # outp << ['Produced Before', calendar_date_select_tag(:before, before, :popup => :force, :valid_date_check => "date < new Date($F('before')).stripTime()")]
+  - # outp << ['Produced After', calendar_date_select_tag(:after, after, :popup => :force, :valid_date_check => "date > new Date($F('after')).stripTime()")]
+  - outp << [submit_tag('Filter'), '']
+  - gen_list outp, :size => 2
+
+%br
+%h3 Invoices
+- outp = []
+- tot_val = 0
+- invoices.each do |i|
+  - outp << [link_to_remote(i.contact.name_long, :url => {:controller => :invoices, :action => :view, :id => i.id}), |
+    format_as_currency(i.total_value), |
+    i.produced_on.inspect] |
+  - tot_val += i.total_value
+- if invoices.size == 0
+  Sorry, no results.
+- else
+  - outp << ["Total", format_as_currency(tot_val), ""]
+  = gen_list outp, :head => ['Client', 'Value', 'Produced On'], :size => 3
+
+%br
+%h3 Liabilities
+- outp = []
+- tot_val = 0
+- liabilities.each do |l|
+  - outp << [link_to_remote(l.contact.name_long, :url => {:controller => :liabilities, :action => :view, :id => l.id}), |
+    format_as_currency(l.value), |
+    l.incurred_on.inspect] |
+  - tot_val += l.value
+- if invoices.size == 0
+  Sorry, no results.
+- else
+  - outp << ["Total", format_as_currency(tot_val), ""]
+  = gen_list outp, :head => ['Supplier', 'Value', 'Incurred On'], :size => 3
