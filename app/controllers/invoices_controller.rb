@@ -22,23 +22,9 @@ class InvoicesController < ApplicationController
     else
       @contact = -1
     end
-    if params[:before]
-      @before = Time.parse(params[:before])
-    else
-      @before = Time.now
-    end
-    if params[:after]
-      @after = Time.parse(params[:after])
-    else
-      @after = 1.year.ago
-    end
-    if params[:procstate] == "Processed"
-      @procstate = "Processed"
-    elsif params[:procstate] == "Unprocessed"
-      @procstate = "Unprocessed"
-    else
-      @procstate = "All"
-    end
+    @before = params[:before] ? Time.parse(params[:before]) : Time.now
+    @after = params[:after] ? Time.parse(params[:after]) : 1.year.ago
+    @procstate = (params[:procstate] == "Processed") ? "Processed" : ((params[:procstate] == "Unprocessed") ? "Unprocessed" : "All")
 
     #setup the conditions
     if @contact != -1

@@ -2,14 +2,16 @@
 %br
 
 
-= form_remote_tag :url => {:action => :index, :controller => :invoices} do
+- form_remote_tag :url => {:action => :index, :controller => :invoices} do
   - outp = []
-  - outp << [select_tag(:contact, "<option value=-1>All</option>" + options_from_collection_for_select(contacts, 'id', 'name_long', contact.to_i)), |
-    calendar_date_select_tag(:after, after, :popup => :force, :valid_date_check => "date < new Date($F('before')).stripTime()"), |
-    calendar_date_select_tag(:before, before, :popup => :force, :valid_date_check => "date > new Date($F('after')).stripTime()"), |
-    select_tag(:procstate, options_for_select([["All"], ["Processed"], ["Unprocessed"]], procstate)), |
-    submit_tag('Filter')] |
-  = gen_list outp, :head => ['Customer', 'Produced After', 'Produced Before', 'Type', ''], :size => 5
+  - outp << ['Client', select_tag(:contact, "<option value=-1>All</option>" + options_from_collection_for_select(contacts, 'id', 'name_long', contact.to_i))]
+  - outp << ['Produced Before', calendar_date_select_tag(:before, before, :popup => :force, :valid_date_check => "date < new Date($F('before')).stripTime()")]
+  - outp << ['Produced After', calendar_date_select_tag(:after, after, :popup => :force, :valid_date_check => "date > new Date($F('after')).stripTime()")]
+  - outp << ['Type', select_tag(:procstate, options_for_select([["All"], ["Processed"], ["Unprocessed"]], procstate))]
+  - outp << [submit_tag('Filter'), '']
+  = gen_list outp, :size => 2
+
+%br
 
 - outp = []
 - invoices.each do |i|

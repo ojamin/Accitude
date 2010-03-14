@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(:version => 20100304150914) do
     t.integer  "invoice_id"
     t.integer  "expense_id"
     t.string   "desc"
-    t.decimal  "value"
+    t.decimal  "value",           :precision => 10, :scale => 2
     t.float    "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(:version => 20100304150914) do
     t.boolean  "processed"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "value"
+    t.decimal  "value",           :precision => 10, :scale => 2
   end
 
   create_table "organisations", :force => true do |t|
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(:version => 20100304150914) do
     t.date     "posted_on"
     t.string   "type"
     t.string   "desc"
-    t.decimal  "value"
+    t.decimal  "value",           :precision => 10, :scale => 2
     t.string   "kind"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -211,13 +211,13 @@ ActiveRecord::Schema.define(:version => 20100304150914) do
 
   create_table "wage_payments", :force => true do |t|
     t.integer  "wage_id"
-    t.decimal  "for_employee"
-    t.decimal  "for_income_tax"
-    t.decimal  "for_ni"
-    t.decimal  "for_other"
+    t.decimal  "for_employee",   :precision => 10, :scale => 2
+    t.decimal  "for_income_tax", :precision => 10, :scale => 2
+    t.decimal  "for_ni",         :precision => 10, :scale => 2
+    t.decimal  "for_other",      :precision => 10, :scale => 2
     t.string   "for_other_desc"
-    t.decimal  "total"
-    t.decimal  "hours"
+    t.decimal  "total",          :precision => 10, :scale => 2
+    t.decimal  "hours",          :precision => 10, :scale => 2
     t.date     "period_start"
     t.date     "period_end"
     t.date     "paid_on"
@@ -229,13 +229,13 @@ ActiveRecord::Schema.define(:version => 20100304150914) do
   create_table "wages", :force => true do |t|
     t.integer  "employee_id"
     t.integer  "organisation_id"
-    t.decimal  "hourly_rate"
-    t.decimal  "weekly_hours"
+    t.decimal  "hourly_rate",          :precision => 10, :scale => 2
+    t.decimal  "weekly_hours",         :precision => 10, :scale => 2
     t.string   "state"
     t.date     "start"
     t.date     "end"
     t.string   "tax_code"
-    t.decimal  "other_deduction"
+    t.decimal  "other_deduction",      :precision => 10, :scale => 2
     t.string   "other_deduction_desc"
     t.datetime "created_at"
     t.datetime "updated_at"
