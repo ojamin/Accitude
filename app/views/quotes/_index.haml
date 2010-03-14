@@ -4,10 +4,11 @@
 - quotes.each do |q|
   - outp << [ |
     link_to_remote(q.contact.name_long, :url => {:action => :view, :id => q.id, :controller => :quotes}), |
+    q.format_as_currency(i.total_value), |
     q.produced_on.inspect |
   ] |
-- outp += do_pag(quotes)
+- # outp += do_pag(quotes)
 - if quotes.size == 0
   Sorry, no results.
 - else
-  = gen_list outp, :head => ['Client', 'Produced On'], :size => 2
+  = gen_list outp, :head => ['Client', 'Value', 'Produced On'], :size => 3

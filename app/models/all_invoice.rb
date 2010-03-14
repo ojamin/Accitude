@@ -17,4 +17,13 @@ class AllInvoice < ActiveRecord::Base
     return true if paid_on
     return false
   end
+
+  def total_value
+    val = 0
+    self.items.each do |i|
+      val += i.value if i.value
+    end
+    return val
+  end
+
 end

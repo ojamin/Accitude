@@ -16,9 +16,11 @@
 - outp = []
 - invoices.each do |i|
   - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), |
-  i.produced_on.inspect] |
-- outp += do_pag(invoices)
+    format_as_currency(i.total_value), |
+    i.been_paid?.to_s, |
+    i.produced_on.inspect] |
+- # outp += do_pag(invoices)
 - if invoices.size == 0
   Sorry, no results.
 - else
-  = gen_list outp, :head => ['Client', 'Produced On'], :size => 2
+  = gen_list outp, :head => ['Client', 'Value', 'Paid?', 'Produced On'], :size => 4
