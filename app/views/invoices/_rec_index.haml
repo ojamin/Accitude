@@ -6,7 +6,7 @@
     link_to_remote(p.contact.name_long, :url => {:action => :rec_view, :id => p.id}), |
     format_as_currency(p.get_total), (p.is_active? ? "Yes" : "No"), p.frequency |
   ] |
-- outp += do_pag(plans)
+- outp << [do_pag(plans), "", "", ""]
 - if plans.size == 0
   Sorry, no results.
 - else

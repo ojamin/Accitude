@@ -1,6 +1,6 @@
 module ApplicationHelper
   def do_pag(coll, remote = {})
-    return [["&nbsp;".html_safe!], [will_paginate(coll, :remote => remote)]]
+    return will_paginate(coll, :remote => remote)
   end
   
   def link_to_remote(name, options = {}, html_options = nil)

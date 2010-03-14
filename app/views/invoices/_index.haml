@@ -19,7 +19,7 @@
     format_as_currency(i.total_value), |
     i.been_paid?.to_s, |
     i.produced_on.inspect] |
-- # outp += do_pag(invoices)
+- outp << [do_pag(invoices), "", "", ""]
 - if invoices.size == 0
   Sorry, no results.
 - else

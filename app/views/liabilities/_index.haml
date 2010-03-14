@@ -3,7 +3,7 @@
 - outp = []
 - liabilities.each do |i|
   - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), i.incurred_on.inspect]
-- outp += do_pag(liabilities)
+- outp << [do_pag(liabilities), ""]
 - if liabilities.size == 0
   Sorry, no results.
 - else

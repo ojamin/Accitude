@@ -5,8 +5,8 @@
     link_to(o.name, :controller => :organisations, :action => :set_org, :id => o.id), |
     "[ #{link_to_remote(:edit, :url => {:action => :edit, :id => o.id})} ]".html_safe! |
   ] |
-- outp += do_pag(orgs)
+- outp << [do_pag(orgs), ""]
 - if orgs.size == 0
   Sorry, no results.
 - else
-  = gen_list outp
+  = gen_list outp, :size => 2

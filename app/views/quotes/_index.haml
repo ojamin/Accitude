@@ -7,7 +7,7 @@
     q.format_as_currency(i.total_value), |
     q.produced_on.inspect |
   ] |
-- # outp += do_pag(quotes)
+- outp << [do_pag(quotes), "", ""]
 - if quotes.size == 0
   Sorry, no results.
 - else

@@ -3,7 +3,7 @@
 - outp = []
 - accounts.each do |a|
   - outp << [(link_to_remote(a.name, :url => {:action => :view, :id => a.id})).html_safe!, "#{a.account}", "#{a.sortcode}"]
-- outp += do_pag(accounts)
+- outp << [do_pag(accounts), "", ""]
 - if accounts.size == 0
   Sorry, no results.
 - else
