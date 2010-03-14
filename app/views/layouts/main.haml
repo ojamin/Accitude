@@ -27,13 +27,18 @@
       #ly_b
         %ul#mnu_nav
           - if @logged_in && @current_org
-            %li#nav_marker
+            - # %li#nav_marker
             %li.section.first Finance In
             %li= link_to_remote(:Quotes, :url => {:controller => :quotes})
             %li= link_to_remote(:Invoices, :url => {:controller => :invoices})
             %li.section Finance Out
             %li= link_to_remote(:Liabilities, :url => {:controller => :liabilities})
             %li= link_to_remote(:Employees, :url => {:controller => :employees})
+            %li.section Reports
+            %li= link_to_remote("Unpaid", :url => {:controller => :reports, :action => :unpaids}) # in/out/unpaids
+            %li= link_to_remote("Businesses", :url => {:controller => :reports, :action => :businesses}) # paid in/unpaid in/paid out/unpaid out/wages/
+            %li= link_to_remote("Employees", :url => {:controller => :reports, :action => :employees}) # breakdown per employee of wages and expenses
+            %li= link_to_remote("Clients", :url => {:controller => :reports, :action => :clients}) # breakdown per client
             %li.section Your Company
             %li= link_to_remote(:Contacts, :url => {:controller => :contacts})
             %li= link_to_remote('Bank Accounts', :url => {:controller => :banks})
