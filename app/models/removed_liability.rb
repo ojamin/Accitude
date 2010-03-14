@@ -1,0 +1,2 @@
+class RemovedLiability < AllLiability
+end

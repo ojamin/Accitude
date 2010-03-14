@@ -90,7 +90,7 @@ class InvoicesController < ApplicationController
   end
 
   def remove
-    enforce_this params[:id] && (@invoice = @current_org.invoices.find_by_id(params[:id])) && ! @invoice.been_paid?
+    enforce_this params[:id] && (@invoice = @current_org.invoices.find_by_id(params[:id])) && @invoice.been_paid? == false
     @invoice[:type] = "RemovedInvoice"
     @invoice.save
     flash[:notice] = "Invoice removed!"

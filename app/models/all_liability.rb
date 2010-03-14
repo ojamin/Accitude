@@ -10,4 +10,9 @@ class AllLiability < ActiveRecord::Base
   validates_presence_of :description
   validates_numericality_of :value, :greater_than_or_equal_to => 0.01
 
+  def been_paid?
+    return true if paid_on
+    return false
+  end
+
 end

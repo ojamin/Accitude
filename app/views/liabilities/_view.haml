@@ -1,7 +1,10 @@
-%h2 Viewing a liability 
+%h2 Viewing a liability for #{liability.contact.name_long} 
 [
-= link_to_remote :Edit, :url => {:action => :edit, :controller => :liabilities, :id => liability.id}
-\-
+- unless liability.paid_on
+  = link_to_remote :Edit, :url => {:action => :edit, :controller => :liabilities, :id => liability.id}
+  \-
+  = link_to_remote :Remove, :confirm => "Confirm delete?", :url => {:action => :remove, :controller => :liabilities, :id => liability.id}
+  \-
 = link_to_remote :Back, :url => {:action => :index, :controller => :liabilities}
 ]
 %br

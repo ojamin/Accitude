@@ -41,5 +41,13 @@ class LiabilitiesController < ApplicationController
     ren_cont 'view', {:liability => @liability} and return
   end
 
+  def remove
+    enforce_this params[:id] && (@liability = @current_org.liabilities.find_by_id(params[:id])) && @liability.been_paid? == false
+    @liability[:type] = "RemovedLiability"
+    @liability.save
+    flash[:notice] = "Liability removed!"
+    index
+  end
+
 end
 

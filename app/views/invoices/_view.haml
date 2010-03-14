@@ -7,7 +7,7 @@ Send as email
   \-
   = link_to_remote :Edit, :url => {:action => :edit, :id => invoice.id, :controller => :invoices}
   \-
-  = link_to_remote :Remove, :url => {:action => :remove, :id => invoice.id, :controller => :invoices}
+  = link_to_remote :Remove, :confirm => "Confirm delete?", :url => {:action => :remove, :id => invoice.id, :controller => :invoices}
 - if invoice.payment_plan
   \-
   = link_to_remote "Payment Plan", :url => {:action => :rec_view, :controller => :invoices, :id => invoice.payment_plan_id}
