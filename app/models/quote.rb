@@ -10,11 +10,7 @@ class Quote < ActiveRecord::Base
   validates_presence_of :produced_on
 
   def total_value
-    val = 0
-    self.items.each do |i|
-      val += i.value if i.value
-    end
-    return val
+    return self.items.collect{|i| ((i.value || 0) * (i.quantity || 0))}.sum
   end
 
 end
