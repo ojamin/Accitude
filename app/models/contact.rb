@@ -4,9 +4,11 @@ class Contact < ActiveRecord::Base
                   :postcode, :phone, :phone2, :fax, :email, :website, :customer, :supplier
 
   belongs_to :organisation
-  has_many :costs
-  has_many :quotes
+  has_many :all_invoices
+  has_many :all_liabilities
   has_many :invoices
+  has_many :liabilities
+  has_many :quotes
   has_many :transactions
   has_many :recurring_liabilities
   has_many :payment_plans
