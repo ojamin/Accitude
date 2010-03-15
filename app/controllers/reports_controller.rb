@@ -1,5 +1,17 @@
 class ReportsController < ApplicationController
 
+  def overview
+    incomming = 0
+    outgoing = 0
+    creditors = 0 # people who i owe cash to 
+    debitors = 0 # people who owe me cash
+    @current_org.invoices.each {|i| i.paid_on ? (incomming += i.total_value) : (debitors += i.total_value)}
+    @current_org.liabilities.each {|l| l.paid_on ? (outgoing += l.value) : (creditors += l.value)}
+
+
+
+  end
+
   def unpaids
     invoices = @current_org.invoices.find_all_by_paid_on nil
     liabilities = @current_org.liabilities.find_all_by_paid_on nil
@@ -7,8 +19,6 @@ class ReportsController < ApplicationController
   end
 
   def contacts
-    # gets client list, for each client total invoices/liabilities paid/unpaid
-
     customers = {}
     suppliers = {}
     @current_org.contacts.each do |c|
