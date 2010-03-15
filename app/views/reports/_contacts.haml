@@ -1,0 +1,17 @@
+%h2 Breakdown By Contact
+%br
+%h3 Customers
+- customers.keys.each do |k|
+  - outp = []
+  - customers[k].each do |l|
+    - outp << [l[0], format_as_currency(l[1])]
+  = gen_list outp, :head => ["<span style='font-weight:bold;'>#{k}</span>".html_safe!, ""], :size => 2
+  %br
+%h3 Suppliers
+- suppliers.keys.each do |k|
+  - outp = []
+  - suppliers[k].each do |l|
+    - outp << [l[0], format_as_currency(l[1])]
+  = gen_list outp, :head => ["<span style='font-weight:bold;'>#{k}</span>".html_safe!, ""], :size => 2
+  %br
+

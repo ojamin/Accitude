@@ -35,10 +35,10 @@
             %li= link_to_remote(:Liabilities, :url => {:controller => :liabilities})
             %li= link_to_remote(:Employees, :url => {:controller => :employees})
             %li.section Reports
-            %li= link_to_remote("Unpaid", :url => {:controller => :reports, :action => :unpaids}) # in/out/unpaids
+            %li= link_to_remote("View Unpaid", :url => {:controller => :reports, :action => :unpaids}) # in/out/unpaids
             %li= link_to_remote("Businesses", :url => {:controller => :reports, :action => :businesses}) # paid in/unpaid in/paid out/unpaid out/wages/
             %li= link_to_remote("Employees", :url => {:controller => :reports, :action => :employees}) # breakdown per employee of wages and expenses
-            %li= link_to_remote("Clients", :url => {:controller => :reports, :action => :clients}) # breakdown per client
+            %li= link_to_remote("By Contact", :url => {:controller => :reports, :action => :contacts}) # breakdown per client
             %li.section Your Company
             %li= link_to_remote(:Contacts, :url => {:controller => :contacts})
             %li= link_to_remote('Bank Accounts', :url => {:controller => :banks})
