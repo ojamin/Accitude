@@ -37,7 +37,7 @@ class PaymentPlan < ActiveRecord::Base
   end
 
   def get_total
-    return self.items.collect{|i| i.quantity * i.value}.sum
+    return self.items.collect{|i| ((i.value || 0) * (i.quantity || 0))}.sum
   end
 
   def is_active?

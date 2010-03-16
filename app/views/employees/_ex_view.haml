@@ -1,13 +1,14 @@
 %h2 Viewing expense claim for #{link_to_remote employee.name, :url => {:controller => :employees, :action => :details, :id => employee.id}}
 [
-= link_to_remote :Edit, :url => {:action => :ex_edit, :controller => :employees, :eid => expense.id, :id => employee.id}
-\-
+- unless expense.paid_on
+  = link_to_remote :Edit, :url => {:action => :ex_edit, :controller => :employees, :eid => expense.id, :id => employee.id}
+  \-
 = link_to_remote :Back, :url => {:action => :ex_index, :controller => :employees, :id => employee.id}
 ]
 %br
 = gen_list [ |
   ['Claimed on date', expense.claimed_on.inspect], |
-  ['Paid on date', (expense.paid_on.inspect || 'Not yet paid')], |
+  [(expense.paid_on ? "Paid on" : "Set paid on date"), (expense.paid_on ? expense.paid_on.inspect : render(:partial => "widgets/paid_on_select", :locals => {:obj => expense, :date => expense.claimed_on, :url => {:action => :ex_view, :controller => :employees, :id => employee.id, :exp => expense.id}}))], |
   ['Notes', expense.notes] |
 ] |
 

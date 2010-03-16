@@ -37,6 +37,11 @@ class EmployeesController < ApplicationController
     enforce_this (params[:exp] && params[:id] &&
                   (@employee = @current_org.employees.find_by_id(params[:id])) &&
                   (@expense = @employee.expenses.find_by_id(params[:exp])))
+    if params[:commit] && params[:paid_on] && ! @expense.paid_on && params[:paid_on].to_date >= @expense.claimed_on
+      @expense.paid_on = params[:paid_on].to_date
+      @expense.save
+      flash[:notice] = "Expense marked as paid!"
+    end
     ren_cont 'ex_view', {:employee => @employee, :expense => @expense} and return
   end
 

@@ -18,7 +18,7 @@ Send as email
 = gen_list [ |
   ["Produced on", invoice.produced_on.inspect], |
   ["Due on", invoice.due_on.inspect], |
-  [(invoice.paid_on ? "Paid on" : "Set paid on date"), (invoice.paid_on ? invoice.paid_on.inspect : render(:partial => "widgets/paid_on_select", :locals => {:obj => invoice}))] |
+  [(invoice.paid_on ? "Paid on" : "Set paid on date"), (invoice.paid_on ? invoice.paid_on.inspect : render(:partial => "widgets/paid_on_select", :locals => {:obj => invoice, :date => invoice.produced_on}))] |
 ] |
 
 = gen_items :title => "Items attached to the invoice:", :items => invoice.items

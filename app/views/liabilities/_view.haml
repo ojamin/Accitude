@@ -11,7 +11,7 @@
 = gen_list [ |
   ['Supplier', liability.contact.name_long], |
   ['Incurred on', liability.incurred_on.inspect], |
-  ['Paid on', (liability.paid_on ? liability.paid_on.inspect : 'Not Paid')], |
+  [(liability.paid_on ? "Paid on" : "Set paid on date"), (liability.paid_on ? liability.paid_on.inspect : render(:partial => "widgets/paid_on_select", :locals => {:obj => liability, :date => liability.incurred_on}))], |
   ['Description', liability.description], |
   ['Receipt ID', liability.receipt_id], |
   ['Value', format_as_currency(liability.value)] |
