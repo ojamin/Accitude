@@ -18,17 +18,6 @@ class ReportsController < ApplicationController
     ren_cont 'unpaids', {:invoices => invoices, :liabilities => liabilities}
   end
 
-  def employees
-    employees = {}
-    @current_org.employees.each do |c|
-        employees[c.name] = [
-          ["Paid expenses", c.expenses.collect{|i| i.paid_on ? i.get_total : 0}.sum],
-          ["Outstanding expenses", c.expenses.collect{|i| i.paid_on ? 0 : i.get_total}.sum]
-        ]
-    end
-    ren_cont 'employees', {:employees => employees}
-  end
-
   def contacts
     customers = {}
     suppliers = {}
