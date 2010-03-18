@@ -61,11 +61,15 @@ form br { clear: left; }
 }
 #ly_b #mnu_nav .first { margin-top:40px; }
 #ly_b #mnu_nav a {
+  margin-left: 3px;
 	display: block;
 	padding: 5px;
 	text-decoration:none;
 }
-#ly_b #mnu_nav a:hover { border-left: 3px solid #F90; }
+#ly_b #mnu_nav a:hover {
+  border-left: 3px solid #F90;
+  margin-left: 0px;
+}
 
 
 
