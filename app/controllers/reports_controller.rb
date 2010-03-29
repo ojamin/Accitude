@@ -1,15 +1,15 @@
 class ReportsController < ApplicationController
 
   def overview
-    incomming = 0
-    outgoing = 0
-    creditors = 0 # people who i owe cash to 
-    debitors = 0 # people who owe me cash
-    @current_org.invoices.each {|i| i.paid_on ? (incomming += i.total_value) : (debitors += i.total_value)}
-    @current_org.liabilities.each {|l| l.paid_on ? (outgoing += l.value) : (creditors += l.value)}
+    incoming_paid = 0
+    outgoing_paid = 0
+    outgoing_unpaid = 0 # people who i owe cash to
+    incoming_unpaid = 0 # people who owe me cash
+    @current_org.invoices.each {|i| i.paid_on ? (incoming_paid += i.total_value) : (incoming_unpaid += i.total_value)}
+    @current_org.liabilities.each {|l| l.paid_on ? (outgoing_paid += l.value) : (outgoing_unpaid += l.value)}
 
 
-
+    ren_cont 'overview', {:incoming_paid => incoming_paid, :incoming_unpaid => incoming_unpaid, :outgoing_paid => outgoing_paid, :outgoing_unpaid => outgoing_unpaid}
   end
 
   def unpaids

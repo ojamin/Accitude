@@ -1,0 +1,10 @@
+%h2 Overview
+%br
+- outp = []
+- outp << ["Paid Liabilities", format_as_currency(outgoing_paid)]
+- outp << ["Outstanding Liabilities", format_as_currency(outgoing_unpaid)]
+- outp << ["Paid Income", format_as_currency(incoming_paid)]
+- outp << ["Outstanding Income", format_as_currency(incoming_unpaid)]
+- outp << ["", ""]
+= gen_list outp, :size => 2
+
