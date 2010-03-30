@@ -1,0 +1,15 @@
+[submodule "vendor/plugins/responds_to_parent"]
+	path = vendor/plugins/responds_to_parent
+	url = git://github.com/markcatley/responds_to_parent.git
+[submodule "vendor/plugins/cacheable-flash"]
+	path = vendor/plugins/cacheable-flash
+	url = git://github.com/pivotal/cacheable-flash.git
+[submodule "vendor/plugins/rails_xss"]
+	path = vendor/plugins/rails_xss
+	url = git://github.com/NZKoz/rails_xss.git
+[submodule "vendor/plugins/prawnto"]
+	path = vendor/plugins/prawnto
+	url = git://github.com/thorny-sun/prawnto.git
+[submodule "vendor/plugins/attachment_fu"]
+	path = vendor/plugins/attachment_fu
+	url = git://github.com/technoweenie/attachment_fu.git
