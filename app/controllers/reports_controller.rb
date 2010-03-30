@@ -1,5 +1,9 @@
 class ReportsController < ApplicationController
 
+  def index
+    ren_cont 'index'
+  end
+
   def overview
     incoming_paid = 0
     outgoing_paid = 0
