@@ -29,16 +29,16 @@ eof
 items = []
 total = 0
 invoice.items.each {|i|
-  items << [i.desc, i.quantity, format_as_currency(i.value)]
+  items << [i.desc, i.quantity, format_as_currency(i.value), format_as_currency(i.quantity * i.value)]
   if false == i.quantity.nil? && false == i.value.nil?
     total = total + i.quantity * i.value
   end
 }
-items << [{:text => 'Total', :colspan => 2, :align => :right}, format_as_currency(total)]
+items << [{:text => 'Total', :colspan => 3, :align => :right}, format_as_currency(total)]
 pdf.table items,
   :position => :center,
-  :headers => ['Description', 'Quantity', 'Value'],
-  :column_widths => {0 => 400, 1 => 70, 2 => 70},
+  :headers => ['Description', 'Quantity', 'Value', 'Total'],
+  :column_widths => {0 => 350, 1 => 55, 2 => 65, 3 => 70},
   :border_style => :grid,
   :header_color => 'e7e7e7',
   :header_text_color => '000000',

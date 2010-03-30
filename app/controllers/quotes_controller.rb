@@ -19,7 +19,7 @@ class QuotesController < ApplicationController
   end
 
   def edit
-    (@quote = Quote.new).organisation = @current_org unless params[:id] && (@quote = @current_org.quotes.find_by_id(params[:id]))
+    (@quote = Quote.new(:produced_on => Date.today, :valid_till => (Date.today + 1.month))).organisation = @current_org unless params[:id] && (@quote = @current_org.quotes.find_by_id(params[:id]))
     if params[:commit]
       @quote.update_attributes params[:quote]
       if params[:contact_id]

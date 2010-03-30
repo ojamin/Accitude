@@ -17,15 +17,15 @@ class InvoicesController < ApplicationController
     conditionvalues = []
 
     #get values if present in the params, or set defaults
-    if params[:contact] != -1 && @current_org.contacts.find_by_id(params[:contact].to_s)
+    if params[:contact] && @current_org.contacts.find_by_id(params[:contact].to_s)
       @contact = params[:contact].to_s
     else
       @contact = -1
     end
     @before = params[:before] ? Time.parse(params[:before]) : Time.now
     @after = params[:after] ? Time.parse(params[:after]) : 1.year.ago
-    @procstate = (params[:procstate] == "Processed") ? "Processed" : ((params[:procstate] == "Unprocessed") ? "Unprocessed" : "All")
-
+    @procstate = ['Processed', 'Unprocessed', 'Paid', 'Unpaid'].include?(params[:procstate]) ? params[:procstate] : "All"
+    
     #setup the conditions
     if @contact != -1
       conditions << "contact_id = ?"
@@ -41,6 +41,10 @@ class InvoicesController < ApplicationController
     elsif @procstate == "Unprocessed"
       conditions << "processed = ?"
       conditionvalues << FALSE
+    elsif @procstate == "Paid"
+      conditions << "paid_on is not NULL"
+    elsif @procstate == "Unpaid"
+      conditions << "paid_on is NULL"
     end
 
     if conditions.length != 0
@@ -57,7 +61,7 @@ class InvoicesController < ApplicationController
   end
 
   def edit
-    (@invoice = Invoice.new).organisation = @current_org unless (params[:id] && (@invoice = Invoice.find_by_id(params[:id])))
+    (@invoice = Invoice.new(:produced_on => Date.today, :due_on => (Date.today + 1.month))).organisation = @current_org unless (params[:id] && (@invoice = Invoice.find_by_id(params[:id])))
     enforce_this @invoice.been_paid? == false
     if params[:commit]
       @invoice.update_attributes params[:invoice]
@@ -115,7 +119,7 @@ class InvoicesController < ApplicationController
   end
 
   def rec_new
-    (@plan = PaymentPlan.new).organisation = @current_org
+    (@plan = PaymentPlan.new(:start => Date.today)).organisation = @current_org
     if params[:commit]
       @plan.update_attributes params[:payment_plan]
       if (c = @current_org.contacts.find_by_id params[:contact_id]) && (@plan.contact = c) && @plan.save
