@@ -57,7 +57,7 @@ class QuotesController < ApplicationController
   def view
     enforce_this params[:id] && (@quote = @current_org.quotes.find_by_id(params[:id]))
     if params[:format] && params[:format] = 'pdf'
-      send_data render_to_string(:partial => 'view_pdf', :locals => {:quote => @quote}), :type => :pdf, :disposition => 'inline', :filename => 'test.pdf' and return 
+      send_data render_to_string(:partial => 'view_pdf', :locals => {:quote => @quote}), :type => :pdf, :disposition => 'inline', :filename => "quote.#{@quote.contact.name_long}.#{@quote.id}.pdf" and return 
     end
     ren_cont 'view', {:quote => @quote} and return
   end
