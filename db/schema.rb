@@ -9,7 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100314224355) do
+ActiveRecord::Schema.define(:version => 20100322173840) do
+
+  create_table "all_expenses", :force => true do |t|
+    t.integer  "employee_id"
+    t.date     "claimed_on"
+    t.date     "paid_on"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "notes"
+    t.string   "type"
+  end
 
   create_table "all_invoices", :force => true do |t|
     t.date     "produced_on"
@@ -83,15 +93,6 @@ ActiveRecord::Schema.define(:version => 20100314224355) do
     t.string   "ni_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "expenses", :force => true do |t|
-    t.integer  "employee_id"
-    t.date     "claimed_on"
-    t.date     "paid_on"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "notes"
   end
 
   create_table "images", :force => true do |t|
@@ -238,6 +239,13 @@ ActiveRecord::Schema.define(:version => 20100314224355) do
     t.string   "tax_code"
     t.decimal  "other_deduction",      :precision => 10, :scale => 2
     t.string   "other_deduction_desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "wiki_items", :force => true do |t|
+    t.string   "name"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
