@@ -15,7 +15,7 @@
 	url = git://github.com/technoweenie/attachment_fu.git
 [submodule "vendor/plugins/easy_migrate"]
 	path = vendor/plugins/easy_migrate
-	url = git@github.com:ebotech/easy_migrate.git
+	url = git://github.com/ebotech/easy_migrate.git
 [submodule "vendor/plugins/Magic-Wiki"]
 	path = vendor/plugins/Magic-Wiki
-	url = git@github.com:ebotech/Magic-Wiki.git
+	url = git://github.com/ebotech/Magic-Wiki.git
