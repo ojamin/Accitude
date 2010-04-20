@@ -29,10 +29,10 @@ eof
 items = []
 total = 0
 quote.items.each {|i|
-  items << [i.desc, i.quantity, format_as_currency(i.value), format_as_currency(i.quantity * i.value)]
-  if false == i.quantity.nil? && false == i.value.nil?
-    total = total + i.quantity * i.value
-  end
+  quantity = i.quantity ? i.quantity : 0.0
+  value = i.value ? i.value : 0.0
+  items << [i.desc, quantity, format_as_currency(value), format_as_currency(quantity * value)]
+  total = total + quantity * value
 }
 items << [{:text => 'Total', :colspan => 3, :align => :right}, format_as_currency(total)]
 pdf.table items,
