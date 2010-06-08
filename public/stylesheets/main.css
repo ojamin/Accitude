@@ -9,7 +9,7 @@ p { margin:0px 0.5em; margin-bottom: 1em; }
 
 
 form label { float:left; text-align:left; margin-bottom:7px;}
-form input, form select { float:left; margin-left: 10px; }
+form input, form select { float:left; margin-left: 10px; padding:0px; margin:0px;}	
 form label input {float: right;}
 form br { clear: left; }
 

@@ -51,7 +51,15 @@ class QuotesController < ApplicationController
       item.invoice = @invoice
       item.save
     }
-    ren_cont 'invoices/view', {:invoice => @invoice} and return
+# Andrew addition
+		if @invoice.save
+			flash[:notice] = "Sucessfully converted"
+			@quote.destroy
+		else
+			flash[:error] = "Something went wrong!"
+		end
+
+		ren_cont 'invoices/view', {:invoice => @invoice} and return
   end
 
   def view
