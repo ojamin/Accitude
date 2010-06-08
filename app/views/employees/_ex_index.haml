@@ -8,7 +8,11 @@
 - list = []
 - expenses = employee.expenses.paginate :page => (params[:page] || '1')
 - expenses.each do |e|
-  - list << [link_to_remote(e.claimed_on.inspect, :url => {:action => :ex_view, :id => employee.id, :exp => e.id}), format_as_currency(e.get_total)]
+  - if e.paid_on?
+    - @pup = "Paid"
+  - else
+    - @pup = "Unpaid"
+  - list << [link_to_remote(e.claimed_on.inspect, :url => {:action => :ex_view, :id => employee.id, :exp => e.id}), format_as_currency(e.get_total), @pup]
 - list << [do_pag(expenses, :id => employee.id), "", ""]
 - if expenses.size == 0
   Sorry, no results.
