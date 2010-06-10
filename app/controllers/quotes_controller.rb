@@ -33,7 +33,7 @@ class QuotesController < ApplicationController
         flash[:error] = get_error_msgs @quote
       end
     end
-    ren_cont 'edit', {:quote => @quote, :contacts => @current_org.contacts} and return
+    ren_cont 'edit', {:quote => @quote, :contacts => @current_org.customers} and return
   end
 
   def convert_to_invoice
