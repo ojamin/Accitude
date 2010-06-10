@@ -119,7 +119,7 @@ class InvoicesController < ApplicationController
   end
 
   def rec_new
-    (@plan = PaymentPlan.new(:start => Date.today)).organisation = @current_org
+		(@plan = PaymentPlan.new(:start => Date.today)).organisation = @current_org
     if params[:commit]
       @plan.update_attributes params[:payment_plan]
       if (c = @current_org.contacts.find_by_id params[:contact_id]) && (@plan.contact = c) && @plan.save
@@ -131,7 +131,7 @@ class InvoicesController < ApplicationController
       end
     end
     ren_cont 'rec_new', {:plan => @plan, :contacts => @current_org.customers} and return
-  end
+	end
 
   def rec_process
     if params[:id]
