@@ -1,0 +1,15 @@
+%h1 Wages for #{employee.name}
+%br
+= link_to_remote 'Back', :Url => {:action => :wages, :controller => :employees, :id => employee.id}
+= link_to_remote 'Edit', :url => {:action => :wage_edit, :id => employee.id, :controller => :employees}
+%br
+%br
+- if @wage.hourly_rate && @wage.weekly_hours
+  - outp = []
+  - outp << ["Hourly rate:", @wage.hourly_rate]
+  - outp << ["Weekly hours:", @wage.weekly_hours]
+  - outp << ["Monthly wage:", (@wage.hourly_rate * @wage.weekly_hours * 4)]
+  = gen_list outp, :size => 2
+
+- else
+  Sorry, wages aren't set up yet.

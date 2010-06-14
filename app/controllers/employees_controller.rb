@@ -13,7 +13,27 @@ class EmployeesController < ApplicationController
   public
 
 	def wages
-		
+
+		ren_cont 'wages', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
+	end
+
+	def wage_view
+		@employee = Employee.find_by_id(params[:id])
+		@wage = @employee.wages.find :first
+		ren_cont 'wage_view', {:employee => Employee.find_by_id(params[:id])}
+	end
+
+	def wage_edit
+		@employee = Employee.find_by_id(params[:id])
+		@wage = @employee.wages.find :first
+
+		if params[:commit]
+			if @wage.update_attributes(params[:wage])
+				ren_cont 'wage_view', {:employee => Employee.find_by_id(params[:id])} and return
+			end
+		end
+
+		ren_cont 'wage_edit', {:employee => Employee.find_by_id(params[:id])}
 	end
 
 	def run_payroll
@@ -51,7 +71,7 @@ class EmployeesController < ApplicationController
                   (@expense = @employee.expenses.find_by_id(params[:exp])))
     if params[:commit] && params[:paid_on] && ! @expense.paid_on && params[:paid_on].to_date >= @expense.claimed_on
       @expense.paid_on = params[:paid_on].to_date
-      @expense.save
+      @expense.savec
       flash[:notice] = "Expense marked as paid!"
     end
     ren_cont 'ex_view', {:employee => @employee, :expense => @expense} and return
@@ -68,7 +88,8 @@ class EmployeesController < ApplicationController
 
   def new
     edit
-  end
+ 		@wage = @employee.wages.new.save
+ 	end
 
   def edit
     (@employee = Employee.new).organisation = @current_org unless params[:id] && (@employee = @current_org.employees.find_by_id(params[:id]))
