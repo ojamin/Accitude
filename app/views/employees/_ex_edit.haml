@@ -15,5 +15,10 @@
     [submit_tag(expense.id ? 'Update' : 'Add'), ''] |
   ] |
 
+-# attempt to have items plus total in the table! (to revert replace outp with :item => expense.items
+-# outp = []
+-# outp << expense.items 
+-# outp << "", "Total:", @expense.get_total
+
 = gen_items :items => expense.items, :allow_new => true, :title => "Enter the items to go on the expense form below:"
 = "Total: #{format_as_currency(@expense.get_total)}"

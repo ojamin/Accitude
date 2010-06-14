@@ -4,11 +4,23 @@ class EmployeesController < ApplicationController
   def menu_items
     return [
       ['List Employees', {:url => {:action => :index}}],
-      ['Add Employee', {:url => {:action => :new}}]
+      ['Add Employee', {:url => {:action => :new}}],
+			['Wages', {:url => {:action => :wages}}],
+			['Run Payroll', {:url => {:action => :run_payroll}}]
     ]
   end
 
   public
+
+	def wages
+		
+	end
+
+	def run_payroll
+
+	end
+
+
   def ex_index
     enforce_this (params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
     ren_cont 'ex_index', {:employee => @employee} and return

@@ -1,8 +1,16 @@
 class ReportsController < ApplicationController
 
   def index
-    ren_cont 'index'
-  end
+		# from overview
+#		   incoming_paid = 0
+#			 outgoing_paid = 0
+#			 outgoing_unpaid = 0 # people who i owe cash to
+#			 incoming_unpaid = 0 # people who owe me cash
+#			 @current_org.invoices.each {|i| i.paid_on ? (incoming_paid += i.total_value) : (incoming_unpaid += i.total_value)}
+#			 @current_org.liabilities.each {|l| l.paid_on ? (outgoing_paid += l.value) : (outgoing_unpaid += l.value)} 
+
+		ren_cont 'index'
+	end
 
   def overview
     incoming_paid = 0
