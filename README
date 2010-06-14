@@ -26,9 +26,12 @@ TO INSTALL:
   2. `cp config/database.yml.template config/database.yml`
   3. Edit config/database.yml to another database if needed
   4. Run `rake gems:install`
-  5. Run `script/console`
-  7. Run `((a = User.new(:password => "test")).username = "admin") && a.save`
-  8. Run `script/server`
-  9. Browse to localhost:3000 and start using the program - the default username/password is admin/test
+	5. Run 'rake db:migrate'
+	6. Run 'git submodule init'
+	7. Run 'git submodule update'
+  8. Run `script/console`
+  9. Run `((a = User.new(:password => "test")).username = "admin") && a.save`
+ 10. Run `script/server`
+ 11. Browse to localhost:3000 and start using the program - the default username/password is admin/test
 
 Sponsored by Ebotech Consulting Ltd. - www.ebotech.com
