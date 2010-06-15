@@ -5,7 +5,10 @@
 - form_remote_for @wage, :url => {:controller => :employees, :action => :wage_edit} do |f|
   - outp << ['Hourly rate:', f.text_field(:hourly_rate)]
   - outp << ['Weekly hours:', f.text_field(:weekly_hours)]
-  - outp << ['This months deductions:', f.text_field(:other_deduction)]
+  - outp << ['Start date:', f.calendar_date_select(:start, :popup => :force)]
+  - outp << ['End date (set to finish current wage rate):', f.calendar_date_select(:end, :popup => :force)]
+  - outp << ['Tax_code:', f.text_field(:tax_code)]
+  - outp << ['Status:', f.select(:state, Wage.states)]
   - outp << [submit_tag('update'), '']
   = gen_list outp
 

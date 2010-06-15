@@ -61,7 +61,7 @@ class PaymentPlan < ActiveRecord::Base
       inv.produced_on = self.last_run_on ? (self.last_run_on + self.freq_to_date) : self.start
       inv.due_on = inv.produced_on + 1.month
       inv.contact = self.contact
-      inv.organisation = self.organisation
+ 			inv.organisation = self.organisation
       inv.payment_plan = self
       inv.save
       self.items.each {|i|
@@ -76,7 +76,7 @@ class PaymentPlan < ActiveRecord::Base
     end
     return invoices
   end
-
-
+	
+	
 
 end

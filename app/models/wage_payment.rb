@@ -4,7 +4,8 @@ class WagePayment < ActiveRecord::Base
                   :for_other, :for_other_desc, :total, :hours,
                   :period_start, :period_end, :paid_on, :payment_method
 
-  belongs_to :wage_id
+	belongs_to :employee_id
+	belongs_to :wage_id
   has_many :transactions
 
 end

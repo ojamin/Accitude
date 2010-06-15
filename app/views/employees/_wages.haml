@@ -1,13 +1,10 @@
 %h2 Wages Summary
 - outp = []
 - employees.each do |e|
-  - @wage = e.wages.find :first
-  - if @wage.weekly_hours && @wage.hourly_rate
-    - @monthly = (@wage.weekly_hours * @wage.hourly_rate * 4)
-  - else
-    -@monthly = "not set"
-  - outp << [link_to_remote(e.name, :url => {:action => :wage_view, :id => e.id, :controller => :employees}), @monthly]
+  - outp << [link_to_remote(e.name, :url => {:action => :wage_view, :controller => :employees, :id => e.id})] 
+= gen_list outp, :size => 1, :head => ['Employee']
 
-= gen_list outp, :size => 4, :head => ['Employee', 'Gross monthly wage', 'Wages due', 'Days until next payment']
+%br
+%h2 Wage Payments
+%br
 
-%h3 Unpaid Wages

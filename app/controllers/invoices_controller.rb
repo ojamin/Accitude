@@ -135,8 +135,7 @@ class InvoicesController < ApplicationController
 
   def rec_process
     if params[:id]
-      return unless (@plan = @current_org.payment_plans.find_by_id(params[:id])) &&
-                    @plan.needs_processing?
+      return unless (@plan = @current_org.payment_plans.find_by_id(params[:id])) && @plan.needs_processing?
       ren_cont 'rec_process_return', {:plans => [@plan]} and return
     elsif params[:all] || true
       @plans = @current_org.payment_plans.select(&:needs_processing?)
@@ -146,11 +145,6 @@ class InvoicesController < ApplicationController
   end
 
 end
-
-
-
-
-
 
 
 
