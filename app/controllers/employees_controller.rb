@@ -18,22 +18,27 @@ class EmployeesController < ApplicationController
 	end
 
 	def wage_view
-		@employee = Employee.find_by_id(params[:id])
-		@wage = @employee.wages.find :first
-		ren_cont 'wage_view', {:employee => Employee.find_by_id(params[:id])}
+		enforce_this (params[:id] && (@wage = @current_org.wages.find_by_id(params[:id])))
+		ren_cont 'wage_view', {:wage => @wage}
 	end
 
 	def wage_edit
-		@employee = Employee.find_by_id(params[:id])
-		@wage = @employee.wages.find :first
+		enforce_this (params[:id] && (@wage = @current_org.wages.find_by_id(params[:id])))
 
 		if params[:commit]
+			if (@wage.start < Date.today) && (@wage.end < Date.today)
+				@wage.state = 'Ended'
+			elsif (@wage.start < Date.today) && !(@wage.end < Date.today)
+				@wage.state = 'Current'
+			else
+				@wage.state = 'Pending'
+			end
 			if @wage.update_attributes(params[:wage])
-				ren_cont 'wage_view', {:employee => Employee.find_by_id(params[:id])} and return
+				ren_cont 'wage_view', {:wage => @wage} and return
 			end
 		end
 
-		ren_cont 'wage_edit', {:employee => Employee.find_by_id(params[:id])}
+		ren_cont 'wage_edit', {:wage => @wage}
 	end
 
 	def run_payroll

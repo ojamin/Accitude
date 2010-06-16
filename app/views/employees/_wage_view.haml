@@ -1,15 +1,19 @@
 %h1 Wages for #{employee.name}
 %br
 = link_to_remote 'Back', :Url => {:action => :wages, :controller => :employees, :id => employee.id}
-= link_to_remote 'Edit', :url => {:action => :wage_edit, :id => employee.id, :controller => :employees}
+= link_to_remote 'Edit', :url => {:action => :wage_edit, :id => wage.id, :controller => :employees}
 %br
 - if @wage.hourly_rate && @wage.weekly_hours
   - outp = []
+  - outp << ['State:', @wage.state]
   - outp << ["Hourly rate:", @wage.hourly_rate]
   - outp << ["Weekly hours:", @wage.weekly_hours]
-  - outp << ["Start date:", @wage.start]
-  - outp << ["End date:", @wage.end]
-  - outp << ["Tax code:", @wage.tax_code]
+  - if @wage.start
+    - outp << ["Start date:", @wage.start]
+  - if @wage.end
+    - outp << ["End date:", @wage.end]
+  - if @wage.tax_code
+    - outp << ["Tax code:", @wage.tax_code]
   = gen_list outp, :size => 2
 
 - else

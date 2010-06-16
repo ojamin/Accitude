@@ -10,6 +10,10 @@ class Wage < ActiveRecord::Base
 
 	STATES = ['Pending', 'Current', 'Ended']
 
+	def self.states
+		return STATES
+	end
+
 # First try stuff
 
 #	def needs_processing?

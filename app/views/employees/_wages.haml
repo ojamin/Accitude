@@ -2,7 +2,7 @@
 - outp = []
 - employees.each do |e|
   - outp << [link_to_remote(e.name, :url => {:action => :wage_view, :controller => :employees, :id => e.id})] 
-= gen_list outp, :size => 1, :head => ['Employee']
+= gen_list outp, :size => 5, :head => ['Employee', 'Rate from', 'Frequency', 'amnt', 'Per Annum']
 
 %br
 %h2 Wage Payments

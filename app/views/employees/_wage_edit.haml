@@ -8,7 +8,7 @@
   - outp << ['Start date:', f.calendar_date_select(:start, :popup => :force)]
   - outp << ['End date (set to finish current wage rate):', f.calendar_date_select(:end, :popup => :force)]
   - outp << ['Tax_code:', f.text_field(:tax_code)]
-  - outp << ['Status:', f.select(:state, Wage.states)]
+  -# outp << ['Status:', f.select(:state, Wage.states)]
   - outp << [submit_tag('update'), '']
   = gen_list outp
 
