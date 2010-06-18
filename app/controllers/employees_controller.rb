@@ -5,21 +5,18 @@ class EmployeesController < ApplicationController
     return [
       ['List Employees', {:url => {:action => :index}}],
       ['Add Employee', {:url => {:action => :new}}],
-			['Wages', {:url => {:action => :wages}}],
-			['Run Payroll', {:url => {:action => :run_payroll}}]
+      ['Wages', {:url => {:action => :wages}}],
+      ['Run Payroll', {:url => {:action => :run_payroll}}]
     ]
   end
 
   public
 
-	def wages
-		
-	end
+  def wages	
+  end
 
-	def run_payroll
-
-	end
-
+  def run_payroll
+  end
 
   def ex_index
     enforce_this (params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))

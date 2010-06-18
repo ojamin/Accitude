@@ -44,22 +44,18 @@ class QuotesController < ApplicationController
     @invoice.contact = @quote.contact
     @invoice.organisation = @current_org
     @invoice.quote = @quote
-    @invoice.save
-    @quote.items.each {|i|
-      item = i.clone
-      item.quote = nil
-      item.invoice = @invoice
-      item.save
-    }
-# Andrew addition
-		if @invoice.save
-			flash[:notice] = "Sucessfully converted"
-			@quote.destroy
-		else
-			flash[:error] = "Something went wrong!"
-		end
-
-		ren_cont 'invoices/view', {:invoice => @invoice} and return
+    if @invoice.save
+      @quote.items.each {|i|
+        item = i.clone
+        item.quote = nil
+        item.invoice = @invoice
+        item.save
+      }
+      flash[:notice] = "Sucessfully converted"
+    else
+      flash[:error] = "Something went wrong!"
+    end
+    ren_cont 'invoices/view', {:invoice => @invoice} and return
   end
 
   def view
