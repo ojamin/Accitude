@@ -26,9 +26,9 @@ TO INSTALL:
   2. `cp config/database.yml.template config/database.yml`
   3. Edit config/database.yml to another database if needed
   4. Run `rake gems:install`
-	5. Run 'rake db:migrate'
-	6. Run 'git submodule init'
-	7. Run 'git submodule update'
+	5. Run 'git submodule init'
+	6. Run 'git submodule update'
+	7. Run 'rake db:migrate'
   8. Run `script/console`
   9. Run `((a = User.new(:password => "test")).username = "admin") && a.save`
  10. Run `script/server`
