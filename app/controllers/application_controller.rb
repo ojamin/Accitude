@@ -30,9 +30,9 @@ class ApplicationController < ActionController::Base
     render :update do |page|
       page.gen_dymenu @menu
       block.call(page)
-      page.gen_main render(:partial => name, :locals => locals)
-    end
-  end
+      page.gen_main(render(:partial => name, :locals => locals))
+    end	
+	end
 
   def set_active_org_id(org)
     org = org.to_i

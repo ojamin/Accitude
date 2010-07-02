@@ -1,10 +1,15 @@
-%h2 Wages Summary
+%h2 Current Wages
 - outp = []
 - employees.each do |e|
-  - outp << [link_to_remote(e.name, :url => {:action => :wage_view, :controller => :employees, :id => e.id})] 
-= gen_list outp, :size => 5, :head => ['Employee', 'Rate from', 'Frequency', 'amnt', 'Per Annum']
+  - wage = e.wages.find :last
+  - hourly = number_to_currency(wage.hourly_rate, :unit => "£")
+  - annum = ((wage.hourly_rate * wage.weekly_hours) / 5) * 252
+  - annum = number_to_currency(annum, :unit => "£")
+  - outp << [link_to_remote(e.name, :url => {:action => :wage_view, :controller => :employees, :id => e.id}), wage.start, hourly, annum] 
+= gen_list outp, :size => 4, :head => ['Employee', 'Rate from', 'Hourly rate', 'Per Annum']
 
 %br
 %h2 Wage Payments
+
 %br
 

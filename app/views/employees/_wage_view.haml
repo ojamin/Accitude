@@ -1,7 +1,7 @@
-%h1 Wages for #{employee.name}
+%h1= "Wages for #{@employee.name}"
 %br
-= link_to_remote 'Back', :Url => {:action => :wages, :controller => :employees, :id => employee.id}
-= link_to_remote 'Edit', :url => {:action => :wage_edit, :id => wage.id, :controller => :employees}
+= link_to_remote 'Back', :Url => {:action => :wages, :controller => :employees}
+= link_to_remote 'Edit', :url => {:action => :wage_edit, :id => @employee.id, :controller => :employees}
 %br
 - if @wage.hourly_rate && @wage.weekly_hours
   - outp = []
@@ -14,6 +14,12 @@
     - outp << ["End date:", @wage.end]
   - if @wage.tax_code
     - outp << ["Tax code:", @wage.tax_code]
+  - weekwage = @wage.hourly_rate * @wage.weekly_hours
+  - outp << ["Weekly wage:", weekwage]
+  - monthwage = weekwage * 4
+  - outp << ["Monthly (four weekly) wage:", monthwage]
+  - annum = (weekwage / 5) * 252
+  - outp << ["Per Annum:", annum]
   = gen_list outp, :size => 2
 
 - else

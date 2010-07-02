@@ -13,33 +13,42 @@ class EmployeesController < ApplicationController
   public
 
 	def wages
-
 		ren_cont 'wages', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
+
 	end
 
 	def wage_view
-		enforce_this (params[:id] && (@wage = @current_org.wages.find_by_id(params[:id])))
-		ren_cont 'wage_view', {:wage => @wage}
+		enforce_this(params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
+		@wage = @employee.wages.find :last
+		if @wage.is_active?
+	  	ren_cont 'wage_view', {:wage => @wage} and return
+		else 
+			ren_cont 'wage_edit', {:wage => @employee.wages.new} and return
+		end
 	end
 
 	def wage_edit
-		enforce_this (params[:id] && (@wage = @current_org.wages.find_by_id(params[:id])))
-
+		enforce_this (params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
+		@wage = @employee.wages.last
+		# < means before, > means after
 		if params[:commit]
-			if (@wage.start < Date.today) && (@wage.end < Date.today)
-				@wage.state = 'Ended'
-			elsif (@wage.start < Date.today) && !(@wage.end < Date.today)
-				@wage.state = 'Current'
-			else
-				@wage.state = 'Pending'
-			end
-			if @wage.update_attributes(params[:wage])
-				ren_cont 'wage_view', {:wage => @wage} and return
+			if @wage.start && @wage.end
+			  if(@wage.start < Date.today) && (@wage.end < Date.today)
+				  @wage.state = 'Ended'
+				end
+			elsif @wage.start && !@wage.end 
+			  @wage.state = 'Current'
+			elsif @wage.start && @wage.end
+				if @wage.end > Date.today && @wage.start < Date.today
+					@wage.state = 'Current'
+				end
 			end
 		end
-
-		ren_cont 'wage_edit', {:wage => @wage}
-	end
+	  if @wage.update_attributes(params[:wage])
+			ren_cont 'wage_view', {:wage => @wage} and return
+		end
+		ren_cont 'wage_edit', {:wage => @wage} and return
+  end
 
 	def run_payroll
 
@@ -107,7 +116,6 @@ class EmployeesController < ApplicationController
         flash[:error] = get_error_msgs @employee
       end
     end
-    ren_cont 'edit', {:employee => @employee}
+    ren_cont 'edit', {:employee => @employee} and return
   end
-
 end
