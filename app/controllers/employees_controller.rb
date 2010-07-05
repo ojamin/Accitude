@@ -25,13 +25,16 @@ class EmployeesController < ApplicationController
 		wages = []
 		emps = @current_org.employees.all
 		emps.each do |e|
-			e.wages.each do |w|
+ 			e.wages.each do |w|
 				wages << w
 			end
 		end
-	
-		wages.each do |w|
-			set_state_for w
+
+		@test = []
+
+		wages.each do |wage|
+			set_state_for wage
+		@test << wage
 		end
 
 		ren_cont 'wages', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
@@ -49,16 +52,13 @@ class EmployeesController < ApplicationController
 
 	def set_state_for(wage)
 		# < means before, > means after
+		wage.update_attribute(:state, "Current")
 		if wage.start && wage.end
 			if (wage.start < Date.today) && (wage.end < Date.today)
-				wage.update_attributes(:state, "Ended")
+				wage.update_attribute(:state, "Ended")
 			end
 		elsif wage.start && !wage.end
 			if wage.start < Date.today
-				wage.update_attribute(:state, "Current")
-			end
-		elsif wage.start && wage.end
-			if wage.end > Date.today && wage.start < Date.today
 				wage.update_attribute(:state, "Current")
 			end
 		end
@@ -69,30 +69,13 @@ class EmployeesController < ApplicationController
 		enforce_this (params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
 	  if @employee.wages.last && @employee.wages.last.state == "Current" 
 			@wage = @employee.wages.last
-			@edit = 'true'
 		else
 			(@wage = Wage.new).employee = @employee
-      @edit = 'false'
 		end	
 		# < means before, > means after
 		if params[:commit]
 			if @wage.update_attributes(params[:wage])
 				set_state_for @wage
-#				if @wage.start && @wage.end
-#				  if(@wage.start < Date.today) && (@wage.end < Date.today)
-#					  #@wage.state = 'Ended'
-#						@wage.update_attribute(:state, "Ended")
-#					end
-#				elsif @wage.start && !@wage.end 
-#				  #@wage.state = 'Current'
-#					@wage.update_attribute(:state, "Current")
-#				elsif @wage.start && @wage.end
-#					if @wage.end > Date.today && @wage.start < Date.today
-#						#@wage.state = 'Current'
-#						@wage.update_attribute(:state, "Current")
-#					end
-#				end
-
 			else
 				flash[:error] = get_error_msgs @wage 
 				ren_cont 'wage_edit', {:id => @employee.id} and return

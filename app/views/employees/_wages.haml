@@ -1,14 +1,21 @@
 - current = []
 - pending = []
 - restart = []
+
+-# @test.each do |t|
+  = t.id
+  = t.state
+ 
+
 - @current_org.employees.each do |e|
   - wages = e.wages.find :all
   - wages.each do |wage|
     - if wage.state == "Current"
       - current << wage
   - if lw = e.wages.last
-    - if lw.state != "Current"
-      - pending << e
+    - if lw.state
+      - if lw.state != "Current"
+        - pending << e
   - else
     - pending << e
 
