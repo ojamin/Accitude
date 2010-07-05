@@ -10,7 +10,10 @@ class ContactsController < ApplicationController
   
   public
   def index
-    @contact_list = @current_org.contacts.paginate :page => (params[:page] || '1')
+		
+		
+
+		@contact_list = @current_org.contacts.paginate :page => (params[:page] || '1')
     ren_cont 'index', {:contact_list => @contact_list} and return
   end
 

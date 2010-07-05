@@ -3,6 +3,8 @@ class Wage < ActiveRecord::Base
   attr_accessible :hourly_rate, :weekly_hours, :state,
                   :start, :end, :tax_code, :other_deduction
                   :other_deduction_desc
+	validates_presence_of :start
+	validates_numericality_of :hourly_rate, :weekly_hours
 
   belongs_to :employee
   belongs_to :organisation

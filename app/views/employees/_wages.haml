@@ -6,8 +6,10 @@
   - wages.each do |wage|
     - if wage.state == "Current"
       - current << wage
-  - lw = e.wages.last
-  - if lw.state != "Current" 
+  - if lw = e.wages.last
+    - if lw.state != "Current"
+      - pending << e
+  - else
     - pending << e
 
 - if pending.count > 0
@@ -24,10 +26,12 @@
 - current.each do |wage|
   -# wage = e.wage.find :last
   - hourly = number_to_currency(wage.hourly_rate, :unit => "£")
+  - weekly = number_to_currency((wage.hourly_rate * wage.weekly_hours), :unit => "£")
+  - monthly = number_to_currency((wage.hourly_rate * wage.weekly_hours * 4),:unit => "£")
   - annum = ((wage.hourly_rate * wage.weekly_hours) / 5) * 252
   - annum = number_to_currency(annum, :unit => "£")
-  - outp << [link_to_remote(wage.employee.name, :url => {:action => :wage_view, :controller => :employees, :id => wage.employee.id}), wage.start, hourly, wage.weekly_hours, annum] 
-= gen_list outp, :size => 5, :head => ['Employee', 'Rate from', 'Hourly rate', 'Hours per week', 'Per Annum']
+  - outp << [link_to_remote(wage.employee.name, :url => {:action => :wage_view, :controller => :employees, :id => wage.employee.id}), wage.start, hourly, wage.weekly_hours.to_i, weekly, monthly, annum] 
+= gen_list outp, :size => 7, :head => ['Employee', 'Rate from', 'Hourly rate', 'Hours per week', 'per week', 'four weekly', 'Per Annum']
 %br
 
 - outp = []
@@ -41,11 +45,16 @@
 - wages.each do |w|
   - if w.state == "Ended"
     - hourly = number_to_currency(w.hourly_rate, :unit => "£")
+    - weekly = number_to_currency((w.hourly_rate * w.weekly_hours), :unit => "£")
+    - monthly = number_to_currency((w.hourly_rate * w.weekly_hours * 4), :unit => "£")
     - annum = ((w.hourly_rate * w.weekly_hours) / 5) * 252
     - annum = number_to_currency(annum, :unit => "£")
-    - outp << [w.employee.name, w.start, hourly, w.weekly_hours, annum]
-= gen_list outp, :size => 5, :head => ['Employee', 'Rate from', 'Hourly rate', 'Hours per week', 'Per Annum']
-
+    - outp << [w.employee.name, w.start, hourly, w.weekly_hours.to_i, weekly, monthly, annum]
+= gen_list outp, :size => 7, :head => ['Employee', 'Rate from', 'Hourly rate', 'Hours per week', 'per week', 'four weekly', 'Per Annum']
+%br
+%br
+%br
+%br
 
 
 
