@@ -1,15 +1,58 @@
+- current = []
+- pending = []
+- restart = []
+- @current_org.employees.each do |e|
+  - wages = e.wages.find :all
+  - wages.each do |wage|
+    - if wage.state == "Current"
+      - current << wage
+  - lw = e.wages.last
+  - if lw.state != "Current" 
+    - pending << e
+
+- if pending.count > 0
+  %h2 wages to be set up.
+  - outp = []
+  - pending.each do |e|
+    - outp << [link_to_remote(e.name, :url => {:action => :wage_edit, :controller => :employees, :id => e.id})]
+  -# restart.each do |e|
+    - outp << [link_to_remote(e.name, :url => {:action => :wage_edit, :controller => :employees, :id => e.id})]
+  = gen_list outp, :size => 1 
+%br
 %h2 Current Wages
 - outp = []
-- employees.each do |e|
-  - wage = e.wages.find :last
+- current.each do |wage|
+  -# wage = e.wage.find :last
   - hourly = number_to_currency(wage.hourly_rate, :unit => "£")
   - annum = ((wage.hourly_rate * wage.weekly_hours) / 5) * 252
   - annum = number_to_currency(annum, :unit => "£")
-  - outp << [link_to_remote(e.name, :url => {:action => :wage_view, :controller => :employees, :id => e.id}), wage.start, hourly, annum] 
-= gen_list outp, :size => 4, :head => ['Employee', 'Rate from', 'Hourly rate', 'Per Annum']
-
+  - outp << [link_to_remote(wage.employee.name, :url => {:action => :wage_view, :controller => :employees, :id => wage.employee.id}), wage.start, hourly, wage.weekly_hours, annum] 
+= gen_list outp, :size => 5, :head => ['Employee', 'Rate from', 'Hourly rate', 'Hours per week', 'Per Annum']
 %br
-%h2 Wage Payments
 
-%br
+- outp = []
+%h2 Archive.
+- emps = @current_org.employees.all
+- wages = []
+- emps.each do |e|
+  - w = e.wages.all
+  - w.each do |wa|
+    - wages << wa
+- wages.each do |w|
+  - if w.state == "Ended"
+    - hourly = number_to_currency(w.hourly_rate, :unit => "£")
+    - annum = ((w.hourly_rate * w.weekly_hours) / 5) * 252
+    - annum = number_to_currency(annum, :unit => "£")
+    - outp << [w.employee.name, w.start, hourly, w.weekly_hours, annum]
+= gen_list outp, :size => 5, :head => ['Employee', 'Rate from', 'Hourly rate', 'Hours per week', 'Per Annum']
+
+
+
+
+
+
+
+
+
+
 

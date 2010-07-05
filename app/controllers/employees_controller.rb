@@ -32,23 +32,29 @@ class EmployeesController < ApplicationController
 		@wage = @employee.wages.last
 		# < means before, > means after
 		if params[:commit]
-			if @wage.start && @wage.end
-			  if(@wage.start < Date.today) && (@wage.end < Date.today)
-				  @wage.state = 'Ended'
+			if @wage.update_attributes(params[:wage])
+				if @wage.start && @wage.end
+				  if(@wage.start < Date.today) && (@wage.end < Date.today)
+					  #@wage.state = 'Ended'
+						@wage.update_attribute(:state, "Ended")
+					end
+				elsif @wage.start && !@wage.end 
+				  #@wage.state = 'Current'
+					@wage.update_attribute(:state, "Current")
+				elsif @wage.start && @wage.end
+					if @wage.end > Date.today && @wage.start < Date.today
+						#@wage.state = 'Current'
+						@wage.update_attribute(:state, "Current")
+					end
 				end
-			elsif @wage.start && !@wage.end 
-			  @wage.state = 'Current'
-			elsif @wage.start && @wage.end
-				if @wage.end > Date.today && @wage.start < Date.today
-					@wage.state = 'Current'
-				end
+#		  	if @wage.update_attributes(params[:wage])
+#					ren_cont 'wage_view', {:wage => @wage} and return
+#				end
 			end
+			ren_cont 'wages', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
 		end
-	  if @wage.update_attributes(params[:wage])
-			ren_cont 'wage_view', {:wage => @wage} and return
-		end
-		ren_cont 'wage_edit', {:wage => @wage} and return
-  end
+		ren_cont 'wage_edit', {:id => @employee.id}
+	end
 
 	def run_payroll
 
