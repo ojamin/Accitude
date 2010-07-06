@@ -13,15 +13,12 @@ class EmployeesController < ApplicationController
   public
 
 	def wages
-		#ren_cont 'wages', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
-
-		@current_org.employees.each do |e|
-			unless e.wages.first
-				(@wage = Wage.new).employee = e
-				@wage.save
-			end
-		end
-
+#		@current_org.employees.each do |e|
+#			unless e.wages.first
+#				(@wage = Wage.new).employee = e
+#				@wage.save
+#			end
+#		end
 		wages = []
 		emps = @current_org.employees.all
 		emps.each do |e|
@@ -29,60 +26,58 @@ class EmployeesController < ApplicationController
 				wages << w
 			end
 		end
-
-		@test = []
-
 		wages.each do |wage|
-			set_state_for wage
-		@test << wage
+			set_state_for(wage)
 		end
 
 		ren_cont 'wages', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
 	end
 
 	def wage_view
-		enforce_this(params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
-		@wage = @employee.wages.find :last
-		if @wage.is_active?
+		enforce_this(params[:id] && (@wage = Wage.find_by_id(params[:id])) && (@wage.employee = @current_org.employees.find_by_id(@wage.employee.id)))
+		# @wage = @employee.wages.find :last
+#		if @wage.is_active?
 	  	ren_cont 'wage_view', {:wage => @wage} and return
-		else 
-			ren_cont 'wage_edit', {:wage => @employee.wages.new} and return
-		end
+#		else 
+#			ren_cont 'wage_edit', {:wage => @employee.wages.new} and return
+#		end
 	end
 
 	def set_state_for(wage)
 		# < means before, > means after
 		wage.update_attribute(:state, "Current")
-		if wage.start && wage.end
-			if (wage.start < Date.today) && (wage.end < Date.today)
-				wage.update_attribute(:state, "Ended")
-			end
-		elsif wage.start && !wage.end
-			if wage.start < Date.today
-				wage.update_attribute(:state, "Current")
-			end
+		if  wage.end && wage.end < Date.today
+			wage.update_attribute(:state, "Ended")
 		end
+
 	end
 
 
 	def wage_edit
-		enforce_this (params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
-	  if @employee.wages.last && @employee.wages.last.state == "Current" 
-			@wage = @employee.wages.last
+		unless params[:new]
+			enforce_this(params[:id] && (@wage = @current_org.wages.find_by_id(params[:id])))
 		else
-			(@wage = Wage.new).employee = @employee
+			enforce_this(params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
+			@wage = Wage.new
+			@wage.employee_id = @employee.id
+		 	@wage.organisation_id = @current_org.id
+			
 		end	
+
 		# < means before, > means after
 		if params[:commit]
 			if @wage.update_attributes(params[:wage])
 				set_state_for @wage
+				ren_cont 'wages', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
+				flash[:notice] = "Wage updated!"
 			else
 				flash[:error] = get_error_msgs @wage 
-				ren_cont 'wage_edit', {:id => @employee.id} and return
+				#ren_cont 'wage_edit', {:id => @employee.id} and return
 			end
-			ren_cont 'wages', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
+#			ren_cont 'wages', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
 		end
-		ren_cont 'wage_edit', {:id => @employee.id} and return
+		ren_cont 'wage_edit', {:wage => @wage} and return
+			#{:id => @wage.id} and return
 	end
 
 	def run_payroll

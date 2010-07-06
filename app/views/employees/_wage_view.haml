@@ -1,7 +1,8 @@
-%h1= "Wages for #{@employee.name}"
+%h1= "Wage for #{@wage.employee.name}"
 %br
-= link_to_remote 'Back', :Url => {:action => :wages, :controller => :employees}
-= link_to_remote 'Edit', :url => {:action => :wage_edit, :id => @employee.id, :controller => :employees}
+= link_to_remote 'Back', :url => {:action => :wages, :controller => :employees}
+- unless @wage.state == "Ended"
+  = link_to_remote 'Edit', :url => {:action => :wage_edit, :id => @wage.id, :controller => :employees}
 %br
 - if @wage.hourly_rate && @wage.weekly_hours
   - outp = []
@@ -22,5 +23,3 @@
   - outp << ["Per Annum:", annum]
   = gen_list outp, :size => 2
 
-- else
-  Sorry, wages aren't set up yet.

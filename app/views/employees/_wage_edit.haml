@@ -1,8 +1,8 @@
-%h1= "Edit wages for #{@employee.name}"
+%h1= "Edit wages for #{@wage.employee.name}"
 %br
-= link_to_remote('Back', :url => {:action => :wage_view, :controller => :employees, :id => @employee.id})
+= link_to_remote('Back', :url => {:action => :wage_view, :controller => :employees, :id => @wage.id})
 - outp = []
-- form_remote_for @wage, :url => {:controller => :employees, :action => :wage_edit} do |f|
+- form_remote_for @wage, :url => {:controller => :employees, :action => :wage_edit, :new => (@wage.id ? false : true)} do |f|
   - outp << ['Hourly rate:', f.text_field(:hourly_rate)]
   - outp << ['Weekly hours:', f.text_field(:weekly_hours)]
   - outp << ['Start date:', f.calendar_date_select(:start, :popup => :force)]
