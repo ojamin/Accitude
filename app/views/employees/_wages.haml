@@ -2,6 +2,7 @@
 - pending = []
 - restart = []
 
+
 -# @test.each do |t|
   = t.id
   = t.state
@@ -56,8 +57,8 @@
     - monthly = number_to_currency((w.hourly_rate * w.weekly_hours * 4), :unit => "£")
     - annum = ((w.hourly_rate * w.weekly_hours) / 5) * 252
     - annum = number_to_currency(annum, :unit => "£")
-    - outp << [link_to_remote(w.employee.name, :url => {:action => :wage_view, :controller => :employees, :id => w.id}), w.start, hourly, w.weekly_hours.to_i, weekly, monthly, annum]
-= gen_list outp, :size => 7, :head => ['Employee', 'Rate from', 'Hourly rate', 'Hours per week', 'per week', 'four weekly', 'Per Annum']
+    - outp << [link_to_remote(w.employee.name, :url => {:action => :wage_view, :controller => :employees, :id => w.id}), w.start, w.end, hourly, w.weekly_hours.to_i, weekly, monthly, annum]
+= gen_list outp, :size => 8, :head => ['Employee', 'Rate from', 'Rate ended', 'Hourly rate', 'Hours per week', 'per week', 'four weekly', 'Per Annum']
 %br
 %br
 %br

@@ -6,8 +6,9 @@ class EmployeesController < ApplicationController
       ['List Employees', {:url => {:action => :index}}],
       ['Add Employee', {:url => {:action => :new}}],
 			['Wages', {:url => {:action => :wages}}],
-			['Run Payroll', {:url => {:action => :run_payroll}}]
-    ]
+			['Run Payroll', {:url => {:action => :run_payroll}}],
+			['Wage Payments', {:url => {:action => :payment_index}}]
+		]
   end
 
   public
@@ -37,13 +38,14 @@ class EmployeesController < ApplicationController
 		enforce_this(params[:id] && (@wage = Wage.find_by_id(params[:id])) && (@wage.employee = @current_org.employees.find_by_id(@wage.employee.id)))
 		# @wage = @employee.wages.find :last
 #		if @wage.is_active?
-	  	ren_cont 'wage_view', {:wage => @wage} and return
+	  ren_cont 'wage_view', {:wage => @wage} and return
 #		else 
 #			ren_cont 'wage_edit', {:wage => @employee.wages.new} and return
 #		end
 	end
 
 	def set_state_for(wage)
+
 		# < means before, > means after
 		wage.update_attribute(:state, "Current")
 		if  wage.end && wage.end < Date.today
@@ -60,8 +62,7 @@ class EmployeesController < ApplicationController
 			enforce_this(params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
 			@wage = Wage.new
 			@wage.employee_id = @employee.id
-		 	@wage.organisation_id = @current_org.id
-			
+		 	@wage.organisation_id = @current_org.id	
 		end	
 
 		# < means before, > means after
@@ -81,12 +82,35 @@ class EmployeesController < ApplicationController
 	end
 
 	def run_payroll
-
+		enforce_this(@wages = @current_org.wages)
+		ren_cont 'run_payroll' and return
 	end
 
+	def payment_index
+		ren_cont 'payment_index', {:payments => @current_org.wage_payments.all} and return
+	end
+
+	def payment_view
+		ren_cont 'payment_view' and return
+	end
+
+	def payment_edit
+		enforce_this(params[:id] && @payment = @current_org.wage_payments.find_by_id(params[:id]))
+		if params[:commit]
+#			@payment.for_ni = params[:wage_payment][:for_ni]
+			if @payment.update_attributes(params[:wage_payment]) && @payment.update_attribute(:set_up, true)
+				@payment.update_attribute(:for_employee, (@payment.total - @payment.for_income_tax - @payment.for_ni - @payment.for_other))
+				flash[:notice] = "payment updated"
+				ren_cont 'payment_index', {:payments => @current_org.wage_payments.all} and return
+				else
+				flash[:error] = get_error_msgs @payment
+			end
+		end
+		ren_cont 'payment_edit' and return
+	end
 
   def ex_index
-    enforce_this (params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
+    enforce_this(params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
     ren_cont 'ex_index', {:employee => @employee} and return
   end
 

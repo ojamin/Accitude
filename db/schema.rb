@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100615140349) do
+ActiveRecord::Schema.define(:version => 20100708115856) do
 
   create_table "all_expenses", :force => true do |t|
     t.integer  "employee_id"
@@ -227,6 +227,8 @@ ActiveRecord::Schema.define(:version => 20100615140349) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "employee_id"
+    t.integer  "organisation_id"
+    t.boolean  "set_up"
   end
 
   create_table "wages", :force => true do |t|
@@ -242,6 +244,7 @@ ActiveRecord::Schema.define(:version => 20100615140349) do
     t.string   "other_deduction_desc"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "last_processed_at"
   end
 
   create_table "wiki_items", :force => true do |t|
