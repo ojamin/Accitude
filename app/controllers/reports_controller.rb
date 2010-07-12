@@ -19,7 +19,7 @@ class ReportsController < ApplicationController
     incoming_unpaid = 0 # people who owe me cash
     @current_org.invoices.each {|i| i.paid_on ? (incoming_paid += i.total_value) : (incoming_unpaid += i.total_value)}
     @current_org.liabilities.each {|l| l.paid_on ? (outgoing_paid += l.value) : (outgoing_unpaid += l.value)}
-
+		@current_org.wage_payments.each {|p| p.paid_on ? (outgoing_paid += p.total) : (outgoing_unpaid += p.total)}
 
     ren_cont 'overview', {:incoming_paid => incoming_paid, :incoming_unpaid => incoming_unpaid, :outgoing_paid => outgoing_paid, :outgoing_unpaid => outgoing_unpaid}
   end

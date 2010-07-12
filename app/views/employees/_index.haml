@@ -2,12 +2,16 @@
 - outp = []
 - employees.each do |e|
   - @unpaid = []
+  - wages = []
   - e.expenses.each do |ex| 
     -if !ex.paid_on?
       - @unpaid << ex.get_total
-  - outp << [link_to_remote(e.name, :url => {:action => :view, :id => e.id, :controller => :employees}), @unpaid.sum, link_to_remote("List Expenses", :url => {:action => :ex_index, :id => e.id, :controller => :employees})]
+  - e.wage_payments.each do |wp|
+    - unless wp.paid_on?
+      - wages << wp.total
+  - outp << [link_to_remote(e.name, :url => {:action => :view, :id => e.id, :controller => :employees}), @unpaid.sum, wages.sum, link_to_remote("List Expenses", :url => {:action => :ex_index, :id => e.id, :controller => :employees})]
 - outp << [do_pag(employees)]
 - if employees.size == 0
   Sorry, no results.
 - else
-  = gen_list outp, :size => 3, :head => ['Name', 'Unpaid Expenses', '']
+  = gen_list outp, :size => 4, :head => ['Name', 'Unpaid Expenses','Unpaid wages', '']
