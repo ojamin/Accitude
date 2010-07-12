@@ -1,11 +1,11 @@
-%h2 Wage Payments
+%h1 Wages
 %br
 
 - pending = []
 - set = []
 
 - payments.each do |p|
-  -if p.set_up = true
+  -unless p.set_up 
     - pending << p
   - else
     - set << p
@@ -18,10 +18,26 @@
     - outp << [link_to_remote(p.employee.name, :url => {:action => :payment_edit, :controller => :employees, :id => p.id}), due, number_to_currency(p.total, :unit => "£")]
   = gen_list outp, :head => ['Payment for:', 'Produced', 'Gross pay']
 - unless set.count == 0
+  - outp = []
+-#  %h3 Unpaid Wages
+- set.each do |p|
+  - due = (p.created_at - (p.created_at.day - 1).days)
+  - due = due.to_s[0..9]
+  - unless p.paid_on
+    - outp << [link_to_remote(p.employee.name, :url => {:action => :payment_edit, :controller => :employees, :id => p.id}), due, number_to_currency(p.total, :unit => "£"), number_to_currency(p.for_employee, :unit => "£") ]
+- unless outp.count < 1 
   %h3 Unpaid Wages
-  - set.each do |p|
-    - due = (p.created_at - (p.created_at.day - 1).days)
-    - due = due.to_s[0..9]
-    - if p.paid_on
-      - outp << [link_to_remote(p.employee.name, :url => {:action => :payment_edit, :controller => :employees, :id => p.id}), due, number_to_currency(p.total, :unit => "£"), number_to_currency(p.for_employee, :unit => "£") ]
-  = gen_list outp, :head => ['Payment for:', 'Produced', 'Gross pay', 'Net Pay']    
+  = gen_list outp, :size => 4, :head => ['Payment for:', 'Produced', 'Gross pay', 'Net Pay']     
+
+
+%br
+- outp = []
+-#%h3 Paid wages (Archive)
+- set.each do |p|
+  - due = (p.created_at - (p.created_at.day - 1).days)
+  - due = due.to_s[0..9]
+  - if p.paid_on
+    - outp << [link_to_remote(p.employee.name, :url => {:action => :payment_view, :controller => :employees, :id => p.id}), due, p.paid_on, number_to_currency(p.total, :unit => "£"), number_to_currency(p.for_employee, :unit => "£") ]
+- unless outp.count < 1
+  %h3 Paid Wages (Archive)
+  = gen_list outp, :size => 5, :head => ['Payment for:', 'Produced', 'Paid on', 'Gross pay', 'Net pay']

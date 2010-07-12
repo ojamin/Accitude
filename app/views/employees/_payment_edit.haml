@@ -10,6 +10,8 @@
   - outp << ['National insurance amount:', f.text_field(:for_ni)]
   - outp << ['Other deductions', f.text_field(:for_other)]
   - outp << ['What are the deductions?', f.text_area(:for_other_desc, :rows => 7, :cols => 33)]
+  - if @payment.set_up
+    - outp << ['Paid on', f.calendar_date_select(:paid_on, :popup => :force)]
   -# outp << ['(Must sum to current total)', '']
   - outp << [submit_tag("set up payment"), '']
   = gen_list outp

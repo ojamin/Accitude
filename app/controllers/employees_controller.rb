@@ -91,6 +91,7 @@ class EmployeesController < ApplicationController
 	end
 
 	def payment_view
+		enforce_this(params[:id] && @payment = @current_org.wage_payments.find_by_id(params[:id]))
 		ren_cont 'payment_view' and return
 	end
 
