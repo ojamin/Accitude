@@ -1,0 +1,16 @@
+%h2= "Wage Payment for #{@payment.employee.name}"
+%h3= "(part of #{@current_org.name})"
+%br
+- outp = []
+- p = @payment
+- outp << ['Gross payment:', number_to_currency(p.total, :unit => '£')]
+- outp << ['Paid for income tax:', number_to_currency(p.for_income_tax, :unit => '£')]
+- outp << ['Paid for National Insurance:', number_to_currency(p.for_ni, :unit => '£')]
+- if p.for_other != 0.00
+  - outp << ['Other deduction:', number_to_currency(p.for_other, :unit => '£')]
+  - outp << ['Reason for deduction:', p.for_other_desc]
+- outp << ['Remaining wages:', number_to_currency(p.for_employee, :unit => "£")]
+- outp << ["-----------------------------------------------------------------------------------------------", "-------------------------"]
+- outp << ['wage for:', (p.created_at).to_s[0..6]] #((p.created_at.day - 1).days)]
+- outp << ['Wage Paid on:', p.paid_on]
+= gen_list outp, :size => 2
