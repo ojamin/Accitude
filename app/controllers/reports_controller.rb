@@ -27,7 +27,8 @@ class ReportsController < ApplicationController
   def unpaids
     invoices = @current_org.invoices.find_all_by_paid_on nil
     liabilities = @current_org.liabilities.find_all_by_paid_on nil
-    ren_cont 'unpaids', {:invoices => invoices, :liabilities => liabilities}
+		payments = @current_org.wage_payments.find_all_by_paid_on nil
+		ren_cont 'unpaids', {:payments => payments, :invoices => invoices, :liabilities => liabilities}
   end
 
   def contacts

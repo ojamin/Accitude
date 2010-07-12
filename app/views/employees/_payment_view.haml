@@ -10,7 +10,7 @@
   - outp << ['Other deduction:', number_to_currency(p.for_other, :unit => '£')]
   - outp << ['Reason for deduction:', p.for_other_desc]
 - outp << ['Remaining wages:', number_to_currency(p.for_employee, :unit => "£")]
-- outp << ["-----------------------------------------------------------------------------------------------", "-------------------------"]
+- outp << ["&nbsp;".html_safe!, ""]
 - outp << ['wage for:', (p.created_at).to_s[0..6]] #((p.created_at.day - 1).days)]
 - outp << ['Wage Paid on:', p.paid_on]
 = gen_list outp, :size => 2
