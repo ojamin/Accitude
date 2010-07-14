@@ -29,7 +29,8 @@
     - outp << [link_to_remote(e.name, :url => {:action => :wage_edit, :controller => :employees, :id => e.id})]
   = gen_list outp, :size => 1 
 %br
-%h2 Current Wages
+- if current.count > 0
+  %h2 Current Wages
 - outp = []
 - current.each do |e|
   - wage = e.wages.find :last
@@ -39,11 +40,12 @@
   - annum = ((wage.hourly_rate * wage.weekly_hours) / 5) * 252
   - annum = number_to_currency(annum, :unit => "£")
   - outp << [link_to_remote(wage.employee.name, :url => {:action => :wage_view, :controller => :employees, :id => wage.id}), wage.start, hourly, wage.weekly_hours.to_i, weekly, monthly, annum] 
-= gen_list outp, :size => 7, :head => ['Employee', 'Rate from', 'Hourly rate', 'Hours per week', 'per week', 'four weekly', 'Per Annum']
+- if current.count > 0
+  = gen_list outp, :size => 7, :head => ['Employee', 'Rate from', 'Hourly rate', 'Hours per week', 'per week', 'four weekly', 'Per Annum']
 %br
 
 - outp = []
-%h2 Archive.
+
 - emps = @current_org.employees.all
 - wages = []
 - emps.each do |e|
@@ -58,7 +60,9 @@
     - annum = ((w.hourly_rate * w.weekly_hours) / 5) * 252
     - annum = number_to_currency(annum, :unit => "£")
     - outp << [link_to_remote(w.employee.name, :url => {:action => :wage_view, :controller => :employees, :id => w.id}), w.start, w.end, hourly, w.weekly_hours.to_i, weekly, monthly, annum]
-= gen_list outp, :size => 8, :head => ['Employee', 'Rate from', 'Rate ended', 'Hourly rate', 'Hours per week', 'per week', 'four weekly', 'Per Annum']
+- if outp.count > 0
+  %h2 Archive
+  = gen_list outp, :size => 8, :head => ['Employee', 'Rate from', 'Rate ended', 'Hourly rate', 'Hours per week', 'per week', 'four weekly', 'Per Annum']
 %br
 %br
 %br

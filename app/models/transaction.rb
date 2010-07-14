@@ -9,6 +9,8 @@ class Transaction < ActiveRecord::Base
   belongs_to :contact
   belongs_to :bank_account
   belongs_to :invoice
+	belongs_to :organisation
+	belongs_to :wage_payment
 
   KINDS = ['Credit', 'Debit']
 

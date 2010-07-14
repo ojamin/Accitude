@@ -2,11 +2,11 @@
 
 %tr#item_new{:class => "list_colour#{colour}"}
   %td
-    = text_field_tag 'item[desc]', '', :size => '50'
+    = text_field_tag 'item[desc]', '...', :size => '50'
     = hidden_field_tag :item_ids2, item_ids
     = hidden_field_tag :colour_id, colour
-  %td= text_field_tag 'item[quantity]', '', :size => '4'
+  %td= text_field_tag 'item[quantity]', '0', :size => '4'
   %td
-    = text_field_tag 'item[value]', '', :size => 4
+    = text_field_tag 'item[value]', '0', :size => 4
     %br/
     = submit_tag :Add

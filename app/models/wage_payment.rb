@@ -9,6 +9,6 @@ class WagePayment < ActiveRecord::Base
 	belongs_to :employee
 	belongs_to :wage
 	belongs_to :organisation
-	has_many :transactions
+	has_many :transactions, :foreign_key => :wage_payment_id
 
 end

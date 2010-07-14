@@ -65,14 +65,31 @@ class InvoicesController < ApplicationController
     enforce_this @invoice.been_paid? == false
     if params[:commit]
       @invoice.update_attributes params[:invoice]
-      if params[:contact_id]
+			logger.info 'this one'
+
+#			if params[:paid_on]
+#				t = Transaction.new
+#				t.invoice_id = @invoice.id
+#				items = @invoice.items.all
+#				val = 0
+#  			items.each do |i|
+#					val =+ i.value 
+#				end
+#  			t.value = val
+#				t.kind = 'Credit'
+#				t.save	
+#  			logger.info 'transaction script has been called'
+#			end
+
+			if params[:contact_id]
         return unless (c = @current_org.contacts.find_by_id params[:contact_id])
         @invoice.contact = c
       end
       if @invoice.save
-        insert_items params[:item_ids], @invoice
-        ren_cont 'view', {:invoice => @invoice} and return
-      else
+				logger.info 'invoice has been saved'
+				insert_items params[:item_ids], @invoice
+				ren_cont 'view', {:invoice => @invoice} and return
+			else
         flash[:error] = get_error_msgs @invoice
       end
     end
@@ -89,7 +106,24 @@ class InvoicesController < ApplicationController
       @invoice.paid_on = params[:paid_on].to_date
       @invoice.save
       flash[:notice] = "Invoice marked as paid"
-    end
+
+			t = Transaction.new
+			t.type = 'Invoice'
+			t.contact_id = @invoice.contact.id
+			t.invoice_id = @invoice.id
+			items = @invoice.items.all
+			val = 0
+ 			items.each do |i|
+				val =+ i.value 
+			end
+ 			t.value = val
+			t.kind = 'Credit'
+			t.desc = "Invoice: #{@invoice.contact.name}, #{@invoice.contact.company}"
+			t.organisation_id = @current_org.id
+			t.save	
+			logger.info 'transaction script has been called'
+					
+		end
     ren_cont 'view', {:invoice => @invoice} and return
   end
 

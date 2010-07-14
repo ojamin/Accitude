@@ -101,6 +101,9 @@ class EmployeesController < ApplicationController
 #			@payment.for_ni = params[:wage_payment][:for_ni]
 			if @payment.update_attributes(params[:wage_payment]) && @payment.update_attribute(:set_up, true)
 				@payment.update_attribute(:for_employee, (@payment.total - @payment.for_income_tax - @payment.for_ni - @payment.for_other))
+				if @payment.paid_on
+					make_payment_transaction @payment
+				end
 				flash[:notice] = "payment updated"
 				ren_cont 'payment_index', {:payments => @current_org.wage_payments.all} and return
 				else
@@ -110,7 +113,19 @@ class EmployeesController < ApplicationController
 		ren_cont 'payment_edit' and return
 	end
 
-  def ex_index
+	def make_payment_transaction(payment)
+		emp = payment.employee.name
+		t = Transaction.new
+		t.wage_payment_id = @payment.id
+		t.type = 'WagePayment'
+		t.organisation_id = @current_org.id
+		t.kind = 'Debit'
+		t.desc = "Wage payment for #{emp}"
+		t.save
+		logger.info 'WagePayment transaction created'
+	end
+
+	def ex_index
     enforce_this(params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
     ren_cont 'ex_index', {:employee => @employee} and return
   end
@@ -126,6 +141,7 @@ class EmployeesController < ApplicationController
       @expense.update_attributes params[:expense]
       if @expense.save
         insert_items params[:item_ids], @expense
+				make_transaction(@expense)
         ren_cont 'ex_view', {:employee => @employee, :expense => @expense} and return
       else
         flash[:error] = get_error_msgs @expense
@@ -140,8 +156,9 @@ class EmployeesController < ApplicationController
                   (@expense = @employee.expenses.find_by_id(params[:exp])))
     if params[:commit] && params[:paid_on] && ! @expense.paid_on && params[:paid_on].to_date >= @expense.claimed_on
       @expense.paid_on = params[:paid_on].to_date
-      @expense.savec
+      @expense.save
       flash[:notice] = "Expense marked as paid!"
+			make_transaction(@expense)
     end
     ren_cont 'ex_view', {:employee => @employee, :expense => @expense} and return
   end
@@ -150,7 +167,23 @@ class EmployeesController < ApplicationController
     ren_cont 'index', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
   end
 
-  def view
+	def make_transaction(expense)
+		t = Transaction.new
+		t.type = "Expense"
+		t.expense_id = expense.id
+		val = 0
+		expense.items.each do |it|
+			val += it.value
+		end
+		t.value = val
+		t.kind = 'Debit'
+		t.desc = ""
+		t.organisation_id = @current_org.id
+		t.save
+		logger.info "Transaction script has been called"
+	end
+
+	def view
     enforce_this (params[:id] && (@employee = @current_org.employees.find_by_id(params[:id].to_s)))
     ren_cont 'view', {:employee => @employee} and return
   end

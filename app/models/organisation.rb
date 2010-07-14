@@ -15,6 +15,7 @@ class Organisation < ActiveRecord::Base
   has_many :recurring_liabilities
   has_many :bank_accounts
 	has_many :wage_payments
+	has_many :transactions
 	has_one :image
 	
 

@@ -6,9 +6,9 @@
     - @pup = "Paid"
   - else
     - @pup = "Unpaid"
-  - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), i.incurred_on.inspect, @pup]
+  - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), i.description, i.incurred_on.inspect, @pup]
 - outp << [do_pag(liabilities), ""]
 - if liabilities.size == 0
   Sorry, no results.
 - else
-  = gen_list outp, {:head => ['Supplier', 'Incurred On', 'Paid?'], :size => 3}
+  = gen_list outp, {:head => ['Supplier', 'Description','Incurred On', 'Paid?'], :size => 4}
