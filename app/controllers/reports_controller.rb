@@ -13,7 +13,7 @@ class ReportsController < ApplicationController
 	end
 
 	def transactions
-	  @transactions = Transaction.find(:all, :order => "created_at DESC")	
+	  @transactions = Transaction.find(:all, :order => "created_at ASC")	
 		ren_cont 'transactions', {:transactions => @transactions} and return
 	end
 
