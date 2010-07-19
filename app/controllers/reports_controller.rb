@@ -12,6 +12,11 @@ class ReportsController < ApplicationController
 		ren_cont 'index'
 	end
 
+	def transactions
+	  @transactions = Transaction.find(:all, :order => "created_at DESC")	
+		ren_cont 'transactions', {:transactions => @transactions} and return
+	end
+
   def overview
     incoming_paid = 0
     outgoing_paid = 0
@@ -21,7 +26,7 @@ class ReportsController < ApplicationController
     @current_org.liabilities.each {|l| l.paid_on ? (outgoing_paid += l.value) : (outgoing_unpaid += l.value)}
 		@current_org.wage_payments.each {|p| p.paid_on ? (outgoing_paid += p.total) : (outgoing_unpaid += p.total)}
 
-    ren_cont 'overview', {:incoming_paid => incoming_paid, :incoming_unpaid => incoming_unpaid, :outgoing_paid => outgoing_paid, :outgoing_unpaid => outgoing_unpaid}
+    ren_cont 'overview', {:incoming_paid => incoming_paid, :incoming_unpaid => incoming_unpaid, :outgoing_paid => outgoing_paid, :outgoing_unpaid => outgoing_unpaid} and return
   end
 
   def unpaids

@@ -108,15 +108,15 @@ class InvoicesController < ApplicationController
       flash[:notice] = "Invoice marked as paid"
 
 			t = Transaction.new
-			t.type = 'Invoice'
-			t.contact_id = @invoice.contact.id
+			t.ttype = 'Invoice'
+#			t.contact_id = @invoice.contact.id
 			t.invoice_id = @invoice.id
-			items = @invoice.items.all
-			val = 0
- 			items.each do |i|
-				val =+ i.value 
-			end
- 			t.value = val
+#			items = @invoice.items.all
+#			val = 0
+# 			items.each do |i|
+#				val =+ i.value 
+#			end
+# 			t.value = val
 			t.kind = 'Credit'
 			t.desc = "Invoice: #{@invoice.contact.name}, #{@invoice.contact.company}"
 			t.organisation_id = @current_org.id

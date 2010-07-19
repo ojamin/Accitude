@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100712152816) do
+ActiveRecord::Schema.define(:version => 20100714125221) do
 
   create_table "all_expenses", :force => true do |t|
     t.integer  "employee_id"
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(:version => 20100712152816) do
     t.integer  "bank_account_id"
     t.integer  "invoice_id"
     t.date     "posted_on"
-    t.string   "type"
+    t.string   "ttype"
     t.string   "desc"
     t.decimal  "value"
     t.string   "kind"
