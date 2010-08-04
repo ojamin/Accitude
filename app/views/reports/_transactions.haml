@@ -13,7 +13,7 @@
       - amnt =+ val
     - bal = bal + amnt
     - outp << [t.created_at.to_s[0..9], |
-               "Invoice: #{t.desc}", |
+               t.desc , |
                format_as_currency(amnt), |
                '', |
                format_as_currency(bal)] |
