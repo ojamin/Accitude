@@ -2,7 +2,8 @@ class PaymentPlan < ActiveRecord::Base
 
   attr_accessible :start, :times, :last_run_on, :frequency
 
-  belongs_to :contact
+	belongs_to :project
+	belongs_to :contact
   belongs_to :organisation
   has_many :invoices
   has_many :items

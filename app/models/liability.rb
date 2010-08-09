@@ -3,6 +3,7 @@ class Liability < AllLiability
   attr_accessible :incurred_on, :paid_on, :description,
                   :receipt_id, :processed, :value
 
+	belongs_to :project
   belongs_to :contact
   belongs_to :organisation
   has_many :transactions

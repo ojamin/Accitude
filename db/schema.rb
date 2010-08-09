@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100714125221) do
+ActiveRecord::Schema.define(:version => 20100806152327) do
 
   create_table "all_expenses", :force => true do |t|
     t.integer  "employee_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20100714125221) do
     t.datetime "updated_at"
     t.text     "notes"
     t.string   "type"
+    t.integer  "project_id"
   end
 
   create_table "all_invoices", :force => true do |t|
@@ -34,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20100714125221) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
+    t.integer  "project_id"
   end
 
   create_table "all_liabilities", :force => true do |t|
@@ -48,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20100714125221) do
     t.datetime "updated_at"
     t.decimal  "value"
     t.string   "type"
+    t.integer  "project_id"
   end
 
   create_table "bank_accounts", :force => true do |t|
@@ -146,6 +149,15 @@ ActiveRecord::Schema.define(:version => 20100714125221) do
     t.string   "frequency"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "project_id"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "organisation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "quotes", :force => true do |t|
@@ -155,6 +167,7 @@ ActiveRecord::Schema.define(:version => 20100714125221) do
     t.date     "valid_till"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "project_id"
   end
 
   create_table "recordeds", :force => true do |t|
@@ -202,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20100714125221) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organisation_id"
+    t.integer  "project_id"
   end
 
   create_table "users", :force => true do |t|

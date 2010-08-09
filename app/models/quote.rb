@@ -2,7 +2,8 @@ class Quote < ActiveRecord::Base
 
   attr_accessible :produced_on, :valid_till
 
-  belongs_to :contact
+	belongs_to :project
+	belongs_to :contact
   belongs_to :organisation
   has_many :items
   has_many :invoices
