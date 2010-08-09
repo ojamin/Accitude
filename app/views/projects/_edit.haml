@@ -1,6 +1,6 @@
-%h1= "New project for #{@org.name}"
+%h1= "Editing #{@project.name}"
 %br
-- form_remote_for @project, :url => {:controller => :projects, :action => :create} do |f|
+- form_remote_for @project, :url => {:controller => :projects, :action => :edit, :id => params[:id], :pid => params[:pid]} do |f|
   = f.error_messages
   %table
     %tr

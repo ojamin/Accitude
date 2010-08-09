@@ -28,6 +28,21 @@ class ProjectsController < ApplicationController
 		ren_cont 'create', {:project => @project, :id => @org.id} and return
 	end
 
+	def edit
+		enforce_this(@project = Project.find_by_id(params[:pid]))
+		@org = Organisation.find_by_id params[:id]
+		logger.info @project	
+		if params[:commit]
+			if @project.update_attributes params[:project]
+				flash[:notice] = "Project updated"
+				ren_cont 'index', {:id => @org.id} and return
+			else
+				flash[:notice] = "Project must have a unique name"
+			end
+		end
+		ren_cont 'edit', {:project => @project, :id => @org.id, :pid => params[:pid]}
+	end
+
 	def delete
 		#enforce_this(params[:id] && params[:pid] && @org = Organisation.find_by_id(params[:id]) && @project = Project.find_by_id(params[:pid]))
 		enforce_this(@project = Project.find_by_id(params[:pid]))

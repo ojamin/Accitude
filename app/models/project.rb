@@ -11,5 +11,6 @@ class Project < ActiveRecord::Base
 
 	validates_presence_of :name, :message => "You must include a name"
 	validates_uniqueness_of :name
+	validates_length_of :desc, :maximum => 1000, :message => "Description can't be more than 1000 letters"
 
 end
