@@ -138,7 +138,8 @@ class EmployeesController < ApplicationController
     enforce_this (params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
     (@expense = Expense.new).employee = @employee unless params[:eid] && (@expense = Expense.find_by_id(params[:eid]))
     if params[:commit]
-      @expense.update_attributes params[:expense]
+			logger.info params[:expense].inspect
+			@expense.update_attributes params[:expense]
       if @expense.save
         insert_items params[:item_ids], @expense
 				make_transaction(@expense)
@@ -170,7 +171,7 @@ class EmployeesController < ApplicationController
 
 	def make_transaction(expense)
 		t = Transaction.new
-		t.type = "Expense"
+		t.ttype = "Expense"
 		t.expense_id = expense.id
 		val = 0
 		expense.items.each do |it|

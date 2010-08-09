@@ -10,6 +10,7 @@
 %br
 = gen_list [ |
   ['Supplier', liability.contact.name_long], |
+  ['Project', liability.project.name], |
   ['Incurred on', liability.incurred_on.inspect], |
   [(liability.paid_on ? "Paid on" : "Set paid on date"), (liability.paid_on ? liability.paid_on.inspect : render(:partial => "widgets/paid_on_select", :locals => {:obj => liability, :date => liability.incurred_on}))], |
   ['Description', liability.description], |

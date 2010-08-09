@@ -1,6 +1,6 @@
 class Quote < ActiveRecord::Base
 
-  attr_accessible :produced_on, :valid_till
+  attr_accessible :produced_on, :valid_till, :project_id
 
 	belongs_to :project
 	belongs_to :contact

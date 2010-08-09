@@ -1,5 +1,7 @@
 class Expense < AllExpense
 
+	attr_accessible :project_id
+
 	belongs_to :organisation
 	belongs_to :project
   belongs_to :employee

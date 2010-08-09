@@ -12,7 +12,8 @@
     ['Claimed on date', f.calendar_date_select(:claimed_on, :popup => :force)], |
     ['Paid on date', f.calendar_date_select(:paid_on, :popup => :force, :valid_date_check => "date > new Date($F('expense_claimed_on')).stripTime()")], |
     ['Notes', f.text_area(:notes, :size => '31x6')], |
-    [submit_tag(expense.id ? 'Update' : 'Add'), ''] |
+    ['Project', f.select(:project_id, @current_org.projects.all.collect {|p| [ p.name, p.id ]}, {:include_blank => true})], |
+    [f.submit(expense.id ? 'Update' : 'Add'), ''] |
   ] |
 
 -# attempt to have items plus total in the table! (to revert replace outp with :item => expense.items

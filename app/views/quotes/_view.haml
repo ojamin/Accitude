@@ -12,7 +12,8 @@ Send as email
 %br 
 = gen_list [ |
   ["Produced on", quote.produced_on.inspect], |
-  ["Valid until", quote.valid_till.inspect] |
+  ["Valid until", quote.valid_till.inspect], |
+  ["Project", quote.project.name] |
 ] |
 
 = gen_items :items => quote.items, :title => "Items attached to the quote:"

@@ -1,6 +1,6 @@
 class PaymentPlan < ActiveRecord::Base
 
-  attr_accessible :start, :times, :last_run_on, :frequency
+  attr_accessible :start, :times, :last_run_on, :frequency, :project_id
 
 	belongs_to :project
 	belongs_to :contact

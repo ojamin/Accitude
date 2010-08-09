@@ -2,12 +2,12 @@
 [
 = link_to_remote :Back, :url => {:action => :rec_index, :controller => :invoices}
 - unless plan.times == 0
-  \-
   = link_to_remote 'End plan', :url => {:controller => :invoices, :action => :rec_end, :id => plan.id}, :confirm => 'Really end plan?'
 ]
 %br
 = gen_list [ |
   ["Customer", plan.contact.name_long], |
+  ["Project", plan.project.name], |
   ["Start date", plan.start.inspect], |
   ["Times left to run (-1 = unending)", (plan.times == 0 ? 'Ended' : plan.times)], |
   ["Last run on", plan.last_run_on.inspect], |
