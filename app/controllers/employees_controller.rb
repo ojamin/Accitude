@@ -164,7 +164,8 @@ class EmployeesController < ApplicationController
   end
 
   def index
-    ren_cont 'index', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
+		logger.info "HHHHHHHHHH #{@current_project.name}"
+		ren_cont 'index', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
   end
 
 	def make_transaction(expense)

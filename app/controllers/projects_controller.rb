@@ -54,4 +54,23 @@ class ProjectsController < ApplicationController
 		ren_cont 'index', {:id => @org.id} and return
 	end
 
+	def set_project
+		set_active_project_id params[:id] if params[:id]
+		logger.info "HHHHHHH #{@current_project}"
+		redirect_to :controller => :main, :action => :index and return
+	end
+
+#	def set_active_project_id(proj)
+#		proj = proj.to_i
+#		@project = Project.find_by_id proj
+#		@org = @project.organisation
+#		session[:project_id] = proj and setup_project and return true if @logged_in && (@logged_in.is_admin || @logged_in.organisation.ids.include?(@org.id))
+#		return false
+#	end
+
+#	def setup_project
+#		return false unless @logged_in
+#		
+#	end
+
 end

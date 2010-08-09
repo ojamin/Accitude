@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password, :passagain, :oldpass, :pass
 
-  before_filter :check_login, :enforce_login, :setup_org, :enforce_org
+  before_filter :check_login, :enforce_login, :setup_org, :enforce_org, :setup_project
 
   @logged_in = false
   @current_org = false
@@ -60,6 +60,25 @@ class ApplicationController < ActionController::Base
     session.reset unless @logged_in
     return @logged_in
   end
+
+	def set_active_project_id(proj)
+	 	proj = proj.to_i	
+		@project = Project.find_by_id proj
+		@org = @project.organisation
+		logger.info "set Project id called"
+		session[:project_id] = proj and setup_project and return true if @logged_in && (@logged_in.is_admin || @logged_in.organisation.ids.include?(@org.id))
+		return false
+	end
+
+	def setup_project
+	 	return false unless @logged_in
+
+ 	 	@current_project = Project.find_by_id(session[:project_id])	 
+	end
+
+	def enforce_project
+		
+	end
 
   def enforce_login
     enforce_this @logged_in
