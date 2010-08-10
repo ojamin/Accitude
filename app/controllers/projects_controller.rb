@@ -56,6 +56,7 @@ class ProjectsController < ApplicationController
 
 	def set_project
 		set_active_project_id params[:id] if params[:id]
+		set_active_org_id @current_project.organisation.id
 		flash[:notice] = "Project set to '#{@current_project.name}'"
 		logger.info "HHHHHHH #{@current_project}"
 		redirect_to :controller => :main, :action => :index and return

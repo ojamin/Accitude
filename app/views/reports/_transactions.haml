@@ -1,4 +1,7 @@
-%h1 Transactions
+- if @current_project
+  %h1= "Transactions for #{@current_project.name}"
+- else
+  %h1= "Transactions for #{@current_org.name}"
 %br 
 
 - bal = 0
@@ -57,7 +60,10 @@
     - outp << [t.created_at, t.ttype, 'not done yet', '', '']
 
 - outp = outp.reverse
-= gen_list outp, :head => ['Date', 'Description', 'Project', 'Money in', 'Money out', 'Balance'], :size => 6
+- if outp.size > 0
+  = gen_list outp, :head => ['Date', 'Description', 'Project', 'Money in', 'Money out', 'Balance'], :size => 6
+- else
+  %p Sorry, no results.
 
 
 

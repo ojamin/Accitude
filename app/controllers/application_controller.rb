@@ -107,4 +107,11 @@ class ApplicationController < ActionController::Base
     return obj.errors.full_messages.join(' and ') if obj.errors.size > 0
     return "Error in input"
   end
+
+  def set_no_project
+    set_active_project_id 0
+		return
+	end
+
+
 end

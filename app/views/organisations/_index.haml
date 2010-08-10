@@ -18,8 +18,18 @@
           link_to(p.name, :controller => :projects, :action => :set_project, :id => p.id), |
           "" |
         ] |
-- outp << ['','','']
-- outp << [do_pag(orgs), ""]
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+
+  =# gen_list outp, :size => 3
+-# outp << [do_pag(orgs), ""]
 - if orgs.size == 0
   Sorry, no results.
 - else

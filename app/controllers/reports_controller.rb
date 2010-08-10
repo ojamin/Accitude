@@ -13,7 +13,11 @@ class ReportsController < ApplicationController
 	end
 
 	def transactions
-	  @transactions = Transaction.find(:all, :order => "created_at ASC")	
+		if @current_project
+			@transactions = @current_project.transactions.find(:all, :order => "created_at ASC")
+		else
+			@transactions = @current_org.transactions.find(:all, :order => "created_at ASC")	
+		end
 		ren_cont 'transactions', {:transactions => @transactions} and return
 	end
 
