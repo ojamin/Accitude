@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
 		@project = Project.new
 		if params[:commit]
 			if @project.update_attributes params[:project]
-				@project.update_attribute :organisation_id, @current_org.id
+				@project.update_attribute :organisation_id, @org.id
 				flash[:notice] = "Project created"
 				ren_cont 'index', {:id => @org.id} and return
 			else
@@ -56,12 +56,14 @@ class ProjectsController < ApplicationController
 
 	def set_project
 		set_active_project_id params[:id] if params[:id]
+		flash[:notice] = "Project set to '#{@current_project.name}'"
 		logger.info "HHHHHHH #{@current_project}"
 		redirect_to :controller => :main, :action => :index and return
 	end
 
 	def set_no_project
 		set_active_project_id 0
+		flash[:notice] = "No current project. All entries currently available"
 		redirect_to :controller => :main, :action => :index and return
 	end
 

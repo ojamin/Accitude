@@ -10,7 +10,11 @@ class QuotesController < ApplicationController
 
   public
   def index
-    @quotes = @current_org.quotes.paginate :page => (params[:page] || '1')
+		unless @current_project
+			@quotes = @current_org.quotes.paginate :page => (params[:page] || '1')
+		else
+			@quotes = @current_project.quotes.paginate :page => (params[:page] || '1')	
+		end
     ren_cont 'index', {:quotes => @quotes} and return
   end
 

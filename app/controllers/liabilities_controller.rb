@@ -10,7 +10,11 @@ class LiabilitiesController < ApplicationController
 
   public
   def index
-    @liabilities = @current_org.liabilities.paginate :page => (params[:page] || '1')
+		if @current_project
+			@liabilities = @current_project.liabilities.paginate :page => (params[:page] || '1')
+		else
+			@liabilities = @current_org.liabilities.paginate :page => (params[:page] || '1')
+		end
     ren_cont 'index', {:liabilities => @liabilities} and return
   end
 

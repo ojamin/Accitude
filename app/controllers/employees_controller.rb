@@ -3,11 +3,12 @@ class EmployeesController < ApplicationController
   private
   def menu_items
     return [
-      ['List Employees', {:url => {:action => :index}}],
-      ['Add Employee', {:url => {:action => :new}}],
+      ['List employees', {:url => {:action => :index}}],
+      ['Add', {:url => {:action => :new}}],
 			['Wages', {:url => {:action => :wages}}],
 			['Run Payroll', {:url => {:action => :run_payroll}}],
-			['Wage Payments', {:url => {:action => :payment_index}}]
+			['Wage Payments', {:url => {:action => :payment_index}}],
+			['All expenses', {:url => {:action => :ex_all}}]
 		]
   end
 
@@ -126,7 +127,7 @@ class EmployeesController < ApplicationController
 	end
 
 	def ex_index
-    enforce_this(params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
+		enforce_this(params[:id] && (@employee = @current_org.employees.find_by_id(params[:id])))
     ren_cont 'ex_index', {:employee => @employee} and return
   end
 
@@ -164,8 +165,24 @@ class EmployeesController < ApplicationController
     ren_cont 'ex_view', {:employee => @employee, :expense => @expense} and return
   end
 
+	def ex_all
+		if @current_project
+			enforce_this(@expenses = @current_project.expenses.all)
+			@current = @current_project.name
+		else
+			enforce_this(@current_org)
+			@expenses = []
+			Expense.all.each do |ex|
+				if ex.employee.organisation_id == @current_org.id
+					@expenses << ex
+				end
+			end
+			@current = @current_org.name
+		end
+		ren_cont 'ex_all', {:expenses => @expenses, :current => @current}
+	end
+
   def index
-		logger.info "HHHHHHHHHH #{@current_project.name}"
 		ren_cont 'index', {:employees => @current_org.employees.paginate(:page => (params[:page] || '1'))} and return
   end
 

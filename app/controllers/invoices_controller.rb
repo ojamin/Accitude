@@ -48,12 +48,22 @@ class InvoicesController < ApplicationController
     end
 
     if conditions.length != 0
-      @invoices = @current_org.invoices.find(:all, :conditions => [conditions.join(' and '), *conditionvalues]).paginate :page => (params[:page] || '1')
+			if @current_project
+				@invoices = @current_project.invoices.find(:all, :conditions => [conditions.join(' and '), *conditionvalues]).paginate :page => (params[:page] || '1')
+			else
+			@invoices = @current_org.invoices.find(:all, :conditions => [conditions.join(' and '), *conditionvalues]).paginate :page => (params[:page] || '1')
+			end
     else
-      @invoices = @current_org.invoices.paginate :page => (params[:page] || '1')
+			if @current_project
+				@invoices = @current_project.invoices.paginate :page => (params[:page] || '1')
+			else
+      	@invoices = @current_org.invoices.paginate :page => (params[:page] || '1')
+			end
     end
     @contacts = @current_org.customers
-    ren_cont 'index', {:invoices => @invoices, :contacts => @contacts, :contact => @contact, :before => @before, :after => @after, :procstate => @procstate} and return
+
+
+		ren_cont 'index', {:invoices => @invoices, :contacts => @contacts, :contact => @contact, :before => @before, :after => @after, :procstate => @procstate} and return
   end
 
   def new
@@ -125,8 +135,12 @@ class InvoicesController < ApplicationController
     ren_cont 'rec_view', {:plan => @plan} and return
   end
 
-  def rec_index
-    @plans = @current_org.payment_plans.paginate :page => (params[:page] || '1')
+	def rec_index
+		unless @current_project
+			@plans = @current_org.payment_plans.paginate :page => (params[:page] || '1')
+		else
+			@plans = @current_project.payment_plans.paginate :page => (params[:page] || '1')	
+		end
     ren_cont 'rec_index', {:plans => @plans} and return
   end
 
