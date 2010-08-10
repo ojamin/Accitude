@@ -7,12 +7,18 @@
      "[ #{link_to_remote("manage projects", :url => {:controller => :projects, :id => o.id})} ]".html_safe! |
   ] |
   - if o.projects.size > 0
+    - outp << [ |
+              "--->", |
+              link_to("No active project", :controller => :projects, :action => :set_no_project), |
+              "" |
+            ] |
     - o.projects.each do |p|
       - outp << [ |
           "--->", |
-          link_to_remote(p.name, :url => {:controller => :projects, :action => :set_project, :id => p.id}).html_safe!, |
+          link_to(p.name, :controller => :projects, :action => :set_project, :id => p.id), |
           "" |
         ] |
+- outp << ['','','']
 - outp << [do_pag(orgs), ""]
 - if orgs.size == 0
   Sorry, no results.

@@ -60,7 +60,8 @@ class PaymentPlan < ActiveRecord::Base
     while self.needs_processing?
       inv = Invoice.new
       inv.produced_on = self.last_run_on ? (self.last_run_on + self.freq_to_date) : self.start
-      inv.due_on = inv.produced_on + 1.month
+			inv.project_id = self.project_id
+			inv.due_on = inv.produced_on + 1.month
       inv.contact = self.contact
  			inv.organisation = self.organisation
       inv.payment_plan = self

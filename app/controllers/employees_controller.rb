@@ -178,6 +178,9 @@ class EmployeesController < ApplicationController
 			val += it.value
 		end
 		t.value = val
+		if expense.project
+			t.project_id = expense.project_id
+		end
 		t.kind = 'Debit'
 		t.desc = ""
 		t.organisation_id = @current_org.id

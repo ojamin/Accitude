@@ -4,6 +4,10 @@
 - bal = 0
 - outp = []
 - @transactions.each do |t|
+  - if t.project
+    - @project = t.project.name
+  - else
+    - @project = ""
   - if t.ttype == 'Invoice' 
     -# logger.info 'IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII'
     - inv = Invoice.find_by_id t.invoice_id
@@ -14,6 +18,7 @@
     - bal = bal + amnt
     - outp << [t.created_at.to_s[0..9], |
                t.desc , |
+               @project, |
                format_as_currency(amnt), |
                '', |
                format_as_currency(bal)] |
@@ -22,6 +27,7 @@
     - bal = bal - lia.value
     - outp << [t.created_at.to_s[0..9], |
                "Liability: #{t.desc}", |
+               @project, |
                '', |
                format_as_currency(lia.value), |
                format_as_currency(bal) ] |
@@ -33,7 +39,8 @@
       - amnt =+ val
     - bal = bal - amnt
     - outp << [t.created_at.to_s[0..9], |
-               "Expense: #{t.desc}", |
+               "Expense: #{t.expense.employee.name}, #{t.desc}", |
+               @project, |
                '', |
                format_as_currency(amnt), |
                format_as_currency(bal)] |
@@ -42,6 +49,7 @@
     - bal = bal - wp.total
     - outp << [t.created_at.to_s[0..9], |
                "Wages for #{wp.employee.name}", |
+               '', | 
                '', |
                format_as_currency(wp.total), |
                format_as_currency(bal)] |
@@ -49,7 +57,7 @@
     - outp << [t.created_at, t.ttype, 'not done yet', '', '']
 
 - outp = outp.reverse
-= gen_list outp, :head => ['Date', 'Description', 'Money in', 'Money out', 'Balance(pending)'], :size => 5
+= gen_list outp, :head => ['Date', 'Description', 'Project', 'Money in', 'Money out', 'Balance'], :size => 6
 
 
 

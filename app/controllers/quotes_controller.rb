@@ -44,7 +44,8 @@ class QuotesController < ApplicationController
     @invoice.contact = @quote.contact
     @invoice.organisation = @current_org
     @invoice.quote = @quote
-    @invoice.save
+		@invoice.project_id = @quote.project_id
+		@invoice.save
     @quote.items.each {|i|
       item = i.clone
       item.quote = nil

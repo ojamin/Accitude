@@ -52,10 +52,13 @@ class LiabilitiesController < ApplicationController
 
 	def make_transaction(liability)
 	 	t = Transaction.new
-		t.type = 'Liability'
+		t.ttype = 'Liability'
 		t.liability_id = liability.id
 		t.contact_id = liability.contact.id
 		t.value = liability.value
+		if liability.project
+			t.project_id = liability.project_id
+		end
 		t.kind = 'Debit'
 		t.desc = "Paid to #{liability.contact.name} for #{liability.description}"
 		t.organisation_id = @current_org.id

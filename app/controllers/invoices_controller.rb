@@ -67,19 +67,6 @@ class InvoicesController < ApplicationController
       @invoice.update_attributes params[:invoice]
 			logger.info 'this one'
 
-#			if params[:paid_on]
-#				t = Transaction.new
-#				t.invoice_id = @invoice.id
-#				items = @invoice.items.all
-#				val = 0
-#  			items.each do |i|
-#					val =+ i.value 
-#				end
-#  			t.value = val
-#				t.kind = 'Credit'
-#				t.save	
-#  			logger.info 'transaction script has been called'
-#			end
 
 			if params[:contact_id]
         return unless (c = @current_org.contacts.find_by_id params[:contact_id])
@@ -109,17 +96,13 @@ class InvoicesController < ApplicationController
 
 			t = Transaction.new
 			t.ttype = 'Invoice'
-#			t.contact_id = @invoice.contact.id
 			t.invoice_id = @invoice.id
-#			items = @invoice.items.all
-#			val = 0
-# 			items.each do |i|
-#				val =+ i.value 
-#			end
-# 			t.value = val
 			t.kind = 'Credit'
 			t.desc = "Invoice: #{@invoice.contact.name}, #{@invoice.contact.company}"
 			t.organisation_id = @current_org.id
+			if @invoice.project
+				t.project_id = @invoice.project_id
+			end
 			t.save	
 			logger.info 'transaction script has been called'
 					

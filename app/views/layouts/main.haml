@@ -39,6 +39,15 @@
             %li= link_to_remote('Bank Accounts', :url => {:controller => :banks})
             %li= link_to_remote('Reports', :url => {:controller => :reports})
             %li= link_to_remote('Edit Organisation', :url => {:controller => :organisations})
+            %br
+            %li 
+              Viewing accounts for
+              %strong= @current_org.name
+            - if @current_project
+              %br
+              %li
+                Project:
+                %strong= @current_project.name
           - elsif @logged_in
             %li= link_to_remote('Choose Organisation', :url => {:controller => :organisations})
 
