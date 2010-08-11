@@ -7,17 +7,28 @@
      "[ #{link_to_remote("manage projects", :url => {:controller => :projects, :id => o.id})} ]".html_safe! |
   ] |
   - if o.projects.size > 0
-    - outp << [ |
-              "--->", |
-              link_to("No active project", :controller => :projects, :action => :set_no_project), |
-              "" |
-            ] |
-    - o.projects.each do |p|
+    - if @current_project
       - outp << [ |
-          "--->", |
-          link_to(p.name, :controller => :projects, :action => :set_project, :id => p.id), |
-          "" |
-        ] |
+                "--->", |
+                link_to("No active project", :controller => :projects, :action => :set_no_project), |
+                "" |
+              ] |
+
+    - if @current_org
+      - o.projects.each do |p|
+        - outp << [ |
+            "--->", |
+            link_to(p.name, :controller => :projects, :action => :set_project, :id => p.id), |
+            "" |
+          ] |
+    - else
+      - o.projects.each do |p|
+        - outp << [ |
+            "--->", |
+            p.name, |
+            "" |
+          ] |
+
   - outp << ['','','']
   - outp << ['','','']
   - outp << ['','','']
