@@ -20,4 +20,24 @@
 = gen_items :items => expense.items, :title => 'Items on the expense claim:'
 
 -# total content of items table
-= "Total: #{format_as_currency(@expense.get_total)}" 
+= "Total: #{format_as_currency(@expense.get_total)}"
+
+%br
+%br
+%h2 Receipts
+%br
+- form_for expense, :url => {:controller => :employees, :action => :add_image, :id => expense.id}, :html => {:multipart => true, :target => :frame} do |f|
+  %table
+    %tr
+      %td Image
+      %td= file_field :image, :uploaded_data
+    %tr
+      %td= ""
+      %td= f.submit "Add image"
+%iframe#frame{:style => 'display:none;', :name => :frame}
+- if expense.images.count > 0
+  - expense.images.each do |i|
+    = link_to image_tag(i.public_filename, :alt => "", :width => '200'), i.public_filename
+    =# link_to_remote "Delete Image", :controller => :employees, :action => :delete_image, :id => i.id
+
+

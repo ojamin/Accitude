@@ -152,7 +152,34 @@ class EmployeesController < ApplicationController
     ren_cont 'ex_edit', {:employee => @employee, :expense => @expense} and return
   end
 
-  def ex_view
+	def add_image
+		@expense = Expense.find_by_id params[:id]
+		@employee = @expense.employee
+		
+		responds_to_parent do
+			if params[:image]
+				@image = Image.new(params[:image])
+				@image.expense_id = params[:id]
+				logger.info @image.inspect
+				if @image.save
+					flash[:notice] = "Receipt added"
+				end
+			end
+			ren_cont 'ex_view', {:employee => @employee, :expense => @expense}
+		end and return
+	end
+
+	def delete_image
+		@expense = Expense.find_by_id params[:eid]
+		@employee = @expense.employee
+		@image = Image.find_by_id params[:id]
+		if @image.delete
+			flash[:notice] = "Image deleted"
+		end
+		ren_cont 'ex_edit', {:employee => @employee, :expense => @expense} and return
+	end
+
+	def ex_view
     enforce_this (params[:exp] && params[:id] &&
                   (@employee = @current_org.employees.find_by_id(params[:id])) &&
                   (@expense = @employee.expenses.find_by_id(params[:exp])))

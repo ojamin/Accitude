@@ -2,6 +2,7 @@ class Image < ActiveRecord::Base
 
   belongs_to :organisation
 	belongs_to :liability
+	belongs_to :expense
 
   has_attachment :content_type => :image,
                 :storage => :file_system,
