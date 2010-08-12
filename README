@@ -3,15 +3,20 @@ Welcome to Accitude - the accounts software with attitude for small business.
 Features:
   - Quote creation
   - Invoice creation
+	- PDF quotes and Invoices
   - Recurring Invoices
   - Multi company
+		- Multi-Project
   - Multi user
   - Employee aware
+	- Expense processing
   - Wage processing
   - Bank reconsiliation
   - Liability processing
-  - Recurring Liabilities
   - Contact list
+	- Account 'statement'
+	- Report of transactions by employee or contact
+
 
 Clone us at git://github.com/ebotech/Accitude.git or http://github.com/ebotech/Accitude.git
 Visit our github page at http://github.com/ebotech/Accitude

@@ -1,3 +1,6 @@
+- unless liability.image_id
+  - @image = Image.new
+
 %h2 Viewing a liability for #{liability.contact.name_long} 
 [
 - unless liability.paid_on
@@ -21,3 +24,33 @@
   ['Receipt ID', liability.receipt_id], |
   ['Value', format_as_currency(liability.value)] |
 ] |
+%br
+%h3 receipt
+- if liability.image
+  %br
+  = image_tag liability.image.public_filename
+  %br
+  = link_to_remote "delete image", :url => {:controller => :liabilities, :action => :delete_image, :id => liability.image.id, :lid => liability.id}
+  %br
+  %br
+  %br
+- else
+  %br
+  =# error_messages_for :image
+  - form_for(@liability, :url => {:controller => :liabilities, :action => :add_image, :id => liability.id, :lid => liability.id}, :html => {:multipart => true, :target => :frame}) do |f| 
+    %table
+      %tr
+        %td Image:
+        %td= file_field :image, :uploaded_data
+      %tr
+        %td= ""
+        %td= f.submit "add image"
+%iframe#frame{:style => 'display:none;', :name => :frame}
+
+
+
+
+
+
+
+

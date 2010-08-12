@@ -23,7 +23,7 @@ class LiabilitiesController < ApplicationController
   end
 
   def edit
-    (@liability = Liability.new).organisation = @current_org unless params[:id] && (@liability = @current_org.liabilities.find_by_id(params[:id]))
+    (@liability = Liability.new).organisation = @current_org unless params[:id] && (@liability = @current_org.liabilities.find_by_id(params[:id]) && @current_org.suppliers.count > 0)
     enforce_this @liability.been_paid? == false
 		logger.info "Edit method"
 		if params[:commit]
@@ -33,7 +33,7 @@ class LiabilitiesController < ApplicationController
         @liability.contact = c
       end
       if @liability.save
-        ren_cont 'view', {:liability => @liability} and return
+        ren_cont 'view', {:image => Image.new, :liability => @liability} and return
       else
         flash[:error] = get_error_msgs @liability
       end
@@ -44,6 +44,11 @@ class LiabilitiesController < ApplicationController
 
   def view
     enforce_this params[:id] && (@liability = @current_org.liabilities.find_by_id(params[:id]))
+		if @liability.image
+			@image = @liability.image
+		else
+			@image = Image.new
+		end
 		logger.info "View method"
 		if params[:commit] && params[:paid_on] && ! @liability.paid_on && params[:paid_on].to_date >= @liability.incurred_on
 			make_transaction @liability
@@ -51,8 +56,39 @@ class LiabilitiesController < ApplicationController
       @liability.save
       flash[:notice] = "Liability marked as paid!"
     end
-    ren_cont 'view', {:liability => @liability} and return
+		ren_cont 'view', {:image => @image, :liability => @liability} and return
   end
+
+	def add_image
+		@liability = Liability.find_by_id params[:lid]
+
+		responds_to_parent do
+			if params[:image]
+				@image = Image.new(params[:image])
+				@liability.image.destroy if @liability.image
+				@liability.image = @image
+			end
+			logger.info @image.inspect
+			unless @image.save
+				flash[:error] = 'Receipt failed to save'
+			else
+				logger.info "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHhh"
+				flash[:notice] = 'Receipt image added'
+				view
+			end 
+		end and return
+
+		#ren_cont 'view', {:liability => @liability} and return
+	end
+
+	def delete_image
+		@liability = Liability.find_by_id params[:lid]
+		@image = Image.find_by_id params[:id]
+		if @image.delete
+			flash[:notce] = "Image deleted"
+		end
+		ren_cont 'view', {:liability => @liability} and return
+	end
 
 	def make_transaction(liability)
 	 	t = Transaction.new
