@@ -27,10 +27,16 @@
 %br
 %h3 receipt
 - if liability.image
-  %br
-  = image_tag liability.image.public_filename
-  %br
-  = link_to_remote "delete image", :url => {:controller => :liabilities, :action => :delete_image, :id => liability.image.id, :lid => liability.id}
+  - if liability.image.content_type[0..4] == 'image'
+    %br
+    = image_tag liability.image.public_filename
+    %br
+    = link_to_remote "delete reciept", :url => {:controller => :liabilities, :action => :delete_image, :id => liability.image.id, :lid => liability.id}
+  - else
+    %br
+    %h5= link_to "Receipt (#{image.filename})", image.public_filename 
+    %br
+    = link_to_remote "delete reciept", :url => {:controller => :liabilities, :action => :delete_image, :id => liability.image.id, :lid => liability.id}
   %br
   %br
   %br
@@ -44,7 +50,7 @@
         %td= file_field :image, :uploaded_data
       %tr
         %td= ""
-        %td= f.submit "Add image"
+        %td= f.submit "Add receipt"
 %iframe#frame{:style => 'display:none;', :name => :frame}
 
 

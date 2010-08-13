@@ -38,7 +38,7 @@
 %iframe#frame{:style => 'display:none;', :name => :frame}
 - if expense.images.count > 0
   - expense.images.each do |i|
-    = link_to image_tag(i.public_filename, :alt => "", :width => '200'), i.public_filename
-    =# link_to_remote "Delete Image", :controller => :employees, :action => :delete_image, :id => i.id
-
-
+    - if i.content_type[0..4] == 'image'
+      = link_to image_tag(i.public_filename, :alt => "", :width => '200'), i.public_filename
+    - else 
+      %h5= link_to "Receipt (#{i.filename})", i.public_filename

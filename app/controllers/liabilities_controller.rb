@@ -23,8 +23,10 @@ class LiabilitiesController < ApplicationController
   end
 
   def edit
-    (@liability = Liability.new).organisation = @current_org unless params[:id] && (@liability = @current_org.liabilities.find_by_id(params[:id]) && @current_org.suppliers.count > 0)
-    enforce_this @liability.been_paid? == false
+    enforce_this (@liability = Liability.new).organisation = @current_org unless params[:id] && @liability = @current_org.liabilities.find_by_id(params[:id]) 
+		enforce_this @current_org.suppliers.count > 0
+		logger.info "HHHHHHHHHHHHHHH #{@liability.inspect} HHHHHHHHHHH"
+		enforce_this @liability.been_paid? == false
 		logger.info "Edit method"
 		if params[:commit]
       @liability.update_attributes params[:liability]
@@ -71,14 +73,15 @@ class LiabilitiesController < ApplicationController
 			logger.info @image.inspect
 			unless @image.save
 				flash[:error] = 'Receipt failed to save'
+				view 
 			else
 				logger.info "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHhh"
 				flash[:notice] = 'Receipt image added'
 				view
 			end 
-		end and return
+		end and return 
 
-		#ren_cont 'view', {:liability => @liability} and return
+		ren_cont 'view', {:liability => @liability} and return
 	end
 
 	def delete_image

@@ -40,7 +40,11 @@
 - if expense.images.count > 0
   - expense.images.each do |i|
     %div
-      = link_to image_tag(i.public_filename, :alt => "", :width => '200'), i.public_filename
+      - if i.content_type[0..4] == 'image'
+        = link_to image_tag(i.public_filename, :alt => "", :width => '200'), i.public_filename
+      - else
+        %br
+        %h4= link_to "Receipt (#{i.filename})", i.public_filename
       %br
       = link_to_remote "Delete Image", :url => {:controller => :employees, :action => :delete_image, :id => i.id, :eid => expense.id}
 
