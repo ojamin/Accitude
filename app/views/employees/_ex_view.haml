@@ -24,9 +24,10 @@
 
 %br
 %br
-%h2 Receipts
+- if expense.images.count > 0 
+  %h2 Receipts
 %br
-- form_for expense, :url => {:controller => :employees, :action => :add_image, :id => expense.id}, :html => {:multipart => true, :target => :frame} do |f|
+-# form_for expense, :url => {:controller => :employees, :action => :add_image, :id => expense.id}, :html => {:multipart => true, :target => :frame} do |f|
   %table
     %tr
       %td Image
