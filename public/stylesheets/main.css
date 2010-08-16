@@ -20,7 +20,7 @@ form br { clear: left; }
 	*/
 }
 
-#ly_h { overflow: hidden; background:#548AA7; height: 90px; border-bottom: 4px solid #2E4A5A; }
+#ly_h { overflow: hidden; background:#649AB7; height: 90px; border-bottom: 4px solid #2E4A5A; }
 #ly_userbox {
 	list-style: none;
 	float: right;
@@ -155,7 +155,7 @@ form br { clear: left; }
   background-color: #f6f6f6;
 }
 #dymenu {
-  background-color: #749Ab7;
+  background-color: #84AAC7;
   margin-left: 235px;
   clear: both;
   height: 30px;
