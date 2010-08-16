@@ -8,7 +8,7 @@ class AdminController < ApplicationController
     return [
       ["List Users", {:url => {:action => :users}}],
       ["Add User", {:url => {:action => :user_new}}],
-      ["List Orgs", {:url => {:action => :orgs}}]
+      ["List Organisations", {:url => {:action => :orgs}}]
     ]
   end
 

@@ -1,21 +1,21 @@
 Welcome to Accitude - the accounts software with attitude for small business.
 
 Features:
-	- Quote creation
-	- Invoice creation
-	- PDF quotes and Invoices
+  - Quote creation
+  - Invoice creation
+  - PDF quotes and Invoices
   - Recurring Invoices
   - Multi company
-		- Multi-Project
+    - Multi-Project
   - Multi user
   - Employee aware
-	- Expense processing
+  - Expense processing
   - Wage processing
   - Bank reconsiliation
   - Liability processing
   - Contact list
-	- Account 'statement'
-	- Report of transactions by employee or contact
+  - Account 'statement'
+  - Report of transactions by employee or contact
 
 
 Clone us at git://github.com/ebotech/Accitude.git or http://github.com/ebotech/Accitude.git
@@ -39,5 +39,11 @@ TO INSTALL:
  10. Run 'quit'
  11. Run 'script/server'
  12. Browse to localhost:3000 and start using the program - the default username/password is admin/test
+
+POST INSTALL SETUP:
+  - Once logged in to the site, click 'Profile' at the top right to change the admin password and e-mail address.
+  - Also at the top right, click 'Admin' to set up Organisations and Users. Note that you must also assign users to their relevant organisations by using 'List Organisations' on the admin page.
+	- Also note that quotes, invoices and liabilities are connected to entries in an organisations contact list. Use 'Contacts' on the sidebar to add these before setting these up. 
+  - If a user has multiple organisations (or their organisation has multiple projects) it is neccessary to switch between these, use 'Edit Organisation' on the side bar. 
 
 Sponsored by Ebotech Consulting Ltd. - www.ebotech.com
