@@ -82,7 +82,7 @@ form br { clear: left; }
 	width:30px; height:30px;
 	padding: 5px;
 	margin: 5px;
-	border: 1px solid #fff;
+	border: 0px solid #fff;
 }
 #ly_b #mnu_tools a:hover { text-decoration:none; border: 1px solid #999; background-color: #D5ECC4; }
 
@@ -171,7 +171,18 @@ form br { clear: left; }
   float: left;
   margin-left: 20px;
 }
-A { color: black; }
+
+A { 
+	color: black;
+	border-width: 0px;
+ }
+
+.close{
+  border-style: none;
+  border-width: 0px;
+  color: green;
+}
+
 #logo {
   margin-top: 30px;
 }

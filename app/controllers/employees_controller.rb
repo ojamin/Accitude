@@ -152,6 +152,10 @@ class EmployeesController < ApplicationController
     ren_cont 'ex_edit', {:employee => @employee, :expense => @expense} and return
   end
 
+	def image_view
+		@image = Image.find_by_id params[:id]
+	end
+
 	def add_image
 		@expense = Expense.find_by_id params[:id]
 		@employee = @expense.employee

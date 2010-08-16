@@ -61,6 +61,10 @@ class LiabilitiesController < ApplicationController
 		ren_cont 'view', {:image => @image, :liability => @liability} and return
   end
 
+	def image_view
+		@image = Image.find_by_id params[:id]
+	end
+
 	def add_image
 		@liability = Liability.find_by_id params[:lid]
 

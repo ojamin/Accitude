@@ -29,7 +29,9 @@
 - if liability.image
   - if liability.image.content_type[0..4] == 'image'
     %br
-    = image_tag liability.image.public_filename
+    =# image_tag liability.image.public_filename
+    =# (link_to (image_tag liability.image.public_filename), liability.image.public_filename).html_safe!
+    = link_to_remote_redbox(image_tag(liability.image.public_filename, :width => 100), :url => {:action => :image_view, :id => liability.image.id})
     %br
     = link_to_remote "delete reciept", :url => {:controller => :liabilities, :action => :delete_image, :id => liability.image.id, :lid => liability.id}
   - else

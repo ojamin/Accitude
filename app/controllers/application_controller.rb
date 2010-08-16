@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   include CacheableFlash
   helper :all # include all helpers, all the time
 
+	require 'redbox'
+
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   # protect_from_forgery :secret => '1f29646080aa4f2962b29498878249a3'
