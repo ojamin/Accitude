@@ -97,7 +97,8 @@ class InvoicesController < ApplicationController
   def view
     enforce_this params[:id] && (@invoice = @current_org.invoices.find_by_id(params[:id]))
     if params[:format] && params[:format] = 'pdf'
-      send_data render_to_string(:partial => 'view_pdf', :locals => {:invoice => @invoice}), :type => :pdf, :disposition => 'inline', :filename => 'test.pdf' and return
+			@filename = "#{@current_org.name} invoice - #{@invoice.produced_on}"
+			send_data render_to_string(:partial => 'view_pdf', :locals => {:invoice => @invoice}), :type => :pdf, :disposition => 'inline', :filename => "#{@filename}.pdf" and return
     end
     if params[:commit] && params[:paid_on] && ! @invoice.paid_on && params[:paid_on].to_date >= @invoice.produced_on
       @invoice.paid_on = params[:paid_on].to_date

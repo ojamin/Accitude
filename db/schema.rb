@@ -265,11 +265,4 @@ ActiveRecord::Schema.define(:version => 20100812140202) do
     t.date     "last_processed_at"
   end
 
-  create_table "wiki_items", :force => true do |t|
-    t.string   "name"
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
 end

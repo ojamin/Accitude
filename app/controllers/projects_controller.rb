@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
 
+	skip_before_filter :enforce_org
+
 	private
 	def menu_items
 		return [
