@@ -35,7 +35,7 @@
         %td= file_field :image, :uploaded_data
       %tr
         %td= ""
-        %td= f.submit "Add image"
+        %td= f.submit "Add receipt"
 %iframe#frame{:style => 'display:none;', :name => :frame}
 - if expense.images.count > 0
   - expense.images.each do |i|

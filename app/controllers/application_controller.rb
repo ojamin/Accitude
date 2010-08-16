@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
 			@project = Project.find_by_id proj
 			@org = @project.organisation
 			logger.info "set Project id called"
-			session[:project_id] = proj and setup_project and return true if @logged_in && (@logged_in.is_admin || @logged_in.organisation.ids.include?(@org.id))
+			session[:project_id] = proj and setup_project and return true if @logged_in && (@logged_in.is_admin || @logged_in.organisation_ids.include?(@org.id))
 			return false
 		else
 			session[:project_id] = nil
