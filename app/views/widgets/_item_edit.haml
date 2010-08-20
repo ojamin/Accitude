@@ -1,0 +1,21 @@
+-# colour = (['2','3'] - [colour_id])[0]
+
+%div{:id => "edit_#{item.id}"}
+  %h4 Edit this item:
+  - form_remote_for item, :url => {:controller => :widgets, :action => :item_edit_process, :id => item.id} do |f|
+  
+    -#%tr#item_edit 
+    %table{:id => "edit_#{item.id}"}
+      %tr
+        %td
+          = text_field_tag 'item[desc]', item.desc, :size => '50'
+          = hidden_field_tag :item_ids2, item_ids
+        %td
+          = text_field_tag 'item[quantity]', item.quantity.to_i, :size => '4'
+        %td
+          = text_field_tag 'item[value]', item.value.to_f, :size => 4
+        %td
+          = submit_tag :Update
+        %td
+          = button_to_remote "delete", :url => {:controller => :widgets, :action => :item_delete, :id => item.id, :confirm => "Are you sure you want to delete this?"}
+        %td= ""

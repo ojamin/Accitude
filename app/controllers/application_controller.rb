@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password, :passagain, :oldpass, :pass
 
-  before_filter :check_login, :enforce_login, :setup_org, :enforce_org, :setup_project, :kill_orphans
+  before_filter :check_login, :enforce_login, :setup_org, :enforce_org, :setup_project
 
   @logged_in = false
   @current_org = false
@@ -60,14 +60,17 @@ class ApplicationController < ActionController::Base
     return @logged_in if @logged_in
     @logged_in = User.find_by_username(session[:uid])
     session.reset unless @logged_in
+		kill_orphans
     return @logged_in
   end
 
 	def kill_orphans
 		@items = Item.all	
 		@items.each do |i|
-			unless i.has_relationship? && (i.created_at > (Time.now - 2.days))
+			unless i.has_relationship? 
+			 if	i.created_at < (Time.now - 2.days)
 				i.delete
+			 end
 			end
 		end
 	end

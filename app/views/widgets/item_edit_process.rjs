@@ -1,0 +1,15 @@
+unless params[:commit]
+	@row = "item_#{params[:id]}"
+#	unless page.visual_effect :fade, @row, :duration => 0.3
+#		page[@row].remove
+#	end
+	logger.info page
+	page.remove @row
+	page.insert_html :bottom, :edit, render(:partial => "widgets/item_edit", :locals => {:item => Item.find_by_id(params[:id]), :item_ids => @item_ids}, :display => true)
+else
+	@edit = "edit_#{params[:id]}"
+	page.remove @edit
+	page[:item_new].remove
+	page.insert_html :bottom, :items_main, render(:partial => "widgets/item_existing", :locals => {:item => Item.find_by_id(params[:id])}, :display => true)
+	page.insert_html :bottom, :items_main, render(:partial => 'widgets/item_new', :locals => {:item_ids => @item_ids, :colour_id => 2})
+end
