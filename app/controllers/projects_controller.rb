@@ -51,6 +51,7 @@ class ProjectsController < ApplicationController
 		@org = Organisation.find_by_id params[:id]
 		logger.info @org
 		logger.info @project
+		@project.
 		@project.delete
 		flash[:notice] = "Project '#{@project.name}' deleted"	
 		ren_cont 'index', {:id => @org.id} and return
