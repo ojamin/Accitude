@@ -17,5 +17,5 @@
         %td
           = submit_tag :Update
         %td
-          = button_to_remote "delete", :url => {:controller => :widgets, :action => :item_delete, :id => item.id, :confirm => "Are you sure you want to delete this?"}
+          = button_to_remote "delete", :url => {:controller => :widgets, :action => :item_delete, :id => item.id}, :confirm => "Are you sure you want to delete this?"
         %td= ""
