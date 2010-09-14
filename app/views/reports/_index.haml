@@ -5,5 +5,6 @@
   %li= link_to_remote("Overview", :url => {:controller => :reports, :action => :overview})
   - #%li= link_to_remote("Employees", :url => {:controller => :reports, :action => :employees}) # breakdown per employee of wages and expenses
   %li= link_to_remote("By Contact", :url => {:controller => :reports, :action => :contacts}) # breakdown per client
+  %li= link_to_remote("Profit and Loss", :url => {:controller => :reports, :action => :profit_and_loss}) # p and l
 %br
 =# render :partial => "overview" 
