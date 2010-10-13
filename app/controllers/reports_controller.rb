@@ -59,4 +59,17 @@ class ReportsController < ApplicationController
     ren_cont 'contacts', {:customers => customers, :suppliers => suppliers}
   end
 
+  def profit_and_loss
+    after = params["after"].to_date unless params["after"].nil?
+	before = params["before"].to_date unless params["before"].nil?
+    @start_date = after || Date.today - 1.year
+	@end_date = before || Date.today
+    @income = @current_org.invoices.find(:all, :conditions => ("paid_on IS NOT NULL AND paid_on BETWEEN '#{@start_date}' AND '#{@end_date}'"))
+	@expenses = @current_org.liabilities(:all, :conditions => ("paid_on IS NOT NULL AND paid_on BETWEEN '#{@start_date}' AND '#{@end_date}'"))
+	@total_income = @income.collect{|i| i.total_value}.sum
+	@total_expense = @expenses.collect{|l| l.value}.sum
+	@profit_or_loss = @total_income - @total_expense
+	ren_cont 'profit_loss'
+  end
+
 end

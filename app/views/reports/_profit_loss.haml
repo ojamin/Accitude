@@ -1,0 +1,30 @@
+%h2 Profit and Loss
+%br
+- form_remote_tag :url => {:action => :profit_and_loss, :controller => :reports} do
+  - outp = []
+  - outp << ['Start Date', calendar_date_select_tag(:after, @start_date, :popup => :force)]
+  - outp << ['End Date', calendar_date_select_tag(:before, @end_date, :popup => :force)]
+  - outp << [submit_tag('Filter'), '']
+  = gen_list outp, :size => 2
+
+%h3 Income
+- inc_list = []
+- @income.each do |invoice|
+  - invoice.items.each do |item|
+    - inc_list << [ item.desc, format_as_currency(item.value * item.quantity) ]
+- inc_list << ["<span style='font-weight:bold;'>Total Income</span>".html_safe!, "<span style='font-weight:bold;'>#{format_as_currency(@total_income)}</span>".html_safe!]
+= gen_list inc_list, :size => 2
+%br
+%h3 Expenses
+- exp_list = []
+- @expenses.each do |l|
+  - exp_list << [ l.organisation.name, format_as_currency(l.value) ]
+- exp_list << ["<span style='font-weight:bold;'>Total Expenditure</span>".html_safe!, "<span style='font-weight:bold;'>#{format_as_currency(@total_expense)}</span>".html_safe!]
+= gen_list exp_list, :size => 2
+%br
+%h3 Profit or Loss
+- net_list = []
+- net_list << ["Total Income", format_as_currency(@total_income)]
+- net_list << ["Total Expenditure", format_as_currency(@total_expense)]
+- net_list << ["<span style='font-weight:bold;'>Net Income</span>".html_safe!,"<span style='font-weight:bold;'>#{format_as_currency(@profit_or_loss)}</span>".html_safe!]
+= gen_list net_list, :size => 2
