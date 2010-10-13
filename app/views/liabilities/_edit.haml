@@ -11,6 +11,7 @@
   - outp << ['Paid on', f.calendar_date_select(:paid_on, :popup => :force, :valid_date_check => "date > new Date($F('liability_incurred_on')).stripTime()")]
   - unless liability.id
     - outp << ['Supplier', select_tag(:contact_id, options_from_collection_for_select(contacts, 'id', 'name_long'))]
+  - outp << ['Project', f.select(:project_id, @current_org.projects.all.collect {|p| [ p.name, p.id ]}, {:include_blank => true})]
   - outp << ['Description', f.text_area(:description, :size => '27x7')]
   - outp << ['Receipt ID', f.text_field(:receipt_id)]
   - outp << ['Value', f.text_field(:value)]

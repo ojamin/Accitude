@@ -40,6 +40,10 @@ module ApplicationHelper
     return render(:partial => 'widgets/gen_list', :locals => {:sublist => opts[:sublist], :items => items, :head => opts[:head], :num => opts[:size], :opts => opts})
   end
 
+  def transact(transaction)
+    return render(:partial => 'widgets/transact', :transaction => transaction)  
+  end
+
   def gen_items(opts={})
     return render :partial => 'widgets/gen_items', :locals => opts
   end

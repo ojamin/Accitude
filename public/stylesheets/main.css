@@ -20,7 +20,7 @@ form br { clear: left; }
 	*/
 }
 
-#ly_h { overflow: hidden; background:#548AA7; height: 90px; border-bottom: 4px solid #2E4A5A; }
+#ly_h { overflow: hidden; background:#649AB7; height: 90px; border-bottom: 4px solid #2E4A5A; }
 #ly_userbox {
 	list-style: none;
 	float: right;
@@ -82,7 +82,7 @@ form br { clear: left; }
 	width:30px; height:30px;
 	padding: 5px;
 	margin: 5px;
-	border: 1px solid #fff;
+	border: 0px solid #fff;
 }
 #ly_b #mnu_tools a:hover { text-decoration:none; border: 1px solid #999; background-color: #D5ECC4; }
 
@@ -155,7 +155,7 @@ form br { clear: left; }
   background-color: #f6f6f6;
 }
 #dymenu {
-  background-color: #749Ab7;
+  background-color: #84AAC7;
   margin-left: 235px;
   clear: both;
   height: 30px;
@@ -171,7 +171,18 @@ form br { clear: left; }
   float: left;
   margin-left: 20px;
 }
-A { color: black; }
+
+A { 
+	color: black;
+	border-width: 0px;
+ }
+
+.close{
+  border-style: none;
+  border-width: 0px;
+  color: green;
+}
+
 #logo {
   margin-top: 30px;
 }

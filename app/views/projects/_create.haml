@@ -1,0 +1,14 @@
+%h1= "New project for #{@org.name}"
+%br
+- form_remote_for @project, :url => {:controller => :projects, :action => :create} do |f|
+  = f.error_messages
+  %table
+    %tr
+      %td= f.label :name
+      %td= f.text_field :name
+    %tr
+      %td= f.label :desc, "Short description"
+      %td= f.text_area :desc
+    %tr
+      %td= ""
+      %td= f.submit

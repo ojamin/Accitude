@@ -48,9 +48,9 @@ pdf.text <<eof
 
 eof
 pdf.text "If you would like to go ahead with this quote, please contact us:", :size => 14
-pdf.text "  Email: #{quote.organisation.email.to_s}" if quote.organisation.email
-pdf.text "  Phone: #{quote.organisation.phone.to_s}" if quote.organisation.phone
-pdf.text "  Website: #{quote.organisation.website.to_s}" if quote.organisation.website
+pdf.text "  Email: #{quote.organisation.email.to_s}" if quote.organisation.email && quote.organisation.email != ""
+pdf.text "  Phone: #{quote.organisation.phone.to_s}" if quote.organisation.phone && quote.organisation.phone.to_s != ""
+pdf.text "  Website: #{quote.organisation.website.to_s}" if quote.organisation.website && quote.organisation.website.to_s != ""
 pdf.text <<eof
 
 

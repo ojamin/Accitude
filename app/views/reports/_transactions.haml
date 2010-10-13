@@ -1,0 +1,71 @@
+- if @current_project
+  %h1= "Transactions for #{@current_project.name}"
+- else
+  %h1= "Transactions for #{@current_org.name}"
+%br 
+
+- bal = 0
+- outp = []
+- @transactions.each do |t|
+  - if t.project
+    - @project = t.project.name
+  - else
+    - @project = ""
+  - if t.ttype == 'Invoice' 
+    -# logger.info 'IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII'
+    - inv = Invoice.find_by_id t.invoice_id
+    - amnt = 0
+    - inv.items.each do |it|
+      - val = it.value * it.quantity
+      - amnt =+ val
+    - bal = bal + amnt
+    - outp << [t.created_at.to_s[0..9], |
+               t.desc , |
+               @project, |
+               format_as_currency(amnt), |
+               '', |
+               format_as_currency(bal)] |
+  - elsif t.ttype == 'Liability'
+    - lia = Liability.find_by_id t.liability_id
+    - bal = bal - lia.value
+    - outp << [t.created_at.to_s[0..9], |
+               "Liability: #{t.desc}", |
+               @project, |
+               '', |
+               format_as_currency(lia.value), |
+               format_as_currency(bal) ] |
+  - elsif t.ttype == 'Expense'
+    - exp = Expense.find_by_id t.expense_id
+    - amnt = 0
+    - exp.items.each do |it|
+      - val = it.value * it.quantity
+      - amnt =+ val
+    - bal = bal - amnt
+    - outp << [t.created_at.to_s[0..9], |
+               "Expense: #{t.expense.employee.name}, #{t.desc}", |
+               @project, |
+               '', |
+               format_as_currency(amnt), |
+               format_as_currency(bal)] |
+  - elsif t.ttype == 'WagePayment'
+    - wp = WagePayment.find_by_id t.wage_payment_id
+    - bal = bal - wp.total
+    - outp << [t.created_at.to_s[0..9], |
+               "Wages for #{wp.employee.name}", |
+               '', | 
+               '', |
+               format_as_currency(wp.total), |
+               format_as_currency(bal)] |
+  - else
+    - outp << [t.created_at, t.ttype, 'not done yet', '', '']
+
+- outp = outp.reverse
+- if outp.size > 0
+  = gen_list outp, :head => ['Date', 'Description', 'Project', 'Money in', 'Money out', 'Balance'], :size => 6
+- else
+  %p Sorry, no results.
+
+
+
+
+

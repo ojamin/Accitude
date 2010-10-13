@@ -1,0 +1,2 @@
+@edit = "edit_#{params[:id]}"
+page.remove @edit

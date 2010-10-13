@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100322173840) do
+ActiveRecord::Schema.define(:version => 20100812140202) do
 
   create_table "all_expenses", :force => true do |t|
     t.integer  "employee_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.datetime "updated_at"
     t.text     "notes"
     t.string   "type"
+    t.integer  "project_id"
   end
 
   create_table "all_invoices", :force => true do |t|
@@ -34,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
+    t.integer  "project_id"
   end
 
   create_table "all_liabilities", :force => true do |t|
@@ -48,6 +50,8 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.datetime "updated_at"
     t.decimal  "value"
     t.string   "type"
+    t.integer  "project_id"
+    t.integer  "image_id"
   end
 
   create_table "bank_accounts", :force => true do |t|
@@ -106,6 +110,8 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.integer  "organisation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "liability_id"
+    t.integer  "expense_id"
   end
 
   create_table "items", :force => true do |t|
@@ -146,6 +152,15 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.string   "frequency"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "project_id"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "organisation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "quotes", :force => true do |t|
@@ -155,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.date     "valid_till"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "project_id"
   end
 
   create_table "recordeds", :force => true do |t|
@@ -195,12 +211,14 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.integer  "bank_account_id"
     t.integer  "invoice_id"
     t.date     "posted_on"
-    t.string   "type"
+    t.string   "ttype"
     t.string   "desc"
     t.decimal  "value"
     t.string   "kind"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organisation_id"
+    t.integer  "project_id"
   end
 
   create_table "users", :force => true do |t|
@@ -226,6 +244,9 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.string   "payment_method"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "employee_id"
+    t.integer  "organisation_id"
+    t.boolean  "set_up"
   end
 
   create_table "wages", :force => true do |t|
@@ -241,13 +262,7 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.string   "other_deduction_desc"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "wiki_items", :force => true do |t|
-    t.string   "name"
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.date     "last_processed_at"
   end
 
 end

@@ -48,9 +48,9 @@ pdf.text <<eof
 
 eof
 pdf.text "If you have any queries re this invoice, please contact us:", :size => 14
-pdf.text "  Email: #{invoice.organisation.email.to_s}" if invoice.organisation.email
-pdf.text "  Phone: #{invoice.organisation.phone.to_s}" if invoice.organisation.phone
-pdf.text "  Website: #{invoice.organisation.website.to_s}" if invoice.organisation.website
+pdf.text "  Email: #{invoice.organisation.email.to_s}" if invoice.organisation.email && invoice.organisation.email != ""
+pdf.text "  Phone: #{invoice.organisation.phone.to_s}" if invoice.organisation.phone && invoice.organisation.phone.to_s != ""
+pdf.text "  Website: #{invoice.organisation.website.to_s}" if invoice.organisation.website && invoice.organisation.website.to_s != ""
 pdf.text <<eof
 
 

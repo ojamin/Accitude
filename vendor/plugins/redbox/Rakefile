@@ -1,0 +1,48 @@
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
+require 'ftools'
+
+desc 'Default: run unit tests.'
+task :default => :test
+
+desc 'Test the redbox plugin.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
+
+desc 'Generate documentation for the redbox plugin.'
+Rake::RDocTask.new(:rdoc) do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title    = 'Redbox'
+  rdoc.options << '--line-numbers' << '--inline-source'
+  rdoc.rdoc_files.include('README')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+desc "Update redbox javascript and css files" 
+task :update_scripts => [] do |t| 
+  redbox_dir = File.expand_path(".")
+  root_dir = File.join(redbox_dir, '..', '..', '..')
+  File.copy File.join(redbox_dir, 'javascripts', 'redbox.js'), File.join(root_dir, 'public', 'javascripts', 'redbox.js')
+  File.copy File.join(redbox_dir, 'stylesheets', 'redbox.css'), File.join(root_dir, 'public', 'stylesheets', 'redbox.css')
+  File.copy File.join(redbox_dir, 'images', 'redbox_spinner.gif'), File.join(root_dir, 'public', 'images', 'redbox_spinner.gif')
+
+  puts "Updated Scripts." 
+end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "redbox"
+    gemspec.summary = "A rails-compatible lightbox effect."
+    gemspec.description = "Provides helper methods to call and dismiss a lightbox-style page overlay."
+    gemspec.email = %w(jon@joncanady.com craig@craigambrose.com)
+    gemspec.homepage = "http://github.com/joncanady/redbox"
+    gemspec.authors = ["Craig Ambrose"]
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: gem install jeweler"
+end

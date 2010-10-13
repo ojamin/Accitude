@@ -1,0 +1,15 @@
+%h1 HELLO!
+=# @transaction.inspect
+-# if @transaction.class = 'Invoice' 
+  - inv = Invoice.find_by_id transaction.invoice_id
+  - amnt = 0
+  - inv.items.each do |it|
+    - val = it.value * it.quantity
+    - amnt =+ val
+  - outp << [transaction.created_on, |
+             transaction.desc, |
+             val, |
+             '', |
+             ''] |
+-# else
+  - outp << ['not fixed yet', transaction.class,'' ,'' ,'' ,'' ,'']

@@ -4,7 +4,9 @@
     %title Acctiude - Accounting with Attitude for small business
     != stylesheet_link_tag 'main'
     != javascript_include_tag :defaults
+    != javascript_include_tag "redbox.js"
     != calendar_date_select_includes "silver"
+    != stylesheet_link_tag 'redbox'
 
   %body
     #ly_w
@@ -30,7 +32,7 @@
             - # %li#nav_marker
             %li.section.first Finance In
             %li= link_to_remote(:Quotes, :url => {:controller => :quotes})
-            %li= link_to_remote(:Invoices, :url => {:controller => :invoices})
+            %li= link_to_remote(:Invoices, :url => {:controller => :invoices}) 
             %li.section Finance Out
             %li= link_to_remote(:Liabilities, :url => {:controller => :liabilities})
             %li= link_to_remote(:Employees, :url => {:controller => :employees})
@@ -39,6 +41,15 @@
             %li= link_to_remote('Bank Accounts', :url => {:controller => :banks})
             %li= link_to_remote('Reports', :url => {:controller => :reports})
             %li= link_to_remote('Edit Organisation', :url => {:controller => :organisations})
+            %br
+            %li 
+              Viewing accounts for
+              %strong= @current_org.name
+            - if @current_project
+              %br
+              %li
+                Project:
+                %strong= @current_project.name
           - elsif @logged_in
             %li= link_to_remote('Choose Organisation', :url => {:controller => :organisations})
 

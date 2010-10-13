@@ -10,6 +10,7 @@
     ['Customer', select_tag(:contact_id, options_from_collection_for_select(contacts, 'id', 'name_long'))], |
     ["Times to run (-1 = unending)", f.text_field(:times)], |
     ["Frequency", f.select(:frequency, PaymentPlan.freqs)], |
+    ['Project', f.select(:project_id, @current_org.projects.all.collect {|p| [ p.name, p.id ]}, {:include_blank => true})], |
     [submit_tag("Add Plan"), ""] |
   ] |
   = gen_list outp

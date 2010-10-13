@@ -7,6 +7,7 @@ class Organisation < ActiveRecord::Base
   has_many :invoices
   has_many :quotes
   has_many :costs
+  has_many :expenses
   has_many :wages
   has_many :contacts
   has_many :employees
@@ -14,7 +15,13 @@ class Organisation < ActiveRecord::Base
   has_many :liabilities
   has_many :recurring_liabilities
   has_many :bank_accounts
+  has_many :wage_payments
+  has_many :transactions
   has_one :image
+
+
+  has_many :projects  
+
 
   validates_presence_of :name
   validates_uniqueness_of :name

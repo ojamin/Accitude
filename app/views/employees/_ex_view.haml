@@ -6,12 +6,42 @@
 = link_to_remote :Back, :url => {:action => :ex_index, :controller => :employees, :id => employee.id}
 ]
 %br
+- if expense.project_id 
+  - unless expense.project
+    - expense.project_id = nil
+  - else
+    - @project = expense.project.name
+- else
+  - @project = ""
 = gen_list [ |
   ['Claimed on date', expense.claimed_on.inspect], |
   [(expense.paid_on ? "Paid on" : "Set paid on date"), (expense.paid_on ? expense.paid_on.inspect : render(:partial => "widgets/paid_on_select", :locals => {:obj => expense, :date => expense.claimed_on, :url => {:action => :ex_view, :controller => :employees, :id => employee.id, :exp => expense.id}}))], |
-  ['Notes', expense.notes] |
+  ['Notes', expense.notes], |
+  ['Project', @project] |
 ] |
 
 = gen_items :items => expense.items, :title => 'Items on the expense claim:'
 
-= "Total: #{format_as_currency(@expense.get_total)}" 
+-# total content of items table
+=# "Total: #{format_as_currency(@expense.get_total)}"
+
+%br
+%br
+- if expense.images.count > 0 
+  %h2 Receipts
+%br
+-# form_for expense, :url => {:controller => :employees, :action => :add_image, :id => expense.id}, :html => {:multipart => true, :target => :frame} do |f|
+  %table
+    %tr
+      %td Image
+      %td= file_field :image, :uploaded_data
+    %tr
+      %td= ""
+      %td= f.submit "Add image"
+%iframe#frame{:style => 'display:none;', :name => :frame}
+- if expense.images.count > 0
+  - expense.images.each do |i|
+    - if i.content_type[0..4] == 'image'
+      = link_to_remote_redbox(image_tag(i.public_filename, :alt => "", :width => '100'), :url => {:action => :image_view, :id => i.id})
+    - else 
+      %h5= link_to "Receipt (#{i.filename})", i.public_filename

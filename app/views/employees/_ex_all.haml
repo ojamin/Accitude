@@ -1,0 +1,18 @@
+%h2= "Expenses for #{@current}"
+%br
+- outp = []
+- @expenses.each do |e|
+  - if e.paid_on?
+    - @pup = "Paid"
+  - else
+    - @pup = "Unpaid"
+  - if e.project 
+    - @project = e.project.name
+  - else
+    - @project = ""
+  - outp << [link_to_remote(e.claimed_on.inspect, :url => {:action => :ex_view, :id => e.employee.id, :exp => e.id}), @project, format_as_currency(e.get_total), @pup]
+
+- if outp.size > 0
+  = gen_list outp, :size => 4, :head => ["Claimed on", "Project", "Amount", "Paid?"]
+- else
+  %p Sorry, no results.

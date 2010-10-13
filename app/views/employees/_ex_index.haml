@@ -6,15 +6,27 @@
 ]
 %br
 - list = []
-- expenses = employee.expenses.paginate :page => (params[:page] || '1')
+- if @current_project
+  - expenses = []
+  - employee.expenses.each do |ex|
+    - if ex.project_id = @current_project.id
+      - expenses << ex
+  - expenses = expenses.paginate :page => (params[:page] || '1')
+- else
+  - expenses = employee.expenses.paginate :page => (params[:page] || '1')
+
 - expenses.each do |e|
   - if e.paid_on?
     - @pup = "Paid"
   - else
     - @pup = "Unpaid"
-  - list << [link_to_remote(e.claimed_on.inspect, :url => {:action => :ex_view, :id => employee.id, :exp => e.id}), format_as_currency(e.get_total), @pup]
-- list << [do_pag(expenses, :id => employee.id), "", ""]
+  - if e.project
+    - @project = e.project.name
+  - else
+    - @project = ""
+  - list << [link_to_remote(e.claimed_on.inspect, :url => {:action => :ex_view, :id => employee.id, :exp => e.id}), @project, format_as_currency(e.get_total), @pup]
+- list << [do_pag(expenses, :id => employee.id), "", "", ""]
 - if expenses.size == 0
   Sorry, no results.
 - else
-  = gen_list list
+  = gen_list list, :size => 4, :head => ["Claimed on", "Project", "Amount", "Paid?"]

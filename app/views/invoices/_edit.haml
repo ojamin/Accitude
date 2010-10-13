@@ -12,6 +12,7 @@
   - outp << ['Due on', f.calendar_date_select(:due_on, :popup => :force, :valid_date_check => "date > new Date($F('invoice_produced_on')).stripTime()")]
   - unless invoice.id
     - outp << ['Contact for', select_tag(:contact_id, options_from_collection_for_select(contacts, 'id', 'name_long'))]
+    - outp << ['Project', f.select(:project_id, @current_org.projects.all.collect {|p| [ p.name, p.id ]}, {:include_blank => true})]
   - outp << [submit_tag('Finish invoice'), '']
   = gen_list outp
 

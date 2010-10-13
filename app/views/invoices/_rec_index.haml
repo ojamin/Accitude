@@ -2,15 +2,20 @@
 %br
 - outp = []
 - plans.each do |p|
+  - if p.project
+    - @project = p.project.name
+  - else
+    - @project = ""
   - outp << [ |
     link_to_remote(p.contact.name_long, :url => {:action => :rec_view, :id => p.id}), |
+    @project, |
     format_as_currency(p.get_total), (p.is_active? ? "Yes" : "No"), p.frequency |
   ] |
 - outp << [do_pag(plans), "", "", ""]
 - if plans.size == 0
   Sorry, no results.
 - else
-  = gen_list(outp, :head => ['Customer', 'Value', 'Active', 'Frequency'], :size => 4, |
+  = gen_list(outp, :head => ['Customer', 'Project', 'Value', 'Active', 'Frequency'], :size => 5, |
     2 => {:style => "width: 70px;text-align: right;"}, |
     3 => {:style => "width: 70px;text-align: right;"}, |
     4 => {:style => "width: 90px;text-align: right;"}) |

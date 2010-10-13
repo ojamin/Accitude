@@ -1,7 +1,5 @@
 %h2 Items currently unpaid
 %br
-
-
 - form_remote_tag :url => {:action => :index, :controller => :invoices} do
   - outp = []
   - # outp << ['Produced Before', calendar_date_select_tag(:before, before, :popup => :force, :valid_date_check => "date < new Date($F('before')).stripTime()")]
@@ -33,8 +31,24 @@
     format_as_currency(l.value), |
     l.incurred_on.inspect] |
   - tot_val += l.value
-- if invoices.size == 0
+- if liabilities.size == 0
   Sorry, no results.
 - else
   - outp << ["Total", format_as_currency(tot_val), ""]
   = gen_list outp, :head => ['Supplier', 'Value', 'Incurred On'], :size => 3
+
+%br
+%h3 Wage Payments
+- outp = []
+- tot_val = 0
+- payments.each do |p|
+  - due = (p.created_at - (p.created_at.day - 1).days)
+  - due = due.to_s[0..9]
+  - tot_val += p.total
+  - outp << [link_to_remote(p.employee.name, :url => {:controller => :employees, :action => :payment_edit, :id => p.id}), number_to_currency(p.total, :unit => "£"), due] 
+- outp << ["Total:", number_to_currency(tot_val, :unit => "£")]
+- if payments.count > 0
+  = gen_list outp, :head => ['Employee', 'Value', 'From date']
+
+
+
