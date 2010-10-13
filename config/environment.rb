@@ -9,8 +9,8 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 PAYMENT_METHODS = ['BACS', 'Cheque', 'Cash', 'Paypal']
 RECURRING_FREQUENCY = ['Daily', 'Weekly', 'Monthly', 'Yearly']
-RELEASE_VERSION = '0.7.2 Beta'
-RELEASE_DATE = '30 March 2010'
+RELEASE_VERSION = '0.9.0 Beta'
+RELEASE_DATE = '13 Oct 2010'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
