@@ -1,5 +1,8 @@
 class Invoice < AllInvoice
 
+  attr_accessible :project_id
+
+  belongs_to :project
   belongs_to :quote
   belongs_to :payment_plan
   belongs_to :contact

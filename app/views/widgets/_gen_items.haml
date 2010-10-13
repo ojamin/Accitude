@@ -2,20 +2,39 @@
 - outp = []
 - items.each do |i|
   - ids.push i.id
-  - outp << [i.desc, i.quantity, format_as_currency(i.value)]
+  - outp << [i.desc, i.quantity, format_as_currency(i.value), format_as_currency(i.value * i.quantity), '']
 %br
 %br
+
 - if local_assigns[:title]
   %h4= title
 - if local_assigns[:allow_new]
   - i = Item.new
   - form_remote_for i, :url => {:controller => :widgets, :action => :item_new_process} do |f|
     <table class="items_main" id="items_main">
-    = gen_list outp, :head => (local_assigns[:head] ? head : ['Description', 'Quantity', 'Value']), :sublist => true
+    
+    %tr.list_colour1
+      %td Description
+      %td Quantity
+      %td Value
+    - i = 0
+    - items.each do |it|
+      - i += 1
+      %tr{:id => "item_#{it.id}"}
+        %td= it.desc
+        %td= it.quantity.to_i
+        %td= format_as_currency(it.value)
+        %td= button_to_remote "edit", :url => {:controller => :widgets, :action => :item_edit_process, :id => it.id}
+        %td= ""
     = render :partial => 'widgets/item_new', :locals => {:item_ids => JSON.generate(ids), :colour_id => 1, :first => true}
-    </table>
+  =# gen_list outp, :head => (local_assigns[:head] ? head : ['Description', 'Quantity', 'Value', '', '']), :sublist => true, :size => 5
+  </table>
 - else
-  = gen_list outp, :head => (local_assigns[:head] ? head : ['Description', 'Quantity', 'Value'])
+  - @total = []
+  - items.each do |i|
+    - @total << (i.value * i.quantity)
+  - outp << ['', '', 'Total:', format_as_currency(@total.sum), '']
+  = gen_list outp, :head => (local_assigns[:head] ? head : ['Description', 'Quantity', 'Value', 'Total', '']), :size => 5
 
-
+%div{:id => 'edit'}
 

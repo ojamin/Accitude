@@ -1,0 +1,8 @@
+%h1 Payroll
+%br
+- outp = []
+- @wages.each do |w|
+  - w.run_payroll.each do |pay|
+    - outp << ["Date: #{pay.created_at}, For employee: #{pay.employee.name} "]
+= gen_list outp, :size => 1
+    

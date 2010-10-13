@@ -2,9 +2,17 @@
 %br
 - outp = []
 - liabilities.each do |i|
-  - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), i.incurred_on.inspect]
+  - if i.paid_on?
+    - @pup = "Paid"
+  - else
+    - @pup = "Unpaid"
+  - if i.project
+    - @project = i.project.name
+  - else
+    - @project = ""
+  - outp << [link_to_remote(i.contact.name_long, :url => {:action => :view, :id => i.id}), @project, i.description, i.incurred_on.inspect, @pup]
 - outp << [do_pag(liabilities), ""]
 - if liabilities.size == 0
   Sorry, no results.
 - else
-  = gen_list outp, {:head => ['Supplier', 'Incurred On'], :size => 2}
+  = gen_list outp, {:head => ['Supplier', 'Project', 'Description','Incurred On', 'Paid?'], :size => 5}

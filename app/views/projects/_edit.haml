@@ -1,0 +1,14 @@
+%h1= "Editing #{@project.name}"
+%br
+- form_remote_for @project, :url => {:controller => :projects, :action => :edit, :id => params[:id], :pid => params[:pid]} do |f|
+  = f.error_messages
+  %table
+    %tr
+      %td= f.label :name
+      %td= f.text_field :name
+    %tr
+      %td= f.label :desc, "Short description"
+      %td= f.text_area :desc
+    %tr
+      %td= ""
+      %td= f.submit

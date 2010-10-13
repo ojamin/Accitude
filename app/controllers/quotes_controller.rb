@@ -10,7 +10,11 @@ class QuotesController < ApplicationController
 
   public
   def index
-    @quotes = @current_org.quotes.paginate :page => (params[:page] || '1')
+    unless @current_project
+      @quotes = @current_org.quotes.paginate :page => (params[:page] || '1')
+    else
+      @quotes = @current_project.quotes.paginate :page => (params[:page] || '1')  
+    end
     ren_cont 'index', {:quotes => @quotes} and return
   end
 
@@ -33,7 +37,7 @@ class QuotesController < ApplicationController
         flash[:error] = get_error_msgs @quote
       end
     end
-    ren_cont 'edit', {:quote => @quote, :contacts => @current_org.contacts} and return
+    ren_cont 'edit', {:quote => @quote, :contacts => @current_org.customers} and return
   end
 
   def convert_to_invoice
@@ -44,20 +48,26 @@ class QuotesController < ApplicationController
     @invoice.contact = @quote.contact
     @invoice.organisation = @current_org
     @invoice.quote = @quote
-    @invoice.save
-    @quote.items.each {|i|
-      item = i.clone
-      item.quote = nil
-      item.invoice = @invoice
-      item.save
-    }
+    @invoice.project_id = @quote.project_id
+    if @invoice.save
+      @quote.items.each {|i|
+        item = i.clone
+        item.quote = nil
+        item.invoice = @invoice
+        item.save
+      }
+      flash[:notice] = "Sucessfully converted"
+    else
+      flash[:error] = "Something went wrong!"
+    end
     ren_cont 'invoices/view', {:invoice => @invoice} and return
   end
 
   def view
     enforce_this params[:id] && (@quote = @current_org.quotes.find_by_id(params[:id]))
     if params[:format] && params[:format] = 'pdf'
-      send_data render_to_string(:partial => 'view_pdf', :locals => {:quote => @quote}), :type => :pdf, :disposition => 'inline', :filename => "quote.#{@quote.contact.name_long}.#{@quote.id}.pdf" and return 
+      @filename = "#{@current_org.name} quote - #{@quote.produced_on}.pdf"
+      send_data render_to_string(:partial => 'view_pdf', :locals => {:quote => @quote}), :type => :pdf, :disposition => 'inline', :filename => @filename and return 
     end
     ren_cont 'view', {:quote => @quote} and return
   end

@@ -48,11 +48,21 @@ class InvoicesController < ApplicationController
     end
 
     if conditions.length != 0
+      if @current_project
+        @invoices = @current_project.invoices.find(:all, :conditions => [conditions.join(' and '), *conditionvalues]).paginate :page => (params[:page] || '1')
+      else
       @invoices = @current_org.invoices.find(:all, :conditions => [conditions.join(' and '), *conditionvalues]).paginate :page => (params[:page] || '1')
+      end
     else
-      @invoices = @current_org.invoices.paginate :page => (params[:page] || '1')
+      if @current_project
+        @invoices = @current_project.invoices.paginate :page => (params[:page] || '1')
+      else
+        @invoices = @current_org.invoices.paginate :page => (params[:page] || '1')
+      end
     end
     @contacts = @current_org.customers
+
+
     ren_cont 'index', {:invoices => @invoices, :contacts => @contacts, :contact => @contact, :before => @before, :after => @after, :procstate => @procstate} and return
   end
 
@@ -65,11 +75,15 @@ class InvoicesController < ApplicationController
     enforce_this @invoice.been_paid? == false
     if params[:commit]
       @invoice.update_attributes params[:invoice]
+      logger.info 'this one'
+
+
       if params[:contact_id]
         return unless (c = @current_org.contacts.find_by_id params[:contact_id])
         @invoice.contact = c
       end
       if @invoice.save
+        logger.info 'invoice has been saved'
         insert_items params[:item_ids], @invoice
         ren_cont 'view', {:invoice => @invoice} and return
       else
@@ -83,12 +97,26 @@ class InvoicesController < ApplicationController
   def view
     enforce_this params[:id] && (@invoice = @current_org.invoices.find_by_id(params[:id]))
     if params[:format] && params[:format] = 'pdf'
-      send_data render_to_string(:partial => 'view_pdf', :locals => {:invoice => @invoice}), :type => :pdf, :disposition => 'inline', :filename => "invoice.#{@invoice.contact.name_long}.#{@invoice.id}.pdf" and return
+      @filename = "#{@current_org.name} invoice - #{@invoice.produced_on}"
+      send_data render_to_string(:partial => 'view_pdf', :locals => {:invoice => @invoice}), :type => :pdf, :disposition => 'inline', :filename => "#{@filename}.pdf" and return
     end
     if params[:commit] && params[:paid_on] && ! @invoice.paid_on && params[:paid_on].to_date >= @invoice.produced_on
       @invoice.paid_on = params[:paid_on].to_date
       @invoice.save
       flash[:notice] = "Invoice marked as paid"
+
+      t = Transaction.new
+      t.ttype = 'Invoice'
+      t.invoice_id = @invoice.id
+      t.kind = 'Credit'
+      t.desc = "Invoice: #{@invoice.contact.name}, #{@invoice.contact.company}"
+      t.organisation_id = @current_org.id
+      if @invoice.project
+        t.project_id = @invoice.project_id
+      end
+      t.save  
+      logger.info 'transaction script has been called'
+          
     end
     ren_cont 'view', {:invoice => @invoice} and return
   end
@@ -109,7 +137,11 @@ class InvoicesController < ApplicationController
   end
 
   def rec_index
-    @plans = @current_org.payment_plans.paginate :page => (params[:page] || '1')
+    unless @current_project
+      @plans = @current_org.payment_plans.paginate :page => (params[:page] || '1')
+    else
+      @plans = @current_project.payment_plans.paginate :page => (params[:page] || '1')  
+    end
     ren_cont 'rec_index', {:plans => @plans} and return
   end
 
@@ -135,8 +167,7 @@ class InvoicesController < ApplicationController
 
   def rec_process
     if params[:id]
-      return unless (@plan = @current_org.payment_plans.find_by_id(params[:id])) &&
-                    @plan.needs_processing?
+      return unless (@plan = @current_org.payment_plans.find_by_id(params[:id])) && @plan.needs_processing?
       ren_cont 'rec_process_return', {:plans => [@plan]} and return
     elsif params[:all] || true
       @plans = @current_org.payment_plans.select(&:needs_processing?)
@@ -146,11 +177,6 @@ class InvoicesController < ApplicationController
   end
 
 end
-
-
-
-
-
 
 
 

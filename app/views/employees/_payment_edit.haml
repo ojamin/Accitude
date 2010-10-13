@@ -1,0 +1,17 @@
+%h1= "Set up wages for #{@payment.employee.name}"
+%br
+= link_to "You might find this site helpful", "http://www.direct.gov.uk/en/Nl1/Newsroom/PreBudgetReport2009/DG_183037", :popup => true
+%br
+%br
+- form_remote_for @payment, :url => {:action => :payment_edit, :controller => :employees} do |f|
+  - outp = []
+  - outp << ['Current Total:', number_to_currency(@payment.total, :unit => "£")]
+  - outp << ['Income tax amount:', f.text_field(:for_income_tax)]
+  - outp << ['National insurance amount:', f.text_field(:for_ni)]
+  - outp << ['Other deductions', f.text_field(:for_other)]
+  - outp << ['What are the deductions?', f.text_area(:for_other_desc, :rows => 7, :cols => 33)]
+  - if @payment.set_up
+    - outp << ['Paid on', f.calendar_date_select(:paid_on, :popup => :force)]
+  -# outp << ['(Must sum to current total)', '']
+  - outp << [submit_tag("set up payment"), '']
+  = gen_list outp

@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   include CacheableFlash
   helper :all # include all helpers, all the time
 
+  require 'redbox'
+
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   # protect_from_forgery :secret => '1f29646080aa4f2962b29498878249a3'
@@ -15,7 +17,7 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password, :passagain, :oldpass, :pass
 
-  before_filter :check_login, :enforce_login, :setup_org, :enforce_org
+  before_filter :check_login, :enforce_login, :setup_org, :enforce_org, :setup_project
 
   @logged_in = false
   @current_org = false
@@ -30,7 +32,7 @@ class ApplicationController < ActionController::Base
     render :update do |page|
       page.gen_dymenu @menu
       block.call(page)
-      page.gen_main render(:partial => name, :locals => locals)
+      page.gen_main(render(:partial => name, :locals => locals))
     end
   end
 
@@ -58,7 +60,43 @@ class ApplicationController < ActionController::Base
     return @logged_in if @logged_in
     @logged_in = User.find_by_username(session[:uid])
     session.reset unless @logged_in
+    kill_orphans
     return @logged_in
+  end
+
+  def kill_orphans
+    @items = Item.all  
+    @items.each do |i|
+      unless i.has_relationship? 
+       if  i.created_at < (Time.now - 2.days)
+        i.delete
+       end
+      end
+    end
+  end
+
+  def set_active_project_id(proj)
+     proj = proj.to_i  
+    unless proj == 0
+      @project = Project.find_by_id proj
+      @org = @project.organisation
+      logger.info "set Project id called"
+      session[:project_id] = proj and setup_project and return true if @logged_in && (@logged_in.is_admin || @logged_in.organisation_ids.include?(@org.id))
+      return false
+    else
+      session[:project_id] = nil
+      @current_project = nil
+    end
+  end
+
+  def setup_project
+     return false unless @logged_in
+
+      @current_project = Project.find_by_id(session[:project_id])   
+  end
+
+  def enforce_project
+    
   end
 
   def enforce_login
@@ -83,4 +121,11 @@ class ApplicationController < ActionController::Base
     return obj.errors.full_messages.join(' and ') if obj.errors.size > 0
     return "Error in input"
   end
+
+  def set_no_project
+    set_active_project_id 0
+    return
+  end
+
+
 end

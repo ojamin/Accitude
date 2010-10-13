@@ -12,8 +12,40 @@
     ['Claimed on date', f.calendar_date_select(:claimed_on, :popup => :force)], |
     ['Paid on date', f.calendar_date_select(:paid_on, :popup => :force, :valid_date_check => "date > new Date($F('expense_claimed_on')).stripTime()")], |
     ['Notes', f.text_area(:notes, :size => '31x6')], |
-    [submit_tag(expense.id ? 'Update' : 'Add'), ''] |
+    ['Project', f.select(:project_id, @current_org.projects.all.collect {|p| [ p.name, p.id ]}, {:include_blank => true})], |
+    [f.submit(expense.id ? 'Update' : 'Add'), ''] |
   ] |
 
+-# attempt to have items plus total in the table! (to revert replace outp with :item => expense.items
+-# outp = []
+-# outp << expense.items 
+-# outp << "", "Total:", @expense.get_total
+
 = gen_items :items => expense.items, :allow_new => true, :title => "Enter the items to go on the expense form below:"
+=# "Total: #{format_as_currency(@expense.get_total)}"
+
+- if expense.id
+  %br
+  %br
+  %h2 Receipts
+  %br
+  - form_for expense, :url => {:controller => :employees, :action => :add_image, :id => expense.id}, :html => {:multipart => true, :target => :frame} do |f|
+    %table
+      %tr
+        %td Image
+        %td= file_field :image, :uploaded_data
+      %tr
+        %td= ""
+        %td= f.submit "Add receipt"
+%iframe#frame{:style => 'display:none;', :name => :frame}
+- if expense.images.count > 0
+  - expense.images.each do |i|
+    %div
+      - if i.content_type[0..4] == 'image'
+        = link_to image_tag(i.public_filename, :alt => "", :width => '200'), i.public_filename
+      - else
+        %br
+        %h4= link_to "Receipt (#{i.filename})", i.public_filename
+      %br
+      = link_to_remote "Delete Image", :url => {:controller => :employees, :action => :delete_image, :id => i.id, :eid => expense.id}
 

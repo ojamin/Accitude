@@ -1,4 +1,6 @@
-%tr{:class => "list_colour#{colour_id}"}[item]
+%tr[item]
   %td= item.desc
-  %td= item.quantity
-  %td= item.value
+  %td= item.quantity.to_i
+  %td= format_as_currency(item.value)
+  %td= button_to_remote "edit", :url => {:controller => :widgets, :action => :item_edit_process, :id => item.id}
+  %td= ""

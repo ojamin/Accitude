@@ -20,6 +20,7 @@ class OrganisationsController < ApplicationController
 
   def set_org
     set_active_org_id params[:id] if params[:id]
+    set_active_project_id 0
     redirect_to :controller => :main, :action => :index and return
   end
 

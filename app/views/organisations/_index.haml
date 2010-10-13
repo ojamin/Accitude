@@ -3,10 +3,45 @@
 - orgs.each do |o|
   - outp << [ |
     link_to(o.name, :controller => :organisations, :action => :set_org, :id => o.id), |
-    "[ #{link_to_remote(:edit, :url => {:action => :edit, :id => o.id})} ]".html_safe! |
+    "[ #{link_to_remote(:edit, :url => {:action => :edit, :id => o.id})} ]".html_safe!, |
+     "[ #{link_to_remote("manage projects", :url => {:controller => :projects, :id => o.id})} ]".html_safe! |
   ] |
-- outp << [do_pag(orgs), ""]
+  - if o.projects.size > 0
+    - if @current_project
+      - outp << [ |
+                "--->", |
+                link_to("No active project", :controller => :projects, :action => :set_no_project), |
+                "" |
+              ] |
+
+    - if @current_org
+      - o.projects.each do |p|
+        - outp << [ |
+            "--->", |
+            link_to(p.name, :controller => :projects, :action => :set_project, :id => p.id), |
+            "" |
+          ] |
+    - else
+      - o.projects.each do |p|
+        - outp << [ |
+            "--->", |
+            p.name, |
+            "" |
+          ] |
+
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+  - outp << ['','','']
+
+  =# gen_list outp, :size => 3
+-# outp << [do_pag(orgs), ""]
 - if orgs.size == 0
   Sorry, no results.
 - else
-  = gen_list outp, :size => 2
+  = gen_list outp, :size => 3

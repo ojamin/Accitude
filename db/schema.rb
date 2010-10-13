@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100322173840) do
+ActiveRecord::Schema.define(:version => 20100812140202) do
 
   create_table "all_expenses", :force => true do |t|
     t.integer  "employee_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.datetime "updated_at"
     t.text     "notes"
     t.string   "type"
+    t.integer  "project_id"
   end
 
   create_table "all_invoices", :force => true do |t|
@@ -34,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
+    t.integer  "project_id"
   end
 
   create_table "all_liabilities", :force => true do |t|
@@ -46,8 +48,10 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.boolean  "processed"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "value",           :precision => 10, :scale => 2
+    t.decimal  "value"
     t.string   "type"
+    t.integer  "project_id"
+    t.integer  "image_id"
   end
 
   create_table "bank_accounts", :force => true do |t|
@@ -106,6 +110,8 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.integer  "organisation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "liability_id"
+    t.integer  "expense_id"
   end
 
   create_table "items", :force => true do |t|
@@ -114,7 +120,7 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.integer  "invoice_id"
     t.integer  "expense_id"
     t.string   "desc"
-    t.decimal  "value",           :precision => 10, :scale => 2
+    t.decimal  "value"
     t.float    "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -146,6 +152,15 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.string   "frequency"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "project_id"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "organisation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "quotes", :force => true do |t|
@@ -155,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.date     "valid_till"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "project_id"
   end
 
   create_table "recordeds", :force => true do |t|
@@ -195,12 +211,14 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
     t.integer  "bank_account_id"
     t.integer  "invoice_id"
     t.date     "posted_on"
-    t.string   "type"
+    t.string   "ttype"
     t.string   "desc"
-    t.decimal  "value",           :precision => 10, :scale => 2
+    t.decimal  "value"
     t.string   "kind"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organisation_id"
+    t.integer  "project_id"
   end
 
   create_table "users", :force => true do |t|
@@ -213,41 +231,38 @@ ActiveRecord::Schema.define(:version => 20100322173840) do
 
   create_table "wage_payments", :force => true do |t|
     t.integer  "wage_id"
-    t.decimal  "for_employee",   :precision => 10, :scale => 2
-    t.decimal  "for_income_tax", :precision => 10, :scale => 2
-    t.decimal  "for_ni",         :precision => 10, :scale => 2
-    t.decimal  "for_other",      :precision => 10, :scale => 2
+    t.decimal  "for_employee"
+    t.decimal  "for_income_tax"
+    t.decimal  "for_ni"
+    t.decimal  "for_other"
     t.string   "for_other_desc"
-    t.decimal  "total",          :precision => 10, :scale => 2
-    t.decimal  "hours",          :precision => 10, :scale => 2
+    t.decimal  "total"
+    t.decimal  "hours"
     t.date     "period_start"
     t.date     "period_end"
     t.date     "paid_on"
     t.string   "payment_method"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "employee_id"
+    t.integer  "organisation_id"
+    t.boolean  "set_up"
   end
 
   create_table "wages", :force => true do |t|
     t.integer  "employee_id"
     t.integer  "organisation_id"
-    t.decimal  "hourly_rate",          :precision => 10, :scale => 2
-    t.decimal  "weekly_hours",         :precision => 10, :scale => 2
+    t.decimal  "hourly_rate"
+    t.decimal  "weekly_hours"
     t.string   "state"
     t.date     "start"
     t.date     "end"
     t.string   "tax_code"
-    t.decimal  "other_deduction",      :precision => 10, :scale => 2
+    t.decimal  "other_deduction"
     t.string   "other_deduction_desc"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "wiki_items", :force => true do |t|
-    t.string   "name"
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.date     "last_processed_at"
   end
 
 end

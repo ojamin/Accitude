@@ -4,7 +4,11 @@ class WagePayment < ActiveRecord::Base
                   :for_other, :for_other_desc, :total, :hours,
                   :period_start, :period_end, :paid_on, :payment_method
 
-  belongs_to :wage_id
-  has_many :transactions
+  validates_numericality_of :for_ni, :for_income_tax, :for_other, :total
+
+  belongs_to :employee
+  belongs_to :wage
+  belongs_to :organisation
+  has_many :transactions, :foreign_key => :wage_payment_id
 
 end

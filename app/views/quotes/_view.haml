@@ -9,10 +9,15 @@ Send as email
 = link_to_remote 'Edit', :url => {:action => :edit, :id => quote.id, :controller => :quotes}
 ]
 %br
-%br 
+%br
+- if quote.project
+  = @project = quote.project.name
+- else
+  = @project = ""
 = gen_list [ |
   ["Produced on", quote.produced_on.inspect], |
-  ["Valid until", quote.valid_till.inspect] |
+  ["Valid until", quote.valid_till.inspect], |
+  ["Project", @project] |
 ] |
 
 = gen_items :items => quote.items, :title => "Items attached to the quote:"

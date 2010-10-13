@@ -1,0 +1,16 @@
+%h1= "Projects for #{@org.name}"
+%br
+- outp = []
+- if @org.projects.count > 0
+  - @org.projects.each do |p|
+    - outp << [ |
+    "<strong>#{p.name}</strong>".html_safe!, |
+    p.desc.gsub("\n", "\n<br/>").html_safe!, |
+    "[#{link_to_remote(:edit, :url =>{:controller => :projects, :action => :edit, :id => params[:id], :pid => p.id})}]".html_safe!, |
+    "[#{link_to_remote(:delete, :url =>{:controller => :projects, :action => :delete, :id => @org.id, :pid => p.id}, :confirm => "Are you sure you want to delete this?" )}]".html_safe! |
+    ] |
+    - 20.times do
+      - outp << ["","","",""]
+  = gen_list outp, :size => 4
+- else
+  %p There are currently no projects for this organisation. Click 'New project' above.

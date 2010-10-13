@@ -12,6 +12,7 @@
   - outp << ["Valid until", f.calendar_date_select(:valid_till, :popup => :force, :valid_date_check => "date > new Date($F('quote_produced_on')).stripTime()")]
   - unless quote.contact
     - outp << ["Contact for", select_tag(:contact_id, options_from_collection_for_select(contacts, 'id', 'name_long'))]
+  - outp << ['Project', f.select(:project_id, @current_org.projects.all.collect {|p| [ p.name, p.id ]}, {:include_blank => true})]
   - outp << [submit_tag(quote.id ? 'Update' : 'Finish quote'), ""]
   = gen_list outp
 

@@ -1,3 +1,6 @@
+- unless liability.image_id
+  - @image = Image.new
+
 %h2 Viewing a liability for #{liability.contact.name_long} 
 [
 - unless liability.paid_on
@@ -8,11 +11,54 @@
 = link_to_remote :Back, :url => {:action => :index, :controller => :liabilities}
 ]
 %br
+- if liability.project
+  - @project = liability.project.name
+- else
+  - @project = ""
 = gen_list [ |
   ['Supplier', liability.contact.name_long], |
+  ['Project', @project], |
   ['Incurred on', liability.incurred_on.inspect], |
   [(liability.paid_on ? "Paid on" : "Set paid on date"), (liability.paid_on ? liability.paid_on.inspect : render(:partial => "widgets/paid_on_select", :locals => {:obj => liability, :date => liability.incurred_on}))], |
   ['Description', liability.description], |
   ['Receipt ID', liability.receipt_id], |
   ['Value', format_as_currency(liability.value)] |
 ] |
+%br
+%h3 receipt
+- if liability.image
+  - if liability.image.content_type[0..4] == 'image'
+    %br
+    =# image_tag liability.image.public_filename
+    =# (link_to (image_tag liability.image.public_filename), liability.image.public_filename).html_safe!
+    = link_to_remote_redbox(image_tag(liability.image.public_filename, :width => 100), :url => {:action => :image_view, :id => liability.image.id})
+    %br
+    = link_to_remote "delete reciept", :url => {:controller => :liabilities, :action => :delete_image, :id => liability.image.id, :lid => liability.id}
+  - else
+    %br
+    %h5= link_to "Receipt (#{image.filename})", image.public_filename 
+    %br
+    = link_to_remote "delete reciept", :url => {:controller => :liabilities, :action => :delete_image, :id => liability.image.id, :lid => liability.id}
+  %br
+  %br
+  %br
+- else
+  %br
+  =# error_messages_for :image
+  - form_for(@liability, :url => {:controller => :liabilities, :action => :add_image, :id => liability.id, :lid => liability.id}, :html => {:multipart => true, :target => :frame}) do |f| 
+    %table
+      %tr
+        %td Image:
+        %td= file_field :image, :uploaded_data
+      %tr
+        %td= ""
+        %td= f.submit "Add receipt"
+%iframe#frame{:style => 'display:none;', :name => :frame}
+
+
+
+
+
+
+
+
