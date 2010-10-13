@@ -31,7 +31,7 @@ total = 0
 invoice.items.each {|i|
   quantity = i.quantity ? i.quantity : 0.0
   value = i.value ? i.value : 0.0
-  items << [i.desc, quantity, format_as_currency(value), format_as_currency(quantity * value)]
+  items << [i.desc, quantity, format_as_currency(value.to_f), format_as_currency(quantity.to_f * value.to_f)]
   total = total + quantity * value
 }
 items << [{:text => 'Total', :colspan => 3, :align => :right}, format_as_currency(total)]
