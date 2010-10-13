@@ -1,4 +1,4 @@
-%h2 Viewing expense claim for #{link_to_remote employee.name, :url => {:controller => :employees, :action => :details, :id => employee.id}}
+%h2 Viewing expense claim for #{link_to_remote employee.name, :url => {:controller => :employees, :action => :view, :id => employee.id}}
 [
 - unless expense.paid_on
   = link_to_remote :Edit, :url => {:action => :ex_edit, :controller => :employees, :eid => expense.id, :id => employee.id}

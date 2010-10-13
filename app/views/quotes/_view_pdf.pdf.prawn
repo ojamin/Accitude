@@ -60,6 +60,9 @@ tmp = <<eof
 All quotations are subject to change and are bound by our standard terms and conditions which are available on request.
 
 eof
+
 pdf.text tmp, :size => 10, :align => :center
+
 pdf.text quote.organisation.footer, :size => 10, :align => :center
+
 

@@ -48,12 +48,12 @@ class ProjectsController < ApplicationController
   def delete
     #enforce_this(params[:id] && params[:pid] && @org = Organisation.find_by_id(params[:id]) && @project = Project.find_by_id(params[:pid]))
     enforce_this(@project = Project.find_by_id(params[:pid]))
-    @org = Organisation.find_by_id params[:id]
-    logger.info @org
-    logger.info @project
-    @project.
-    @project.delete
-    flash[:notice] = "Project '#{@project.name}' deleted"  
+#    @org = Organisation.find_by_id params[:id]
+#    logger.info @org
+#    logger.info @project
+#    @project.
+#    @project.delete
+    flash[:notice] = "Project '#{@project.name}' not deleted - not yet implemented."
     ren_cont 'index', {:id => @org.id} and return
   end
 

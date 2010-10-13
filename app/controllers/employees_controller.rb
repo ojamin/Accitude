@@ -201,13 +201,11 @@ class EmployeesController < ApplicationController
       enforce_this(@expenses = @current_project.expenses.all)
       @current = @current_project.name
     else
-      enforce_this(@current_org)
       @expenses = []
-      Expense.all.each do |ex|
-        if ex.employee.organisation_id == @current_org.id
-          @expenses << ex
-        end
+      @current_org.employees.each do |emp|
+        @expenses  << emp.expenses
       end
+      @expenses.flatten!
       @current = @current_org.name
     end
     ren_cont 'ex_all', {:expenses => @expenses, :current => @current}
