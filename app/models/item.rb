@@ -1,6 +1,7 @@
 class Item < ActiveRecord::Base
 
   attr_accessible :desc, :value, :quantity
+  before_save :check_value_quantity
 
   belongs_to :payment_plan
   belongs_to :quote
@@ -15,5 +16,10 @@ class Item < ActiveRecord::Base
   #validates_presence_of :desc
   #validates_numericality_of :value
   #validates_numericality_of :quantity :only_integer => true
+  
+  def check_value_quantity
+    self.value = 0 unless self.value
+    self.quantity = 0 unless self.quantity
+  end
 
 end
